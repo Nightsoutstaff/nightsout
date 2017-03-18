@@ -1,9 +1,19 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   #before_action :authenticate_user!
+  #include CanCan::ControllerAdditions
 
-  def after_sign_in_path_for(resource)
-    edit_user_registration_path
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :city, :language])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:name, :city, :language, :role])
   end
+
+  def user_params
+  	params.require(:user).permit(:name, :email, :city, :language, :password, :password_confirmation, :role)
+	end
 
 end

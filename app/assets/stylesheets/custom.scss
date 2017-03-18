@@ -1,8 +1,18 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+/*
 body {
   padding-top: 60px;
+}
+*/
+
+.checkbox input[type="checkbox"] {
+  margin-left: 0;
+}
+
+.navbar-inverse {
+  background-color: #001a66;
 }
 
 section {

@@ -1,9 +1,110 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<% provide(:title, "Home") %>
+
+
+  <img src="assets/BannerNightsout.jpg" style="width:100%">
+  <div style="position: absolute; top: 0; background-color: transparent; right:20px;">
+    <br>
+    <%= link_to "Accedi", new_user_session_path, class: "btn btn-sm btn-default" %>
+    &nbsp;<%= link_to "Registrati", new_user_registration_path, class: "btn btn-sm btn-default" %>
+  </div> 
+ 
+<!--<img src="assets/BannerNightsout.jpg" style="width:100%; margin-top:-60px">-->
+<br><br><br>
+<div class="container">
+  <div id="myCarousel" class="carousel slide">
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+      <div class="item active">
+      	<div class="col-md-5">
+      		<img src="assets/networkart.jpg">
+      	</div>
+      	<div class="col-md-7">
+      		<div class="center jumbotron" style="background-color:white">
+  <h1>Segui i tuoi eventi e locali preferiti</h1>
+
+  <h2>
+    Accedi in modalità utente per cercare tutti gli eventi intorno a te e salvare i tuoi preferiti da seguire! Visita e valuta ogni locale e scrivi la tua opinione!<p>Non sei ancora iscritto? <%= link_to "Registrati subito!", new_user_registration_path %></p>
+  </h2>
+
+  <%= link_to "Registrati", new_user_registration_path, class: "btn btn-lg btn-primary" %>
+</div>
+      	</div>
+        <!--<img src="assets/Nightsout_template.jpg" width="460" height="345">-->
+      </div>
+
+      <div class="item">
+        <div class="col-md-5">
+      		<img src="assets/networkart2.jpg">
+      	</div>
+      	<div class="col-md-7">
+      		<div class="center jumbotron" style="background-color:white">
+  <h1>Pubblica tutti gli eventi organizzati dal tuo locale</h1>
+
+  <h2>
+    Accedi in modalità gestore per creare la pagina del tuo locale e pubblicare tutti gli eventi che vuoi! Osserva cosa ne pensano gli altri utenti e continua a pubblicarne di nuovi!<p>Non sei ancora iscritto? <%= link_to "Registrati subito!", new_user_registration_path %></p>
+  </h2>
+
+  <%= link_to "Registrati", new_user_registration_path, class: "btn btn-lg btn-primary" %>
+</div>
+      	</div>
+      </div>
+    
+      <div class="item">
+        <div class="col-md-5">
+      		<img src="assets/networkart3.jpg" width="398"> <!-- -2px perchè spariva l'ultima linea a destra -->
+      	</div>
+      	<div class="col-md-7">
+      		<div class="center jumbotron" style="background-color:white">
+  <h1>Non vuoi iscriverti? Cerca subito!</h1>
+
+  <h2>
+    Se non vuoi iscriverti non potrai accedere a tutti i servizi offerti da Nightsout, ma potrai comunque cercare velocemente tutti gli eventi intorno a te per organizzare le tue serate, prova!
+  </h2>
+
+  <%= link_to "Cerca", search_path, class: "btn btn-lg btn-primary" %>
+</div>
+      	</div>
+      </div>
+    </div>
+    <br><br><br>
+  	<!-- Indicators -->
+	  <ol class="carousel-indicators">
+	    <li class="item1 active"></li>
+	    <li class="item2"></li>
+	    <li class="item3"></li>
+	  </ol>
+	</div>
+</div>
+
+<script>
+$(document).ready(function(){
+    // Activate Carousel
+    $("#myCarousel").carousel({interval: 5000});
+    
+    // Enable Carousel Indicators
+    $(".item1").click(function(){
+        $("#myCarousel").carousel(0);
+    });
+    $(".item2").click(function(){
+        $("#myCarousel").carousel(1);
+    });
+    $(".item3").click(function(){
+        $("#myCarousel").carousel(2);
+    });
+    $(".item4").click(function(){
+        $("#myCarousel").carousel(3);
+    });
+ 
+});
+</script>
 
 <ul>
   <li><%= link_to 'Profile', edit_user_registration_path %></li>
   <li><%= link_to 'Log out', destroy_user_session_path, method: :delete %></li>
   <li><%= link_to 'Log In', new_user_session_path %></li>
   <li><%= link_to 'Sign Up', new_user_registration_path %></li>
+  <li><%= link_to 'Search', search_path %></li>
+  <li><%= link_to "Help", help_path %></li>
+  <li><%= link_to "Contact", contact_path %></li>
+  <li><%= link_to "About", about_path %></li>
 </ul>
