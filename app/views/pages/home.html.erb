@@ -1,7 +1,7 @@
 <% provide(:title, "Home") %>
 
 
-  <img src="assets/BannerNightsout.jpg" style="width:100%">
+  <img src="assets/banner2.jpg" style="width:100%">
   <div style="position: absolute; top: 0; background-color: transparent; right:20px;">
     <br>
     <%= link_to "Accedi", new_user_session_path, class: "btn btn-sm btn-default" %>
@@ -98,7 +98,36 @@ $(document).ready(function(){
 });
 </script>
 
-<ul>
+<!--<div style="width:100%; position:relative; background-image:url('assets/sfondo.jpg')">
+  <!--<img src="assets/sfondo.jpg" width="100%"/>-->
+<div style="padding-left:50px; padding-right:50px; width: 100%; background-image:url('assets/sfondo.jpg'); background-size:cover">
+    <br><br><br><br>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2"> 
+    <h2 style="font-size:18px;text-align:left;color:white;">
+      Dopo esserti registrato e aver effettuato l'accesso puoi cambiare modalità dalle impostazioni<br>
+      In modalità utente puoi cercare tutti gli eventi intorno a te e salvare i tuoi preferiti da seguire! Visita e valuta ogni locale e scrivi la tua opinione!<br>
+      In modalità gestore puoi creare la pagina del tuo locale e pubblicare tutti gli eventi che vuoi! Osserva cosa ne pensano gli altri utenti e continua a pubblicarne di nuovi!<br>
+    </h2>
+    <center><%= link_to "Accedi", new_user_session_path, class: "btn btn-lg btn-default" %>
+    &nbsp;&nbsp;<%= link_to "Registrati", new_user_registration_path, class: "btn btn-lg btn-default" %></center>
+    <br><br><br><br><br>
+  </div>
+</div>
+</div>
+<br><br><br>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h2>
+      Se non vuoi iscriverti non potrai accedere a tutti i servizi offerti da Nightsout, ma potrai comunque cercare velocemente tutti gli eventi intorno a te per organizzare le tue serate, prova!
+    </h2>
+    <center><%= link_to "Cerca", search_path, class: "btn btn-lg btn-primary" %></center>
+  </div>
+</div>
+
+
+<br>
+<!--<ul>
   <li><%= link_to 'Profile', edit_user_registration_path %></li>
   <li><%= link_to 'Log out', destroy_user_session_path, method: :delete %></li>
   <li><%= link_to 'Log In', new_user_session_path %></li>
@@ -107,4 +136,4 @@ $(document).ready(function(){
   <li><%= link_to "Help", help_path %></li>
   <li><%= link_to "Contact", contact_path %></li>
   <li><%= link_to "About", about_path %></li>
-</ul>
+</ul>-->

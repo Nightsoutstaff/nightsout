@@ -1,4 +1,6 @@
-<h2>Accedi</h2>
+<%= provide(:title, 'Accedi') %>
+
+<br><h1>Accedi</h1><br>
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
@@ -10,7 +12,10 @@
       </div>
 
       <div class="field">
-        <%= f.label :password %><br />
+        <%= f.label :password %>
+        <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+          &nbsp;<%= link_to "Password dimenticata?", new_password_path(resource_name) %>
+        <% end -%><br />
         <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
       </div>
 
@@ -22,12 +27,23 @@
           <% end %>
         </div>
       <% end -%>
-
+      </div>
+    </div><br>
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4">
       <div class="actions">
-        <%= f.submit "Log in" %>
+        <%= f.submit "Accedi", class: "btn btn-primary" %>
       </div>
     <% end %>
+    <br><br><br>
+    <%- if devise_mapping.omniauthable? %>
+      <%- resource_class.omniauth_providers.each do |provider| %>
+        <%= link_to omniauth_authorize_path(resource_name, provider), class: "btn btn-block btn-social btn-facebook" do %>
+            <span class="fa fa-facebook"></span> Sign in with Facebook
+        <% end %>
+      <% end -%>
+    <% end -%>
+    <br><br><br>
   </div>
 </div>
 
-<%= render "devise/shared/links" %>

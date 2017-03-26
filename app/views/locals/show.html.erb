@@ -1,0 +1,16 @@
+<%= provide(:title, @local.name) %>
+
+<div class="container">
+	<div class="center">
+		<p><%= @local.name %></p>
+		<%= image_tag @local.picture.url if @local.picture? %>
+		<p><%= @local.address %></p>
+		<p><%= @local.description %></p>
+		<% if user_signed_in? %>
+			<% if(current_user.role=='owner'&&current_user==@local.user) %>
+				<%= link_to 'Modifica', edit_local_path(@local), class: "btn btn-primary" %>
+			<% end 
+		end %>
+
+	</div>
+</div>

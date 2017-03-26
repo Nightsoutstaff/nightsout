@@ -7,12 +7,55 @@ body {
 }
 */
 
+.btn-primary {
+  background-color: #002080;
+  color: #f2f2f2;
+  border:none;
+  border-radius:30px;
+  &:hover {
+    background-color: #00134d;
+    color:white;
+  }
+}
+
+.btn-default {
+  background-color:transparent;
+  border-color: white;
+  color: white;
+  border-radius: 30px;
+  &:hover {
+    background-color: white;
+    color: #002699;
+    border-color:white;
+  }
+}
+
+.btn-delete {
+  background-color: red;
+  color: #f2f2f2;
+  border:none;
+  border-radius:30px;
+  &:hover {
+    background-color: #b30000;
+    color:white;
+  }
+}
+
+.btn-in{
+  background-color: #002080;
+  color: #f2f2f2;
+  &:hover {
+    background-color: #00134d;
+    color:white;
+  }
+}
+
 .checkbox input[type="checkbox"] {
   margin-left: 0;
 }
 
 .navbar-inverse {
-  background-color: #001a66;
+  background-color: #002080;
 }
 
 section {
@@ -218,7 +261,7 @@ input {
 
 /* microposts */
 
-.microposts {
+.locals {
   list-style: none;
   padding: 0;
   li {
@@ -229,9 +272,9 @@ input {
     margin-top: 5em;
     padding-top: 0;
   }
-  .content {
+  .description {
     display: block;
-    margin-left: 60px;
+    /*margin-left: 60px;*/
     img {
       display: block;
       padding: 5px 0;
@@ -240,9 +283,40 @@ input {
   .timestamp {
     color: $gray-light;
     display: block;
-    margin-left: 60px;
+    /*margin-left: 60px;*/
   }
-  .gravatar {
+  .picture {
+    float: left;
+    margin-right: 10px;
+    margin-top: 5px;
+  }
+}
+
+.events {
+  list-style: none;
+  padding: 0;
+  li {
+    padding: 10px 0;
+    border-top: 1px solid #e8e8e8;
+  }
+  .user {
+    margin-top: 5em;
+    padding-top: 0;
+  }
+  .description {
+    display: block;
+    /*margin-left: 60px;*/
+    img {
+      display: block;
+      padding: 5px 0;
+    }
+  }
+  .timestamp {
+    color: $gray-light;
+    display: block;
+    /*margin-left: 60px;*/
+  }
+  .picture {
     float: left;
     margin-right: 10px;
     margin-top: 5px;
@@ -301,4 +375,10 @@ span.picture {
 
 .users.follow {
   padding: 0;
+}
+
+
+#map {
+  height: 350px;
+  width: 100%;
 }

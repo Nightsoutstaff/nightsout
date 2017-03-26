@@ -1,0 +1,22 @@
+<% provide(:title, "Modifica evento") %>
+<h1>Modifica <%= @event.name %></h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@event) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
+        <div class="field">
+          <%= f.text_field :name, placeholder: @event.name %>
+        </div>
+        
+        <div class="field">
+          <%= f.text_area :description, placeholder: @event.local.description %>
+        </div>
+        <span class="picture">
+          <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
+        </span>
+      <%= f.submit "Save changes", class: "btn btn-primary" %>
+    <% end %>
+
+  </div>
+</div>

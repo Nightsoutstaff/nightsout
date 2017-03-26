@@ -1,8 +1,8 @@
 <header class="navbar navbar-static-top navbar-inverse">
   <div class="container">
     <nav>
+      <!--<img src="assets/nightsout_scritta.png" style="width:90px; padding:5px; left:0px">-->
       <ul class="nav navbar-nav navbar-right">
-
         <% if user_signed_in? %>
           <% if current_user.role == 'client' %>
             <li><%= link_to "Home", all_events_path %></li>
@@ -24,8 +24,12 @@
           <li><%= link_to "Accedi", new_user_session_path %></li>
           <li><%= link_to "Registrati", new_user_registration_path %></li>
         <% end %>
-
       </ul>
     </nav>
   </div>
-</header>
+</header> 
+<div class="container">
+  <% flash.each do |message_type, message| %>
+    <div class="alert alert-<%= message_type %>"><%= message %></div>
+  <% end %>
+</div>

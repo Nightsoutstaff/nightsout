@@ -1,16 +1,83 @@
 <%= provide(:title,'Cerca') %>
+<% require 'date'
+require 'time' %>
+
 
 <h1> Pagina di ricerca degli eventi su google maps </h1>
 <h2> Va messa la funzione di ricerca con la mappa, i filtri per categoria e data, i risultati ottenuti </h2>
 
-<h1> Pagina di ricerca degli eventi su google maps </h1>
-<h2> Va messa la funzione di ricerca con la mappa, i filtri per categoria e data, i risultati ottenuti </h2>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+		<%= form_tag(search_path, :method => "get", id: "search-form") do %>
+			<span><%= select_tag(:search_category, options_for_select(['Ristorante','Pub','Dance']), include_blank: 'Filtra per categoria?') %></span>
+			<div class="field">
+		    <%= text_field_tag :search_date, params[:search_date], placeholder: "Filtra per giorno?", class: 'datetimepicker12 form-control' %>
+		  </div>
+		  <div class="input-group">
+		  	<%= text_field_tag :search, params[:search], placeholder: "Inserisci indirizzo", class: "form-control" %>
+		  	<div class="input-group-btn">
+		  		<%= submit_tag "Cerca", :name => nil, class: "btn btn-in" %>
+		  	</div>
+			</div>
+		<% end %>
+		<br><br>
+		<% if @address != nil %>
+			<% if @locals.blank?%>
+				<h4>Non ci sono eventi vicino a: <%= @address %></h4> 
+			<% else 
+					if @events.blank?%>
+						<h4> Non ci sono eventi con queste caratteristiche </h4>
+					<% else %>
+						<div id="map"></div><br>
+						<h4>Eventi trovati:</h4>
+						<ul class="events">
+			    		<%= render @events %>
+			  		</ul>
+			  		<%= will_paginate @events %>
+			<% 	end 
+				end
+			end %>
+	</div>
+</div>
 
-<h1> Pagina di ricerca degli eventi su google maps </h1>
-<h2> Va messa la funzione di ricerca con la mappa, i filtri per categoria e data, i risultati ottenuti </h2>
+<script type="text/javascript" charset="utf-8">
+	function initMap() {
+    var new_center = {lat: <%= @lat %>, lng: <%= @lng %>};
+	  var map = new google.maps.Map(document.getElementById('map'), {
+	    zoom: 12,
+	    center: new_center
+	  });
+    
+    function addMarker(feature) {
+     	var marker = new google.maps.Marker({
+       	position: {lat: feature[0], lng: feature[1]},
+      	map: map
+     	});
+     	var infowindow = new google.maps.InfoWindow({
+      	content: 'ciao'
+    	});
 
-<h1> Pagina di ricerca degli eventi su google maps </h1>
-<h2> Va messa la funzione di ricerca con la mappa, i filtri per categoria e data, i risultati ottenuti </h2>
+   		marker.addListener('mouseover', function() {
+      	infowindow.open(map, marker);
+    	});
+   	}
 
-<h1> Pagina di ricerca degli eventi su google maps </h1>
-<h2> Va messa la funzione di ricerca con la mappa, i filtri per categoria e data, i risultati ottenuti </h2>
+   	var features = <%= @positions %>
+   	for (var i = 0, feature; feature = features[i]; i++) {
+     	addMarker(feature);
+   	}
+  }
+</script>
+<script async defer
+	    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXXF9Al_dOIDzdjzBcd5vgF8RtcWNE8_Y&callback=initMap">
+</script>
+<script type="text/javascript">
+        $(function () {
+            $('.datetimepicker12').datetimepicker({
+               
+                sideBySide: true,
+                format: 'D-M-YYYY HH:mm',
+                minDate: moment()
+            });
+        });
+    </script>

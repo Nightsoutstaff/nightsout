@@ -1,0 +1,24 @@
+<% provide(:title, "Modifica locale") %>
+<h1>Modifica <%= @local.name %></h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@local) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
+        <div class="field">
+          <%= f.text_field :name, placeholder: @local.name %>
+        </div>
+        <div class="field">
+          <%= f.text_field :address, placeholder: @local.address %>
+        </div>
+        <div class="field">
+          <%= f.text_area :description, placeholder: @local.description %>
+        </div>
+        <span class="picture">
+          <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
+        </span>
+      <%= f.submit "Save changes", class: "btn btn-primary" %>
+    <% end %>
+
+  </div>
+</div>

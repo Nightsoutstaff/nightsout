@@ -1,6 +1,6 @@
 <%= provide(:title,'Impostazioni') %>
 
-<h2>Impostazioni profilo <%= current_user.name %></h2>
+<br><h1>Impostazioni profilo <%= current_user.name %></h1><br>
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
@@ -17,22 +17,16 @@
       <% end %>
 
       <div class="field">
-        <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+        <%= f.label :password %> <i>&nbsp;(lascia vuoto se non vuoi cambiare)</i><br />
         <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
-        <% if @minimum_password_length %>
-          <br />
-          <em><%= @minimum_password_length %> characters minimum</em>
-        <% end %>
       </div>
 
       <div class="field">
-        <%= f.label :password_confirmation %><br />
+        <%= f.label :password_confirmation %>
+        <span>&nbsp;<% if @minimum_password_length %>
+          <em><%= @minimum_password_length %> caratteri minimo</em>
+        <% end %></span><br />
         <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %>
-      </div>
-
-      <div class="field">
-        <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-        <%= f.password_field :current_password, autocomplete: "off", class: 'form-control' %>
       </div>
 
       <div class="field">
@@ -45,17 +39,28 @@
         <%= f.text_field :language, class: 'form-control' %>
       </div>
 
-      <%= f.collection_select(:role, User::ROLES, :to_s, lambda{|i| i.to_s.humanize}) %>
+      <div class="field">
+        <%= f.label :Modalità %>
+        <p> Come cliente puoi cercare e visualizzare ogni evento, mentre come gestore puoi pubblicare eventi e locali a tuo nome:<p>
+        <%= f.collection_select(:role, User::ROLES, :to_s, lambda{|i| i.to_s.humanize}) %>
+      </div>
 
+      <div class="field">
+        <%= f.label :current_password %> <i>&nbsp;(password attuale per salvare i cambiamenti)</i><br />
+        <%= f.password_field :current_password, autocomplete: "off", class: 'form-control' %>
+      </div>
+
+      <br>
       <div class="actions">
-        <%= f.submit "Update" %>
+        <%= f.submit "Modifica account", class: "btn btn-primary" %>
       </div>
     <% end %>
+
+    <br><br><%= link_to "Back", :back %><br><br>
+
+    <h1>Cancel my account</h1>
+
+    <p>Vuoi eliminare il tuo account?  <%= button_to "Elimina account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete , class: "btn btn-delete" %></p>
+    <br><br><br>
   </div>
 </div>
-
-<h3>Cancel my account</h3>
-
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
-
-<%= link_to "Back", :back %>

@@ -10,7 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170317120734) do
+ActiveRecord::Schema.define(version: 20170321112413) do
+
+  create_table "events", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "start"
+    t.datetime "end"
+    t.text     "description"
+    t.integer  "local_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "picture"
+    t.index ["local_id", "created_at"], name: "index_events_on_local_id_and_created_at"
+    t.index ["local_id"], name: "index_events_on_local_id"
+  end
+
+  create_table "locals", force: :cascade do |t|
+    t.string   "name"
+    t.string   "category"
+    t.text     "description"
+    t.integer  "telephone"
+    t.string   "address"
+    t.string   "website"
+    t.integer  "iva"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "picture"
+    t.index ["user_id", "created_at"], name: "index_locals_on_user_id_and_created_at"
+    t.index ["user_id"], name: "index_locals_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "name"

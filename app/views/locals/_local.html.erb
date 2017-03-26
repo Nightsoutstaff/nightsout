@@ -1,0 +1,26 @@
+<li id="local-<%= local.id %>">
+  <div class="row">
+    <div class="col-md-8">
+      Nome locale: <%= link_to local.name, local %><br>
+      Categoria: <%= local.category %><br>
+      Indirizzo: <%= local.address %><br>
+      Telefono: <%= local.telephone %><br>
+      Sito web: <%= local.website %><br>
+      Descrizione: <%= local.description %><br>
+
+      <% if user_signed_in? %>
+        <% if current_user==local.user %>
+            Partita IVA: <%= local.iva %><br>
+            <div class="timestamp">
+              Posted <%= time_ago_in_words(local.created_at) %> ago
+              <%= link_to "Elimina", local, method: :delete,
+                                           data: { confirm: "Sei sicuro?" } %>
+            </div>
+        <% end 
+        end %>
+    </div>
+    <div class="col-md-4">
+      <%= image_tag local.picture.url if local.picture? %>
+    </div>
+  </div>
+</li>
