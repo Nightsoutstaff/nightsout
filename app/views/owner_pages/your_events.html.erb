@@ -1,0 +1,22 @@
+<%= provide(:title, 'I tuoi eventi') %>
+<br><h1>I tuoi eventi</h1><br>
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+  <p>Aggiungi un nuovo evento:&nbsp;&nbsp;&nbsp;<%= link_to "Aggiungi evento", publish_events_path, class: "btn btn-primary" %></p>
+  <br>
+    <% current_user.locals.each do |l| 
+        @cont=0
+        if l.events.any?
+          @cont += l.events.count 
+    			@events = l.events.paginate(page: params[:page], :per_page => 5) %>
+          <h3>Eventi in <%= l.name %>: (<%= @cont %>)</h3>
+          <ol class="events">
+            <%= render @events %>
+          </ol>
+          <%= will_paginate @events %>
+    		<% end
+    	 end 
+    	 %>
+  </div>
+</div>

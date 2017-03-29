@@ -1,2 +1,21 @@
-<h1>ClientPages#following</h1>
-<p>Find me in app/views/client_pages/following.html.erb</p>
+<%= provide(:title,'Seguiti') %>
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+
+		<h1>Following</h1>
+
+		<h4>Eventi seguiti (<%= @user.following_event.count %>):</h4>
+		<ul class="events">
+			<%= render @events %>
+		</ul>
+		<%= will_paginate @events %>
+
+		<h4>Locali seguiti (<%= @user.following_local.count %>):</h4>
+		<ul class="locals">
+			<%= render @locals %>
+		</ul>
+		<%= will_paginate @locals %>
+
+	</div>
+</div>

@@ -9,4 +9,11 @@ class OwnerPagesController < ApplicationController
   def publish_locals
   	@local = current_user.locals.build
   end
+
+  def your_events
+  end
+
+  def your_locals
+  end
+  
 end

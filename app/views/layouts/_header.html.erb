@@ -10,13 +10,13 @@
             <li><%= link_to "Seguiti", following_path %></li>
             <li><%= link_to "Notifiche", "#" %></li>
             <li><%= link_to "Impostazioni", edit_user_registration_path %></li>
-            <li><%= link_to 'Log out', destroy_user_session_path, method: :delete %></li>
+            <li><%= link_to "Esci", destroy_user_session_path, method: :delete %></li>
           <% elsif current_user.role == 'owner' %>
-            <li><%= link_to "Tuoi eventi", publish_events_path %></li>
-            <li><%= link_to "Tuoi locali", publish_locals_path %></li>
+            <li><%= link_to "Tuoi eventi", your_events_path %></li>
+            <li><%= link_to "Tuoi locali", your_locals_path %></li>
             <li><%= link_to "Notifiche", "#" %></li>
             <li><%= link_to "Impostazioni", edit_user_registration_path %></li>
-            <li><%= link_to 'Log out', destroy_user_session_path, method: :delete %></li>
+            <li><%= link_to "Esci", destroy_user_session_path, method: :delete %></li>
           <% end %>
         <% else %>
           <li><%= link_to "Home", root_path %></li>

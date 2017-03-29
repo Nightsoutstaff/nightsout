@@ -1,0 +1,20 @@
+<%= provide(:title, 'I tuoi locali') %>
+<br><h1>I tuoi locali</h1><br>
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+
+    Aggiungi un nuovo locale: 
+    <%= link_to "Aggiungi locale", publish_events_path, class: "btn btn-primary" %>
+  <br>
+    <% if current_user.locals.any? %>
+      <% @locals = current_user.locals.paginate(page: params[:page], :per_page => 5) %>
+      <h3>Locali (<%= current_user.locals.count %>)</h3><br>
+      <ol class="locals">
+        <%= render @locals %>
+      </ol>
+      <%= will_paginate @locals %>
+    <% end %>
+    
+  </div>
+</div>

@@ -1,16 +1,107 @@
 <%= provide(:title, @local.name) %>
 
-<div class="container">
-	<div class="center">
-		<p><%= @local.name %></p>
-		<%= image_tag @local.picture.url if @local.picture? %>
-		<p><%= @local.address %></p>
-		<p><%= @local.description %></p>
-		<% if user_signed_in? %>
-			<% if(current_user.role=='owner'&&current_user==@local.user) %>
-				<%= link_to 'Modifica', edit_local_path(@local), class: "btn btn-primary" %>
-			<% end 
-		end %>
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    
+    <center><h1><%= @local.name %></h1></center>
 
-	</div>
+    <% if @local.picture? %>
+
+      <div class="col-sm-3">
+        <%= image_tag @local.picture.url, class: 'thumbnail' %>
+      </div>
+
+      <div class="col-sm-7">
+        Nome locale: <%= link_to @local.name, @local %><br>
+        Categoria: <%= @local.category %><br>
+        Indirizzo: <%= @local.address %><br>
+        Telefono: <%= @local.telephone %><br>
+        Sito web: <%= @local.website %><br>
+        Descrizione: <%= @local.description %><br>
+
+        <% if user_signed_in? %>
+          <% if current_user==@local.user %>
+              Partita IVA: <%= @local.iva %><br>
+              <div class="timestamp">
+                Posted <%= time_ago_in_words(@local.created_at) %> ago
+              </div>
+          <% end 
+          end %>
+      </div>
+
+      <div class="col-sm-2">
+        
+        <% if user_signed_in? %>
+          <% if current_user==@local.user && current_user.role=='owner'%>
+            <%= link_to 'Modifica', edit_local_path(@local), class: "edit-link" %><br>
+            <%= link_to "Elimina", @local, method: :delete,
+                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %>
+          <% elsif current_user==@local.user%>
+          <% else %>
+            <div id="follow_form"><br>
+              <% if current_user.following_local?(@local) %>
+                <%= form_for(current_user.active_local_relationships.find_by(followed_id: @local.id),
+               html: { method: :delete }) do |f| %>
+                  <%= f.submit "Segui già", data: { confirm: "Sei sicuro?" }, class: "unfollow-btn" %>
+                <% end %>
+              <% else %>
+                <%= form_for(current_user.active_local_relationships.build) do |f| %>
+                  <div><%= hidden_field_tag :followed_id, @local.id %></div>
+                  <%= f.submit "Segui", class: "follow-btn" %>
+                <% end %>
+              <% end %>
+            </div>
+          <% end 
+        end %>
+        <span><img src="/assets/eye-icon.png" width="20px" height="20px">&nbsp;&nbsp;<%= @local.followers.count %></span>
+      </div>
+    <% else %>
+
+      <div class="col-sm-10">
+        Nome locale: <%= link_to @local.name, @local %><br>
+        Categoria: <%= @local.category %><br>
+        Indirizzo: <%= @local.address %><br>
+        Telefono: <%= @local.telephone %><br>
+        Sito web: <%= @local.website %><br>
+        Descrizione: <%= @local.description %><br>
+
+        <% if user_signed_in? %>
+          <% if current_user==@local.user %>
+              Partita IVA: <%= @local.iva %><br>
+              <div class="timestamp">
+                Posted <%= time_ago_in_words(@local.created_at) %> ago
+              </div>
+          <% end 
+        end %>
+      </div>
+        
+      <div class="col-sm-2">
+        
+        <% if user_signed_in? %>
+          <% if current_user==@local.user && current_user.role=='owner' %>
+            <%= link_to 'Modifica', edit_local_path(@local), class: "edit-link" %><br>
+            <%= link_to "Elimina", @local, method: :delete,
+                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %>
+          <% elsif current_user==@local.user%>
+          <% else %>
+            <div id="follow_form"><br>
+              <% if current_user.following_local?(@local) %>
+                <%= form_for(current_user.active_local_relationships.find_by(followed_id: @local.id),
+               html: { method: :delete }) do |f| %>
+                  <%= f.submit "Segui già", data: { confirm: "Sei sicuro?" }, class: "unfollow-btn" %>
+                <% end %>
+              <% else %>
+                <%= form_for(current_user.active_local_relationships.build) do |f| %>
+                  <div><%= hidden_field_tag :followed_id, @local.id %></div>
+                  <%= f.submit "Segui", class: "follow-btn" %>
+                <% end %>
+              <% end %>
+            </div>
+          <% end 
+        end %>
+        <span><img src="/assets/eye-icon.png" width="20px" height="20px">&nbsp;&nbsp;<%= @local.followers.count %></span>
+      </div>
+    <% end %>
+
+  </div>
 </div>

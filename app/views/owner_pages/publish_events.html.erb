@@ -1,16 +1,10 @@
 <%= provide(:title,'Pubblica Evento') %>
 
-<h1>Pubblica eventi</h1>
-<h2>Creazione, modifica e visualizzazione di tutti i tuoi eventi</h2>
+<h1>Pubblica evento</h1><br>
 
 <div class="row">
-  <aside class="col-md-4">
-    <section class="user_info">
-      <h1>
-        <%= current_user.name %>
-      </h1>
-    </section>
-	  <section class="event_form">
+  <div class="col-md-6 col-md-offset-3">
+      
     	<%= form_for @event do |f| %>
     		<%= f.select :local_id, options_for_select(Local.find_by_sql(["SELECT * FROM locals WHERE user_id = ? ", current_user.id]).collect{|p| [ p.name,p.id] }), {:id => "select_local"} %>  <!-- value:id, option:name -->
   			<div class="field">
@@ -31,48 +25,31 @@
   			<span class="picture">
     			<%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
   			</span>
-  			<%= f.submit "Post", class: "btn btn-primary" %>
-		  <% end %>
-		  <script type="text/javascript">
-  		$('#local_picture').bind('change', function() {
-    		var size_in_megabytes = this.files[0].size/1024/1024;
-    		if (size_in_megabytes > 5) {
-      		alert('Maximum file size is 5MB. Please choose a smaller file.');
-    		}
-  		});
-		  </script>
-	  </section>
+        </div>
+    </div>
+    <br><div class="row">
+      <div class="col-xs-4 col-xs-offset-4">
+      <div class="actions">
+  			<%= f.submit "Pubblica", class: "btn btn-primary" %>
 
-  </aside>
-  <div class="col-md-8">
-    
-    <% 
-      
-      current_user.locals.each do |l| 
-        @cont=0
-        if l.events.any?
-          @cont += l.events.count 
-    			@events = l.events.paginate(page: params[:page], :per_page => 3) %>
-          <h3>Eventi in <%= l.name %>: (<%= @cont %>)</h3>
-          <ol class="events">
-            <%= render @events %>
-          </ol>
-          <%= will_paginate @events %>
-    		<% end
-    	 end 
-    	 %>
-    
+	  </div><br>
   </div>
 </div>
+<% end %>
 
-<!--<script type="text/javascript"> $('.datepicker').datepicker({format: 'dd-mm-yyyy'}); </script>-->
-    <script type="text/javascript">
-        $(function () {
-            $('.datetimepicker12').datetimepicker({
-               
-                sideBySide: true,
-                format: 'D-M-YYYY HH:mm',
-                minDate: moment()
-            });
-        });
-    </script>
+<script type="text/javascript">
+  $('#local_picture').bind('change', function() {
+    var size_in_megabytes = this.files[0].size/1024/1024;
+    if (size_in_megabytes > 5) {
+      alert('Maximum file size is 5MB. Please choose a smaller file.');
+    }
+  });
+
+  $(function () {
+    $('.datetimepicker12').datetimepicker({
+      sideBySide: true,
+      format: 'D-M-YYYY HH:mm',
+      minDate: moment()
+    });
+  });
+</script>

@@ -2,6 +2,16 @@ class User < ApplicationRecord
 
   has_many :locals, dependent: :destroy
 
+  has_many :active_event_relationships, class_name:  "EventRelationship",
+                                  foreign_key: "follower_id",
+                                  dependent:   :destroy
+  has_many :active_local_relationships, class_name:  "LocalRelationship",
+                                  foreign_key: "follower_id",
+                                  dependent:   :destroy
+
+  has_many :following_local, through: :active_local_relationships, source: :followed
+  has_many :following_event, through: :active_event_relationships, source: :followed
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -29,5 +39,40 @@ class User < ApplicationRecord
 	end
 
   ROLES = %i[client owner]  # + admin e banned non a scelta dell'utente
+
+  # Follows an event.
+  def follow_event(event)
+    following_event << event
+  end
+
+  # Unfollows an event.
+  def unfollow_event(event)
+    following_event.delete(event)
+  end
+
+  # Returns true if the current user is following the event.
+  def following_event?(event)
+    following_event.include?(event)
+  end
+
+  # Follows a local.
+  def follow_local(local)
+    following_local << local
+    local.events.each do |e|
+      if following_event?(e)
+      else following_event << e
+      end
+    end
+  end
+
+  # Unfollows a local.
+  def unfollow_local(local)
+    following_local.delete(local)
+  end
+
+  # Returns true if the current user is following the local.
+  def following_local?(local)
+    following_local.include?(local)
+  end
 
 end

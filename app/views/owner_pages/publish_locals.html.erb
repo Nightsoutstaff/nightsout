@@ -14,13 +14,8 @@
 <h2>Creazione, modifica e visualizzazione di tutti i tuoi locali</h2>
 
 <div class="row">
-  <aside class="col-md-5">
-    <section class="user_info">
-      <h1>
-        Aggiungi locale
-      </h1>
-    </section>
-	  <section class="local_form">
+  <div class="col-md-6 col-md-offset-3">
+	  <div class="local_form">
     	<%= form_for(@local) do |f| %>
     		<%= render 'shared/error_messages', object: f.object %>
   			<div class="field">
@@ -58,18 +53,6 @@
     		}
   		});
 		  </script>
-	  </section>
-
-  </aside>
-  <div class="col-md-7">
-    <% if current_user.locals.any? %>
-    <% @locals = current_user.locals.paginate(page: params[:page], :per_page => 3) %>
-  	
-      <h3>Locali (<%= current_user.locals.count %>)</h3><br>
-      <ol class="locals">
-        <%= render @locals %>
-      </ol>
-      <%= will_paginate @locals %>
-    <% end %>
+	  </div>
   </div>
 </div>

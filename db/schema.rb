@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170321112413) do
+ActiveRecord::Schema.define(version: 20170327162939) do
+
+  create_table "event_relationships", force: :cascade do |t|
+    t.integer  "follower_id"
+    t.integer  "followed_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["followed_id"], name: "index_event_relationships_on_followed_id"
+    t.index ["follower_id", "followed_id"], name: "index_event_relationships_on_follower_id_and_followed_id", unique: true
+    t.index ["follower_id"], name: "index_event_relationships_on_follower_id"
+  end
 
   create_table "events", force: :cascade do |t|
     t.string   "name"
@@ -23,6 +33,16 @@ ActiveRecord::Schema.define(version: 20170321112413) do
     t.string   "picture"
     t.index ["local_id", "created_at"], name: "index_events_on_local_id_and_created_at"
     t.index ["local_id"], name: "index_events_on_local_id"
+  end
+
+  create_table "local_relationships", force: :cascade do |t|
+    t.integer  "follower_id"
+    t.integer  "followed_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["followed_id"], name: "index_local_relationships_on_followed_id"
+    t.index ["follower_id", "followed_id"], name: "index_local_relationships_on_follower_id_and_followed_id", unique: true
+    t.index ["follower_id"], name: "index_local_relationships_on_follower_id"
   end
 
   create_table "locals", force: :cascade do |t|

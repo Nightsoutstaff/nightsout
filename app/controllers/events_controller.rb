@@ -23,7 +23,7 @@ before_action :authenticate_user!, only: [:create, :edit, :update, :destroy]
     
     if @event.save
       flash[:success] = "Evento aggiunto!"
-      redirect_to publish_events_path
+      redirect_to your_events_path
     else
       render 'owner_pages/publish_events'
     end
@@ -33,7 +33,7 @@ before_action :authenticate_user!, only: [:create, :edit, :update, :destroy]
     @event = Event.find(params[:id])
     @event.destroy
     flash[:success] = "Evento eliminato!"
-    redirect_to request.referrer || publish_events_path
+    redirect_to request.referrer || your_events_path
   end
 
   def edit
@@ -48,6 +48,12 @@ before_action :authenticate_user!, only: [:create, :edit, :update, :destroy]
     else
       render 'edit'
     end
+  end
+
+  def followers
+    @event  = Event.find(params[:id])
+    @events = @event.followers.paginate(page: params[:page])
+    render 'client_pages/following'
   end
 
   private

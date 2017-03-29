@@ -16,6 +16,10 @@ body {
     background-color: #00134d;
     color:white;
   }
+  &:active {
+    background-color: #00134d;
+    color:white;
+  }
 }
 
 .btn-default {
@@ -259,7 +263,7 @@ input {
   background-color: #717171;
 }
 
-/* microposts */
+/* feed di locali ed eventi */
 
 .locals {
   list-style: none;
@@ -287,8 +291,8 @@ input {
   }
   .picture {
     float: left;
-    margin-right: 10px;
-    margin-top: 5px;
+    /*margin-right: 10px;
+    margin-top: 5px;*/
   }
 }
 
@@ -318,8 +322,8 @@ input {
   }
   .picture {
     float: left;
-    margin-right: 10px;
-    margin-top: 5px;
+    /*margin-right: 10px;
+    margin-top: 5px;*/
   }
 }
 
@@ -331,7 +335,7 @@ aside {
 }
 
 span.picture {
-  margin-top: 10px;
+  margin-top: 20px;
   input {
     border: 0;
   }
@@ -381,4 +385,86 @@ span.picture {
 #map {
   height: 350px;
   width: 100%;
+}
+
+/* flash messages */
+.alert-error {
+    background-color: #f2dede;
+    border-color: #eed3d7;
+    color: #b94a48;
+    text-align: left;
+ }
+
+.alert-alert {
+    background-color: #f2dede;
+    border-color: #eed3d7;
+    color: #b94a48;
+    text-align: left;
+ }
+
+.alert-success {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #468847;
+    text-align: left;
+ }
+
+.alert-notice {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #468847;
+    text-align: left;
+ }
+
+ /* images */
+
+ .thumbnail {
+  border: 1px solid;
+  max-width:100%;
+ }
+
+
+ /* links modifica ed elimina */
+
+ .edit-link {
+  color: gray;
+  background-color:white;
+  border: none;
+  padding-top:5px;
+  &:hover {
+    color: #002080;
+  }
+ }
+
+ .delete-link {
+  color: gray;
+  background-color:white;
+  border:none;
+  &:hover {
+    color: red;
+  }
+ }
+
+ /* follow e unfollow buttons */
+
+.follow-btn {
+  background-color:white;
+  color:gray;
+  border-color:gray;
+  border-radius:30px;
+  &:hover{
+    color:#002080;
+    border-color:#002080;
+  }
+}
+
+.unfollow-btn {
+  background-color:white;
+  color:gray;
+  border-color:gray;
+  border-radius:30px;
+  &:hover{
+    color:red;
+    border-color:red;
+  }
 }

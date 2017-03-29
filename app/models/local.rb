@@ -3,6 +3,13 @@ class Local < ApplicationRecord
   default_scope -> { order(created_at: :desc) }
 
   has_many :events, dependent: :destroy
+  #has_many :following, through: :active_relationships, source: :followed_local
+
+  has_many :passive_local_relationships, class_name:  "LocalRelationship",
+                                   foreign_key: "followed_id",
+                                   dependent:   :destroy
+
+  has_many :followers, through: :passive_local_relationships, source: :follower
 
   validates :user_id, presence: true
   validates :description, presence: true, length: { maximum: 1400 }

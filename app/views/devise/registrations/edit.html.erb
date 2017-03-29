@@ -56,11 +56,11 @@
       </div>
     <% end %>
 
-    <br><br><%= link_to "Back", :back %><br><br>
+    <br><br><br><br>
 
-    <h1>Cancel my account</h1>
+    <h1>Elimina account</h1>
 
-    <p>Vuoi eliminare il tuo account?  <%= button_to "Elimina account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete , class: "btn btn-delete" %></p>
+    <p>Vuoi eliminare il tuo account? <%= button_to "Elimina account", registration_path(resource_name), data: { confirm: "ATTENZIONE!\nIl tuo account verrà eliminato in modo permanente.\nSei sicuro?" }, method: :delete , class: "btn btn-delete" %></p>
     <br><br><br>
   </div>
 </div>

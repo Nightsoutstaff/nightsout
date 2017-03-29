@@ -3,16 +3,19 @@
 require 'time' %>
 
 
-<h1> Pagina di ricerca degli eventi su google maps </h1>
-<h2> Va messa la funzione di ricerca con la mappa, i filtri per categoria e data, i risultati ottenuti </h2>
+<h1> Cerca evento </h1>
+<h2>Cerca tutti gli eventi vicino a un indirizzo! Puoi anche filtrare i risultati per categoria o data e ora:</h2>
 
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
 		<%= form_tag(search_path, :method => "get", id: "search-form") do %>
-			<span><%= select_tag(:search_category, options_for_select(['Ristorante','Pub','Dance']), include_blank: 'Filtra per categoria?') %></span>
-			<div class="field">
-		    <%= text_field_tag :search_date, params[:search_date], placeholder: "Filtra per giorno?", class: 'datetimepicker12 form-control' %>
+			<div class="form-inline">
+				<%= select_tag(:search_category, options_for_select(['Ristorante','Pub','Dance']), include_blank: 'Inserisci categoria', class: 'form-control') %>
+				&nbsp;&nbsp;
+		    <%= text_field_tag :search_date, params[:search_date], placeholder: "Inserisci data e ora", class: 'datetimepicker12 form-control' %>
+		  
 		  </div>
+		  
 		  <div class="input-group">
 		  	<%= text_field_tag :search, params[:search], placeholder: "Inserisci indirizzo", class: "form-control" %>
 		  	<div class="input-group-btn">
@@ -26,7 +29,7 @@ require 'time' %>
 				<h4>Non ci sono eventi vicino a: <%= @address %></h4> 
 			<% else 
 					if @events.blank?%>
-						<h4> Non ci sono eventi con queste caratteristiche </h4>
+						<h4>Non ci sono eventi con queste caratteristiche vicino a: <%= @address %></h4>
 					<% else %>
 						<div id="map"></div><br>
 						<h4>Eventi trovati:</h4>
@@ -74,7 +77,6 @@ require 'time' %>
 <script type="text/javascript">
         $(function () {
             $('.datetimepicker12').datetimepicker({
-               
                 sideBySide: true,
                 format: 'D-M-YYYY HH:mm',
                 minDate: moment()

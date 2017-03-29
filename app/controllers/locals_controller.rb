@@ -12,7 +12,7 @@ class LocalsController < ApplicationController
     @local = current_user.locals.build(local_params)
     if @local.save
       flash[:success] = "Locale aggiunto!"
-      redirect_to publish_locals_path
+      redirect_to your_locals_path
     else
       render 'owner_pages/publish_locals'
     end
@@ -22,7 +22,7 @@ class LocalsController < ApplicationController
     @local = Local.find(params[:id])
     @local.destroy
     flash[:success] = "Locale eliminato!"
-    redirect_to request.referrer || publish_locals_path
+    redirect_to request.referrer || your_locals_path
   end
 
   def edit
@@ -37,6 +37,12 @@ class LocalsController < ApplicationController
     else
       render 'edit'
     end
+  end
+
+  def followers
+    @local  = Local.find(params[:id])
+    @locals = @local.followers.paginate(page: params[:page])
+    render 'client_pages/following'
   end
 
   private
