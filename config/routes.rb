@@ -35,8 +35,12 @@ Rails.application.routes.draw do
   get '/your_locals', to: 'owner_pages#your_locals'
   get '/your_events', to: 'owner_pages#your_events'
   get  '/help',    to: 'pages#help'
+  get  '/notifications',    to: 'pages#notifications'
   get  '/about',   to: 'pages#about'
   get  '/contact', to: 'pages#contact'
   get  '/search',    to: 'pages#search'
+  get '/events_all', to: 'admin_pages#events_all'
+  get '/locals_all', to: 'admin_pages#locals_all'
+  get '/users_all', to: 'admin_pages#users_all'
 
 end

@@ -16,8 +16,7 @@ class Local < ApplicationRecord
   validates :name, presence: true
   validates :category, presence: true
   validates :iva, presence: true
-  validates :telephone, length: {minimum:9, maximum:11}
-  
+  validates :telephone, length: {minimum:8, maximum:11}
    
   mount_uploader :picture, PictureUploader
   validate  :picture_size

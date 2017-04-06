@@ -1,4 +1,7 @@
 class PagesController < ApplicationController
+
+  def notifications
+  end
   
   def home
   end
