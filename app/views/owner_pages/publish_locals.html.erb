@@ -1,15 +1,18 @@
 <%= provide(:title,'Pubblica Locale') %>
 
-<script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXXF9Al_dOIDzdjzBcd5vgF8RtcWNE8_Y&callback=initMap">
-</script>
+<script src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAXXF9Al_dOIDzdjzBcd5vgF8RtcWNE8_Y&libraries=places&sensor=false&callback=initializeAddr" async defer></script>
+
     
 <script>
-  function initialize_locale() {
-    var input2 = document.getElementById('address');
-    new google.maps.places.Autocomplete(input2);
+  var options = {
+    types: ['address'],
+    componentRestrictions: {country: "it"}
+  };
+
+  function initializeAddr() {
+    var input = document.getElementById("loc-address");
+    new google.maps.places.Autocomplete(input, options);
   }
-  google.maps.event.addDomListener(window, 'load', initialize_locale);
 </script>
 
 <h1>Pubblica locali</h1>
@@ -27,7 +30,7 @@
           <%= f.select(:category, ['Pub', 'Ristorante', 'Dance']) %>
         </div>
   			<div class="field" id="address" name="address" tag="address">
-    			<%= f.text_field :address, placeholder: "Inserisci indirizzo", class: "form-control" %>
+    			<%= f.text_field :address, placeholder: "Inserisci indirizzo", id: "loc-address", class: "form-control" %>
   			</div>
         <div class="field">
           <%= f.text_field :telephone, placeholder: "Inserisci telefono", class: "form-control" %>

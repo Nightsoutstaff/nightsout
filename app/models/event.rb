@@ -3,7 +3,7 @@ class Event < ApplicationRecord
   default_scope -> { order(created_at: :desc) }
 
   #has_many :following, through: :active_relationships, source: :followed_event
-
+  #has_many :jobs, dependent: :destroy
   has_many :passive_event_relationships, class_name:  "EventRelationship",
                                    foreign_key: "followed_id",
                                    dependent:   :destroy

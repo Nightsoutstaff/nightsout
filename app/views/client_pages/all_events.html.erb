@@ -1,13 +1,40 @@
 <%= provide(:title,'Eventi in città') %>
 
-<h1> Tutti gli eventi in città </h1>
-<h2> Lista dei locali nella tua città da filtrare per categoria e data</h2>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+		<%= form_tag(all_events_path, :method => "get", id: "search-form") do %>
+			<div class="form-inline">
+				<%= select_tag(:search_category, options_for_select(['Ristorante','Pub','Dance']), include_blank: 'Inserisci categoria', class: 'form-control') %>
+				&nbsp;&nbsp;
+		    <%= text_field_tag :search_date, params[:search_date], placeholder: "Inserisci data e ora", class: 'datetimepicker12 form-control' %>
+		  
+		  </div>
 
-<h1> Tutti gli eventi in città </h1>
-<h2> Lista dei locali nella tua città da filtrare per categoria e data</h2>
+		  <div class="input-group-btn">
+		  		<%= submit_tag "Cerca", :name => nil, class: "btn btn-in" %>
+		  	</div>
+		<% end %>
 
-<h1> Tutti gli eventi in città </h1>
-<h2> Lista dei locali nella tua città da filtrare per categoria e data</h2>
+		<p>Eventi a <%= @city_user %></p>
 
-<h1> Tutti gli eventi in città </h1>
-<h2> Lista dei locali nella tua città da filtrare per categoria e data</h2>
+		<% if @erroreCitta == 1 %>
+		     <p>Attenzione, controlla la città nelle tue impostazioni!</p>
+		<% else %>
+			<ol class="events">
+		   		<%= render @events %>
+			</ol>
+			<%= will_paginate @events %>
+		<% end %>
+
+	</div>
+</div>
+
+<script type="text/javascript">
+  $(function () {
+    $('.datetimepicker12').datetimepicker({
+      sideBySide: true,
+      format: 'D-M-YYYY HH:mm',
+      minDate: moment()
+    });
+  });
+</script>

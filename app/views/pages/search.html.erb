@@ -1,10 +1,9 @@
 <%= provide(:title,'Cerca') %>
-<% require 'date'
-require 'time' %>
-
 
 <h1> Cerca evento </h1>
 <h2>Cerca tutti gli eventi vicino a un indirizzo! Puoi anche filtrare i risultati per categoria o data e ora:</h2>
+
+<script src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAXXF9Al_dOIDzdjzBcd5vgF8RtcWNE8_Y&libraries=places&sensor=false&callback=initialize" async defer></script>
 
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
@@ -17,7 +16,7 @@ require 'time' %>
 		  </div>
 		  
 		  <div class="input-group">
-		  	<%= text_field_tag :search, params[:search], placeholder: "Inserisci indirizzo", class: "form-control" %>
+		  	<%= text_field_tag :search, params[:search], placeholder: "Inserisci indirizzo", id: "loc-search", class: "form-control" %>
 		  	<div class="input-group-btn">
 		  		<%= submit_tag "Cerca", :name => nil, class: "btn btn-in" %>
 		  	</div>
@@ -44,36 +43,49 @@ require 'time' %>
 </div>
 
 <script type="text/javascript" charset="utf-8">
+  function initialize() {
+    initAutocomplete();
+    initMap(); 
+  }
+
+  function initAutocomplete() {
+    var input = document.getElementById("loc-search");
+    new google.maps.places.Autocomplete(input);
+  }
+  
 	function initMap() {
-    var new_center = {lat: <%= @lat %>, lng: <%= @lng %>};
+    var myCenter = {lat: <%= @lat %> , lng: <%= @lng %>};
 	  var map = new google.maps.Map(document.getElementById('map'), {
 	    zoom: 12,
-	    center: new_center
+	    center: myCenter
 	  });
     
-    function addMarker(feature) {
-     	var marker = new google.maps.Marker({
-       	position: {lat: feature[0], lng: feature[1]},
-      	map: map
-     	});
-     	var infowindow = new google.maps.InfoWindow({
-      	content: 'ciao'
-    	});
-
-   		marker.addListener('mouseover', function() {
-      	infowindow.open(map, marker);
-    	});
-   	}
-
-   	var features = <%= @positions %>
-   	for (var i = 0, feature; feature = features[i]; i++) {
-     	addMarker(feature);
-   	}
+    
+    var marker1=new google.maps.Marker({
+          position:myCenter,
+          animation:google.maps.Animation.BOUNCE,
+        });
+    marker1.setMap(map);
+    var infowindow = new google.maps.InfoWindow();
+    var marker, i;
+    
+    var features = <%= raw @positions %>;
+    
+    for (i = 0; i < features.length; i++) {  
+          marker = new google.maps.Marker({
+            position: new google.maps.LatLng(features[i][0], features[i][1]),
+            map: map
+          });
+          google.maps.event.addListener(marker, 'click', (function(marker, i) {
+            return function() {
+              infowindow.setContent('<div>Evento: '+features[i][2]+'<br>'+features[i][3]+'</div>');
+              infowindow.open(map, marker);
+            }
+          })(marker, i));
+        }
   }
 </script>
-<script async defer
-	    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXXF9Al_dOIDzdjzBcd5vgF8RtcWNE8_Y&callback=initMap">
-</script>
+
 <script type="text/javascript">
   $(function () {
     $('.datetimepicker12').datetimepicker({

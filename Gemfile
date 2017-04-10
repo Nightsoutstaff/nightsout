@@ -31,7 +31,10 @@ gem 'devise'
 gem 'cancancan'        
 gem 'omniauth'
 gem 'omniauth-facebook'  
-gem 'geocoder'      
+gem 'geocoder'   
+gem 'gmaps4rails'   
+gem 'country_select'
+gem 'city-state'
 
 group :development, :test do
   gem 'sqlite3', '1.3.12'

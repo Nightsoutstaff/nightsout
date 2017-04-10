@@ -8,6 +8,7 @@ class CreateLocals < ActiveRecord::Migration[5.0]
       t.string :address
       t.string :website
       t.integer :iva
+      t.string :city
       t.float :latitude
       t.float :longitude
       t.references :user, foreign_key: true

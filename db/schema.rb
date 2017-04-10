@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 20170327162939) do
     t.string   "address"
     t.string   "website"
     t.integer  "iva"
+    t.string   "city"
     t.float    "latitude"
     t.float    "longitude"
     t.integer  "user_id"

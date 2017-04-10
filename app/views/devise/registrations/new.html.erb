@@ -1,6 +1,20 @@
 <%= provide(:title, 'Registrati') %>
 <br><h1>Registrati</h1><br>
 
+<script src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAXXF9Al_dOIDzdjzBcd5vgF8RtcWNE8_Y&libraries=places&sensor=false&callback=searchCity" async defer></script>
+
+<script>
+  var options = {
+    types: ['(cities)'],
+    componentRestrictions: {country: "it"}
+  };
+
+  function searchCity() {
+    var input = document.getElementById("loc-city");
+    new google.maps.places.Autocomplete(input, options);
+  }
+</script>
+
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
@@ -18,7 +32,7 @@
 
       <div class="field">
         <%= f.label :Città %><br />
-        <%= f.text_field :city, class: 'form-control' %>
+        <%= f.text_field :city, id: "loc-city", class: 'form-control' %>
       </div>
 
       <div class="field">

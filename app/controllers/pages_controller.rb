@@ -16,9 +16,15 @@ class PagesController < ApplicationController
   end
 
   def search
+    require 'date'
+    require 'time'
+
     @locals = nil
     @address = nil
     @category = nil
+    @positions = []
+    @lat = 0
+    @lng = 0
     @date = nil
     if params[:search] != nil && params[:search].length > 1
       @address = params[:search]
@@ -54,7 +60,7 @@ class PagesController < ApplicationController
 
         @events = Event.where(:id => @events_ids).paginate(page: params[:page], :per_page => 5)
         @events.each do |e|
-          (@positions ||= []) << [e.local.latitude, e.local.longitude]
+          (@positions ||= []) << [e.local.latitude, e.local.longitude, e.name, e.description]
         end 
       end 
     end

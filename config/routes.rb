@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   resources :local_relationships,       only: [:create, :destroy]
 
   root 'pages#home'
+  
   get '/publish_events', to: 'owner_pages#publish_events'
   get '/publish_locals', to: 'owner_pages#publish_locals'
   get '/all_events', to: 'client_pages#all_events'

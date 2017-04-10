@@ -1,6 +1,20 @@
 <% provide(:title, "Modifica locale") %>
 <h1>Modifica <%= @local.name %></h1>
 
+<script src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAXXF9Al_dOIDzdjzBcd5vgF8RtcWNE8_Y&libraries=places&sensor=false&callback=modifyAddr" async defer></script>
+
+<script>
+  var options = {
+    types: ['address'],
+    componentRestrictions: {country: "it"}
+  };
+
+  function modifyAddr() {
+    var input = document.getElementById("loc-address-modify");
+    new google.maps.places.Autocomplete(input, options);
+  }
+</script>
+
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
     <%= form_for(@local) do |f| %>
@@ -9,7 +23,7 @@
           <%= f.text_field :name, placeholder: @local.name %>
         </div>
         <div class="field">
-          <%= f.text_field :address, placeholder: @local.address %>
+          <%= f.text_field :address, id: "loc-address-modify", placeholder: @local.address %>
         </div>
         <div class="field">
           <%= f.text_area :description, placeholder: @local.description %>

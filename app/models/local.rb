@@ -25,6 +25,13 @@ class Local < ApplicationRecord
   # auto-fetch coordinates and the condition is for preventing fetching the same address more than once
   after_validation :geocode, if: :address_changed?
 
+  reverse_geocoded_by :latitude, :longitude do |obj,results|
+  if geo = results.first
+    obj.city    = geo.city
+    end
+  end
+  after_validation :reverse_geocode
+
   def self.search_local(search)
     Local.near("%#{search}%", 5)
   end
