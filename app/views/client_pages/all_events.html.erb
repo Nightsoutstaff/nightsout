@@ -18,7 +18,9 @@
 		<p>Eventi a <%= @city_user %></p>
 
 		<% if @erroreCitta == 1 %>
-		     <p>Attenzione, controlla la città nelle tue impostazioni!</p>
+		     <p>Non ci sono eventi nella tua città!<br><small>Se il problema persiste, controlla la città nelle tue impostazioni!</small></p>
+		<% elsif @events_ids.empty? %>
+			<p>Non ci sono eventi nella tua città!</p>
 		<% else %>
 			<ol class="events">
 		   		<%= render @events %>

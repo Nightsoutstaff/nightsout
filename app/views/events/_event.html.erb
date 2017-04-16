@@ -33,6 +33,10 @@
             <%= link_to "Elimina", event, method: :delete,
                                            data: { confirm: "Sei sicuro?" }, class: "delete-link" %>
           <% elsif current_user==event.local.user%>
+          <% elsif current_user.role == 'admin' %>
+          <!-- Numero segnalazioni -->
+          <%= link_to "Elimina", event, method: :delete,
+                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %>
           <% else %>
             <div id="follow_form">
               <% if current_user.following_event?(event) %>
@@ -49,7 +53,11 @@
             </div>
           <% end 
         end %>
+        <% if current_user.role != 'admin' %>
         <span><img src="/assets/eye-icon.png" width="20px" height="20px">&nbsp;&nbsp;<%= event.followers.count %></span>
+        <% else %>
+          <span>#Segnalazioni</span>
+        <% end %>
       </div>
 
     <% else %>
@@ -80,6 +88,10 @@
             <%= link_to "Elimina", event, method: :delete,
                                            data: { confirm: "Sei sicuro?" }, class: "delete-link" %>
           <% elsif current_user==event.local.user%>
+          <% elsif current_user.role == 'admin' %>
+          <!-- Numero segnalazioni -->
+          <%= link_to "Elimina", event, method: :delete,
+                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %>
           <% else %>
             <div id="follow_form">
               <% if current_user.following_event?(event) %>
@@ -96,7 +108,11 @@
             </div>
           <% end 
         end %>
+        <% if current_user.role != 'admin' %>
         <span><img src="/assets/eye-icon.png" width="20px" height="20px">&nbsp;&nbsp;<%= event.followers.count %></span>
+        <% else %>
+          <span>#Segnalazioni</span>
+        <% end %>
       </div>
     <% end %>
   </div>

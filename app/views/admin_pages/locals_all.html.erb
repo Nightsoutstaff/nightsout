@@ -1,2 +1,13 @@
-<h1>AdminPages#locals_all</h1>
-<p>Find me in app/views/admin_pages/locals_all.html.erb</p>
+<%= provide(:title, 'Tutti i locali') %>
+<br><h1>Tutti i locali</h1><br>
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+  	<% @locals = @local.paginate(page: params[:page], :per_page => 5) %>
+    <h3>Locali totali (<%= @local.count %>)</h3><br>
+    <ol class="events">
+    	<%= render @locals %>
+    </ol>
+      	<%= will_paginate @locals %>
+  </div>
+</div>

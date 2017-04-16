@@ -1,2 +1,13 @@
-<h1>AdminPages#events_all</h1>
-<p>Find me in app/views/admin_pages/events_all.html.erb</p>
+<%= provide(:title, 'Tutti gli eventi') %>
+<br><h1>Tutti gli eventi</h1><br>
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+  	<% @events = @event.paginate(page: params[:page], :per_page => 5) %>
+    <h3>Eventi totali (<%= @event.count %>)</h3><br>
+    <ol class="events">
+    	<%= render @events %>
+    </ol>
+      	<%= will_paginate @events %>
+  </div>
+</div>

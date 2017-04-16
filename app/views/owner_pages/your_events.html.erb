@@ -5,6 +5,7 @@
   <div class="col-md-10 col-md-offset-1">
   <p>Aggiungi un nuovo evento:&nbsp;&nbsp;&nbsp;<%= link_to "Aggiungi evento", publish_events_path, class: "btn btn-primary" %></p>
   <br>
+
     <% current_user.locals.each do |l| 
         @cont=0
         if l.events.any?
@@ -20,4 +21,3 @@
     	 %>
   </div>
 </div>
-

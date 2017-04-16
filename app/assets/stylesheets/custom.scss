@@ -263,6 +263,61 @@ input {
   background-color: #717171;
 }
 
+/* feed user */
+.users {
+  list-style: none;
+  padding: 0;
+  li {
+    padding: 10px 0;
+    border-top: 1px solid #e8e8e8;
+  }
+  .user {
+    margin-top: 5em;
+    padding-top: 0;
+  }
+  .description {
+    display: block;
+    /*margin-left: 60px;*/
+    img {
+      display: block;
+      padding: 5px 0;
+    }
+  }
+  .timestamp {
+    color: $gray-light;
+    display: block;
+    /*margin-left: 60px;*/
+  }
+}
+
+/* feed notifiche */
+.notifications {
+  list-style: none;
+  padding: 0;
+  li {
+    padding: 10px 0;
+    border-top: 1px solid #e8e8e8;
+  }
+  .user {
+    margin-top: 5em;
+    padding-top: 0;
+  }
+  .description {
+    display: block;
+    /*margin-left: 60px;*/
+    img {
+      display: block;
+      padding: 5px 0;
+    }
+  }
+  .timestamp {
+    color: $gray-light;
+    display: block;
+    /*margin-left: 60px;*/
+  }
+}
+
+
 /* feed di locali ed eventi */
 
 .locals {

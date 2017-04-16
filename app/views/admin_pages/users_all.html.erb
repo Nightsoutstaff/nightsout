@@ -1,2 +1,11 @@
-<h1>AdminPages#users_all</h1>
-<p>Find me in app/views/admin_pages/users_all.html.erb</p>
+<%= provide(:title, 'Tutti gli utenti') %>
+<br><h1>Tutti gli utenti</h1><br>
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <h3>Utenti totali (<%= @user.count %>)</h3><br>
+    <ol class="users">
+    	<%= render partial: "users/user", collection: @user %>
+    </ol>
+  </div>
+</div>

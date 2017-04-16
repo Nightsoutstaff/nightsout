@@ -1,0 +1,22 @@
+<li id="user-<%= user.id %>">
+  <div class="row">
+    
+      <div class="col-sm-10">
+        Nome: <%= user.name %><br>
+        Email: <%= user.email %><br>
+        Città: <%= user.city %><br>
+        Registrato alle <%= user.created_at.strftime("ore %H:%M del %d-%m-%y") %><br>
+        Ruolo: <%= user.role %><br>
+      </div>
+
+      <div class="col-sm-2">
+        
+        <% if user_signed_in? %>
+          <% if current_user.role=='admin' %>
+            <%= link_to "Elimina", user, method: :delete,
+                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %>
+          <% end 
+        end %>
+      </div>
+  </div>
+</li>

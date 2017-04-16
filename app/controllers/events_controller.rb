@@ -17,12 +17,13 @@ before_action :authenticate_user!, only: [:create, :edit, :update, :destroy]
   #end
 
   def create
-  	@local= Local.find_by(id: params[:event][:local_id]) #prendi id locale dal select nel form
+  	@local = Local.find_by(id: params[:event][:local_id]) #prendi id locale dal select nel form
     @event = @local.events.build(event_params)
     #@event = Event.new(event_params)
     
     if @event.save
       flash[:success] = "Evento aggiunto!"
+      Local.addFollowingLocalPublishEventNotification(@local.id, @local.name)
       redirect_to your_events_path
     else
       render 'owner_pages/publish_events'
@@ -30,10 +31,18 @@ before_action :authenticate_user!, only: [:create, :edit, :update, :destroy]
   end
 
   def destroy
+    #Se è l'admin che ha eliminato l'evento
     @event = Event.find(params[:id])
+    if(current_user.role == 'admin')
+        Notification.create(text: "Evento eliminato da Admin!", sent: true, event: @event.name, local: @event.local.name, end: @event.start, user_id: @event.local.user.id)
+    end
     @event.destroy
     flash[:success] = "Evento eliminato!"
-    redirect_to request.referrer || your_events_path
+    if(current_user.role == 'admin')
+      redirect_to events_all_path
+    else
+      redirect_to your_events_path
+    end
   end
 
   def edit

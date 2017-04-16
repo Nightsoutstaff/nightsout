@@ -19,9 +19,9 @@ class ClientPagesController < ApplicationController
           @locals.each do |l|
             @events_ids += l.events.collect{|e| e.id }
           end
-        @events = Event.where(:id => @events_ids).paginate(page: params[:page], :per_page => 10)
+          @events = Event.where(:id => @events_ids).paginate(page: params[:page], :per_page => 10)
       else
-        @erroreCitta = 1
+        @erroreCitta= 1
       end
     else
 

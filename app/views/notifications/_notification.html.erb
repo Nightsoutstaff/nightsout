@@ -1,0 +1,26 @@
+<li id="notification-<%= notification.id %>">
+  <div class="row">
+    <div class="col-sm-12">
+        <% if (notification.text == "Evento scaduto!") %>
+        	<%= notification.text %>
+        	<p>Il tuo evento "<b><%= notification.event %></b>" è stato eliminato perchè scaduto alle
+        			<b><%=notification.end.strftime("ore %H:%M del %d-%m-%y") %></b></p>
+		<% elsif (notification.text == "Nuovo evento!") %>
+        	<%= notification.text %>
+        		<p>Ciao! Il locale "<b><%= notification.local %></b>" che stai seguendo ha appena pubblicato un nuovo evento!</p>
+        <% elsif (notification.text == "Evento seguito scaduto!") %>
+        	<%= notification.text %>
+        		<p>L'evento "<b><%= notification.event %></b>" seguito in precedenza è scaduto!</p>
+        <% elsif (notification.text == "Evento in avvicinamento!") %>
+        	<%= notification.text %>
+        		<p>L'evento "<b><%= notification.event %></b>" si terrà alle <b><%=notification.end.strftime("ore %H:%M del %d-%m-%y") %></b></p>
+        <% elsif (notification.text == "Evento eliminato da Admin!") %>
+          <%= notification.text %>
+            <p>Il tuo evento "<b><%= notification.event %></b>" è stato eliminato dall'Admin a causa delle segnalazioni ricevute dagli utenti.</p>
+        <% elsif (notification.text == "Locale eliminato da Admin!") %>
+          <%= notification.text %>
+            <p>Il tuo locale "<b><%= notification.local %></b>" è stato eliminato dall'Admin a causa delle segnalazioni ricevute dagli utenti.</p>
+        <% end %>         
+    </div>
+  </div>
+</li>

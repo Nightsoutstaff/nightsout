@@ -1,6 +1,8 @@
 class User < ApplicationRecord
 
   has_many :locals, dependent: :destroy
+  #Aggiunta la riga delle notifiche
+  has_many :notifications, dependent: :destroy
 
   has_many :active_event_relationships, class_name:  "EventRelationship",
                                   foreign_key: "follower_id",

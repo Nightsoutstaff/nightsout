@@ -36,6 +36,43 @@ class Local < ApplicationRecord
     Local.near("%#{search}%", 5)
   end
 
+  def self.deleteEvents
+    event = Event.joins(:local).where(['events.end<?', DateTime.now])
+    if not event.blank?
+      for i in 0..event.size-1
+        followerEvent = EventRelationship.where(['followed_id=?', event[i].id])
+          for k in 0..followerEvent.size-1
+            Notification.create(text: "Evento seguito scaduto!", sent: true, event: event[i].name, local: event[i].local_id, end: event[i].end, user_id: followerEvent[k].follower_id)
+          end
+          Notification.create(text: "Evento scaduto!", sent: true, event: event[i].name, local: event[i].local_id, end: event[i].end, user_id: event[i].local.user_id)
+          event[i].destroy
+      end
+    end
+  end
+
+  #Caso in cui vado ad inserire all'interno del campo end della tabella notifiche, il contenuto del campo start dell'evento,
+  #così da visualizzare la data dell'evento in arrivo. Questo metodo è inserito nello schedule.rb e verrà effettuato ogni 24h
+  def self.approachingEvent
+    event = Event.joins(:local).where(['events.start>?', DateTime.now+2])
+    if not event.blank?
+      for i in 0..event.size-1
+        followerEvent = EventRelationship.where(['followed_id=?', event[i].id])
+          for k in 0..followerEvent.size-1
+            Notification.create(text: "Evento in avvicinamento!", sent: true, event: event[i].name, local: "", end: event[i].start, user_id: followerEvent[k].follower_id)
+          end
+      end
+    end
+  end
+
+  def self.addFollowingLocalPublishEventNotification(idLocal, nameLocal)
+    local = LocalRelationship.where(followed_id: idLocal)
+    if not local.blank?
+      for i in 0..local.size-1
+         Notification.create(text: "Nuovo evento!", sent: true, event: "", local: nameLocal, end: "", user_id: local[i].follower_id)
+      end
+    end   
+  end
+
   private
 
     # Validates the size of an uploaded picture.

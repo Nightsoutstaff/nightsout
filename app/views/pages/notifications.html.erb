@@ -1,1 +1,26 @@
-<h1> notifiche </h1>
+<%= provide(:title, "Notifiche") %>
+
+<br><h1>Notifiche</h1><br>
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <% if not current_user.notifications.any? %>
+      <h2>Non ci sono notifiche</h2>
+    <% else %>
+      <h2>Nuove notifiche (<%= @newNotifications.count %>)</h2>
+        <ol class="notifications">
+          <%= render partial: "notifications/notification", collection: @newNotifications %>
+        </ol>
+    
+      <h2>Vecchie notifiche</h2>
+        <ol class="notifications">
+          <%= render partial: "notifications/notification", collection: @oldNotifications %>
+        </ol>
+    <% end %>
+    <% Notification.where(['user_id=? AND read=?', current_user.id, false ]).each do |n|
+        n.update_attributes(:read => true)
+    end %>
+
+  </div>
+</div>
+

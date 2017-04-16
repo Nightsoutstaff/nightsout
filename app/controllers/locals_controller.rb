@@ -7,7 +7,6 @@ class LocalsController < ApplicationController
     #@microposts = @user.microposts.paginate(page: params[:page], :per_page => 10)
   end
 
-
   def create
     @local = current_user.locals.build(local_params)
     if @local.save
@@ -20,9 +19,16 @@ class LocalsController < ApplicationController
 
   def destroy
     @local = Local.find(params[:id])
+    if(current_user.role == 'admin')
+        Notification.create(text: "Locale eliminato da Admin!", sent: true, local: @local.name, user_id: @local.user.id)
+    end
     @local.destroy
     flash[:success] = "Locale eliminato!"
-    redirect_to request.referrer || your_locals_path
+    if(current_user.role == 'admin')
+      redirect_to locals_all_path
+    else
+      redirect_to your_locals_path
+    end
   end
 
   def edit

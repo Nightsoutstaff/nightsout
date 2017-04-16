@@ -35,6 +35,7 @@ gem 'geocoder'
 gem 'gmaps4rails'   
 gem 'country_select'
 gem 'city-state'
+gem 'whenever', :require => false
 
 group :development, :test do
   gem 'sqlite3', '1.3.12'
@@ -46,6 +47,7 @@ group :development do
   gem 'listen',                '3.0.8'
   gem 'spring',                '1.7.2'
   gem 'spring-watcher-listen', '2.0.0'
+  gem "capistrano", "~> 3.8"
 end
 
 group :test do

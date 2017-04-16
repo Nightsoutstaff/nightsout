@@ -37,6 +37,9 @@
             <%= link_to "Elimina", @local, method: :delete,
                                            data: { confirm: "Sei sicuro?" }, class: "delete-link" %>
           <% elsif current_user==@local.user%>
+          <% elsif current_user.role == 'admin' %>
+          <%= link_to "Elimina", @local, method: :delete,
+                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %>
           <% else %>
             <div id="follow_form"><br>
               <% if current_user.following_local?(@local) %>
@@ -53,7 +56,11 @@
             </div>
           <% end 
         end %>
+        <% if current_user.role != 'admin' %>
         <span><img src="/assets/eye-icon.png" width="20px" height="20px">&nbsp;&nbsp;<%= @local.followers.count %></span>
+        <% else %>
+          <span>#Segnalazioni</span>
+        <% end %>
       </div>
     <% else %>
 
@@ -83,6 +90,9 @@
             <%= link_to "Elimina", @local, method: :delete,
                                            data: { confirm: "Sei sicuro?" }, class: "delete-link" %>
           <% elsif current_user==@local.user%>
+          <% elsif current_user.role == 'admin' %>
+          <%= link_to "Elimina", @local, method: :delete,
+                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %>
           <% else %>
             <div id="follow_form"><br>
               <% if current_user.following_local?(@local) %>
@@ -99,7 +109,11 @@
             </div>
           <% end 
         end %>
+        <% if current_user.role != 'admin' %>
         <span><img src="/assets/eye-icon.png" width="20px" height="20px">&nbsp;&nbsp;<%= @local.followers.count %></span>
+        <% else %>
+          <span>#Segnalazioni</span>
+        <% end %>
       </div>
     <% end %>
 

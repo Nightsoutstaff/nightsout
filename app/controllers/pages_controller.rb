@@ -1,8 +1,13 @@
 class PagesController < ApplicationController
+  before_action :authenticate_user!, only: [:notifications]
 
   def notifications
+    @oldNotifications = nil
+    @newNotifications = nil
+    @oldNotifications = Notification.where(['user_id = ? AND read = ?', current_user.id, true]).paginate(page: params[:page], :per_page => 5)
+    @newNotifications = Notification.where(['user_id = ? AND read = ?', current_user.id, false]).paginate(page: params[:page], :per_page => 5)
   end
-  
+
   def home
   end
 
@@ -65,7 +70,5 @@ class PagesController < ApplicationController
       end 
     end
   end
-
-  
 
 end

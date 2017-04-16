@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170327162939) do
+ActiveRecord::Schema.define(version: 20170410231719) do
 
   create_table "event_relationships", force: :cascade do |t|
     t.integer  "follower_id"
@@ -62,6 +62,20 @@ ActiveRecord::Schema.define(version: 20170327162939) do
     t.string   "picture"
     t.index ["user_id", "created_at"], name: "index_locals_on_user_id_and_created_at"
     t.index ["user_id"], name: "index_locals_on_user_id"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.string   "text"
+    t.boolean  "read",       default: false
+    t.boolean  "sent",       default: false
+    t.string   "event"
+    t.string   "local"
+    t.datetime "end"
+    t.integer  "user_id"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["user_id", "created_at"], name: "index_notifications_on_user_id_and_created_at"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
