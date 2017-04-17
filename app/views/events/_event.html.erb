@@ -53,11 +53,7 @@
             </div>
           <% end 
         end %>
-        <% if current_user.role != 'admin' %>
         <span><img src="/assets/eye-icon.png" width="20px" height="20px">&nbsp;&nbsp;<%= event.followers.count %></span>
-        <% else %>
-          <span>#Segnalazioni</span>
-        <% end %>
       </div>
 
     <% else %>
@@ -108,11 +104,7 @@
             </div>
           <% end 
         end %>
-        <% if current_user.role != 'admin' %>
         <span><img src="/assets/eye-icon.png" width="20px" height="20px">&nbsp;&nbsp;<%= event.followers.count %></span>
-        <% else %>
-          <span>#Segnalazioni</span>
-        <% end %>
       </div>
     <% end %>
   </div>
