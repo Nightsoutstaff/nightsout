@@ -18,6 +18,7 @@
         Inizio: <%= @event.start.strftime("ore %H:%M del %d-%m-%y") %><br>
         Fine: <%= @event.end.strftime("ore %H:%M del %d-%m-%y") %><br>
         Descrizione: <%= @event.description %><br></p>
+
         
         <% if user_signed_in? %>
           <% if current_user==@event.local.user %>
@@ -60,6 +61,9 @@
         <% else %>
           <span>Segnalazioni</span>
         <% end %>
+        <br>
+        <br>
+        <%= social_share_button_tag(@event.name) %>
       </div>
 
     <% else %>
@@ -114,6 +118,9 @@
         <% else %>
           <span>Segnalazioni</span>
         <% end %>
+        <br>
+        <br>
+        <%= social_share_button_tag(@event.name) %>
       </div>
     <% end %>
   </div>
@@ -121,5 +128,6 @@
 <div class="row">
   <div class="col-md-6 col-md-offset-4">
     --------- zona commenti ---------
+    
   </div>
 </div>

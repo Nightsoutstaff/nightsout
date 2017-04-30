@@ -21,7 +21,6 @@ gem 'coffee-rails',            '4.2.1'
 gem 'jquery-rails',            '4.1.1'
 gem 'turbolinks',              '5.0.1'
 gem 'jbuilder',                '2.4.1'
-gem 'bootstrap-sass',          '3.3.6'
 gem 'bootstrap-social-rails'
 gem 'font-awesome-rails'
 #gem 'bootstrap-datepicker-rails'
@@ -36,6 +35,7 @@ gem 'gmaps4rails'
 gem 'country_select'
 gem 'city-state'
 gem 'whenever', :require => false
+gem 'social-share-button'
 
 group :development, :test do
   gem 'sqlite3', '1.3.12'

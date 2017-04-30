@@ -12,17 +12,18 @@
   			</div>
 
         <div class="field">
-          <%= f.text_field :start, class: 'datetimepicker12 form-control' %>
+          <%= f.text_field :start, placeholder: "Inserisci data e ora di inizio evento", class: 'datetimepicker12 form-control' %>
         </div>
 
         <div class="field">
-          <%= f.text_field :end, class: 'datetimepicker12 form-control' %>
+          <%= f.text_field :end, placeholder: "Inserisci data e ora di fine evento", class: 'datetimepicker12 form-control' %>
         </div>
   			
   			<div class="field">
     			<%= f.text_area :description, placeholder: "Inserisci descrizione", class: "form-control" %>
   			</div>
   			<span class="picture">
+          <p>Inserisci un'immagine per l'evento:</p>
     			<%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
   			</span>
         </div>

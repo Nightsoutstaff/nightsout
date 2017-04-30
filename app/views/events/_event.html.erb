@@ -54,6 +54,9 @@
           <% end 
         end %>
         <span><img src="/assets/eye-icon.png" width="20px" height="20px">&nbsp;&nbsp;<%= event.followers.count %></span>
+        <br>
+        <br>
+        <%= social_share_button_tag("evento") %>
       </div>
 
     <% else %>
@@ -105,6 +108,9 @@
           <% end 
         end %>
         <span><img src="/assets/eye-icon.png" width="20px" height="20px">&nbsp;&nbsp;<%= event.followers.count %></span>
+        <br>
+        <br>
+        <%= social_share_button_tag("evento") %>
       </div>
     <% end %>
   </div>
