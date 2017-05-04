@@ -31,6 +31,8 @@ Rails.application.routes.draw do
   resources :event_relationships,       only: [:create, :destroy]
   resources :local_relationships,       only: [:create, :destroy]
 
+  mount Commontator::Engine => '/commontator'
+
 
   root 'pages#home'
   

@@ -39,6 +39,7 @@ GEM
       i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    acts_as_votable (0.10.0)
     airbrussh (1.2.0)
       sshkit (>= 1.6.1, != 1.7.0)
     ansi (1.5.0)
@@ -80,6 +81,9 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
+    commontator (4.11.1)
+      jquery-rails
+      rails (>= 3.1)
     concurrent-ruby (1.0.5)
     countries (2.0.8)
       i18n_data (~> 0.7.0)
@@ -158,11 +162,10 @@ GEM
       fog-json (~> 1.0)
       fog-xml (~> 0.1)
       ipaddress (~> 0.8)
-    fog-core (1.44.0)
+    fog-core (1.44.1)
       builder
       excon (~> 0.49)
       formatador (~> 0.2)
-      xmlrpc
     fog-dynect (0.0.3)
       fog-core
       fog-json
@@ -233,8 +236,8 @@ GEM
     fog-xml (0.1.3)
       fog-core
       nokogiri (>= 1.5.11, < 2.0.0)
-    font-awesome-rails (4.7.0.1)
-      railties (>= 3.2, < 5.1)
+    font-awesome-rails (4.7.0.2)
+      railties (>= 3.2, < 5.2)
     formatador (0.2.5)
     geocoder (1.4.3)
     globalid (0.4.0)
@@ -392,9 +395,6 @@ GEM
     shellany (0.0.1)
     sixarm_ruby_unaccent (1.1.1)
     slop (3.6.0)
-    social-share-button (0.2.1)
-      coffee-rails
-      sass-rails
     sort_alphabetical (1.1.0)
       unicode_utils (>= 1.2.2)
     spring (1.7.2)
@@ -437,12 +437,12 @@ GEM
       chronic (>= 0.6.3)
     will_paginate (3.1.0)
     xml-simple (1.1.5)
-    xmlrpc (0.3.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts_as_votable
   bcrypt (= 3.1.11)
   bootstrap-sass (= 3.3.6)
   bootstrap-social-rails
@@ -454,6 +454,7 @@ DEPENDENCIES
   carrierwave (= 0.11.2)
   city-state
   coffee-rails (= 4.2.1)
+  commontator
   country_select
   devise
   faker (= 1.6.6)
@@ -476,7 +477,6 @@ DEPENDENCIES
   rails-controller-testing (= 0.1.1)
   rspec
   sass-rails (= 5.0.6)
-  social-share-button
   spring (= 1.7.2)
   spring-watcher-listen (= 2.0.0)
   sqlite3 (= 1.3.12)

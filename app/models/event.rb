@@ -22,6 +22,8 @@ class Event < ApplicationRecord
   mount_uploader :picture, PictureUploader
   validate  :picture_size
 
+  acts_as_commontable
+
   private
 
     # Validates the size of an uploaded picture.

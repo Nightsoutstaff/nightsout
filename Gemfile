@@ -35,7 +35,8 @@ gem 'gmaps4rails'
 gem 'country_select'
 gem 'city-state'
 gem 'whenever', :require => false
-gem 'social-share-button'
+gem 'commontator'
+gem 'acts_as_votable'
 
 group :development, :test do
   gem 'sqlite3', '1.3.12'
