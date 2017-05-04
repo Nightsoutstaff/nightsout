@@ -20,6 +20,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:facebook]
 
   acts_as_commontator
+  #acts_as_voter
 
 
   def self.from_omniauth(auth, f)

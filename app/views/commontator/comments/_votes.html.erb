@@ -16,21 +16,18 @@
       <%= form_tag commontator.upvote_comment_path(comment),
             :method => :put,
             :remote => true do %>
-        <%= image_submit_tag "commontator/upvote.png",
-              :onmouseover => "this.src='#{image_path("commontator/upvote_hover.png")}'",
-              :onmouseout => "this.src='#{image_path("commontator/upvote.png")}'" %>
+        <%= image_submit_tag('/assets/blue-plus.png', class: 'vote-btn')%>
       <% end %>
     <% elsif can_vote %>
       <%= form_tag commontator.unvote_comment_path(comment),
             :method => :put,
             :remote => true do %>
-        <%= image_submit_tag "commontator/upvote_active.png",
-              :onmouseover => "this.src='#{image_path("commontator/upvote.png")}'",
-              :onmouseout => "this.src='#{image_path("commontator/upvote_active.png")}'"
-        %>
+        <%= image_submit_tag('/assets/plus.png', class: 'vote-btn')%>
       <% end %>
     <% else %>
-      <%= image_tag "commontator/upvote_disabled.png" %>
+      <%= image_submit_tag('/assets/blue-plus.png', class: 'vote-btn')%>
+        <!--:onmouseover => "this.src='#{image_path("commontator/upvote_hover.png")}'",
+              :onmouseout => "this.src='#{image_path("commontator/upvote.png")}'" %>-->
     <% end %>
   </span>
   <% end %>
@@ -47,21 +44,16 @@
       <%= form_tag commontator.downvote_comment_path(comment),
             :method => :put,
             :remote => true do %>
-        <%= image_submit_tag "commontator/downvote.png",
-              :onmouseover => "this.src='#{image_path("commontator/downvote_hover.png")}'",
-              :onmouseout => "this.src='#{image_path("commontator/downvote.png")}'" %>
+        <%= image_submit_tag('/assets/red-minus.png', class: 'vote-btn')%>
       <% end %>
     <% elsif can_vote %>
       <%= form_tag commontator.unvote_comment_path(comment),
             :method => :put,
             :remote => true do %>
-        <%= image_submit_tag "commontator/downvote_active.png",
-              :onmouseover => "this.src='#{image_path("commontator/downvote.png")}'",
-              :onmouseout => "this.src='#{image_path("commontator/downvote_active.png")}'"
-        %>
+        <%= image_submit_tag('/assets/minus.png', class: 'vote-btn')%>
       <% end %>
     <% else %>
-      <%= image_tag "commontator/downvote_disabled.png" %>
+      <%= image_submit_tag('/assets/red-minus.png', class: 'vote-btn')%>
     <% end %>
   </span>
   <% end %>

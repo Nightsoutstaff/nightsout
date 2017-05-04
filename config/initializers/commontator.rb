@@ -154,7 +154,7 @@ Commontator.configure do |config|
   #   :s  (star ratings)
   #   :r  (reputation system)
   # Default: :n
-  config.comment_voting = :n
+  config.comment_voting = :ld
 
   # vote_count_proc
   # Type: Proc
@@ -181,7 +181,7 @@ Commontator.configure do |config|
   # If :l is selected, the "reply to thread" form will appear before the comments
   # Otherwise, it will appear after the comments
   # Default: :e
-  config.comment_order = :e
+  config.comment_order = :ve
 
   # new_comment_style
   # Type: Symbol
