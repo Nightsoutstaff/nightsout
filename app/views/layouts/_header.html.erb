@@ -23,6 +23,8 @@
             <li><%= link_to "Tutti gli utenti", users_all_path %></li>
             <li><%= link_to "Notifiche", notifications_path %></li>
             <li><%= link_to "Esci", destroy_user_session_path, method: :delete %></li>
+          <% elsif current_user.role == 'banned' %>
+            <li><%= link_to "Esci", destroy_user_session_path, method: :delete %></li>
           <% end %>
         <% else %>
           <li><%= link_to "Home", root_path %></li>

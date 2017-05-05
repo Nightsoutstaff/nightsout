@@ -47,8 +47,11 @@ Rails.application.routes.draw do
   get '/about',   to: 'pages#about'
   get '/contact', to: 'pages#contact'
   get '/search',    to: 'pages#search'
+  get '/banned', to: 'pages#banned'
   get '/events_all', to: 'admin_pages#events_all'
   get '/locals_all', to: 'admin_pages#locals_all'
   get '/users_all', to: 'admin_pages#users_all'
+  post 'admin_pages/ban' => 'admin_pages#ban', :as => :ban
+  post 'admin_pages/unban' => 'admin_pages#unban', :as => :unban
 
 end

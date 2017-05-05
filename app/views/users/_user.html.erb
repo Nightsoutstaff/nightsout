@@ -13,8 +13,17 @@
         
         <% if user_signed_in? %>
           <% if current_user.role=='admin' %>
-            <%= link_to "Elimina", user, method: :delete,
-                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %>
+            <% if user.role == 'client' || user.role=='owner'%>
+              <%= form_tag ban_path, method: :post do %>
+                <%= hidden_field_tag :id, user.id %>
+                <%= submit_tag 'ban user' %>
+              <% end %>
+            <% elsif user.role == 'banned' %>
+              <%= form_tag unban_path, method: :post do %>
+                <%= hidden_field_tag :id, user.id %>
+                <%= submit_tag 'unban user' %>
+              <% end %>
+            <% end %>
           <% end 
         end %>
       </div>

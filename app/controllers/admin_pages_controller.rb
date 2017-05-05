@@ -11,4 +11,16 @@ class AdminPagesController < ApplicationController
   	@user = User.all.paginate(page: params[:page], :per_page => 5)
   end
 
+  def ban
+  	@user = User.find(params[:id])
+  	@user.update_attributes(:role => 'banned')
+  	redirect_to users_all_path
+  end
+
+  def unban
+  	@user = User.find(params[:id])
+  	@user.update_attributes(:role => 'client')
+  	redirect_to users_all_path
+  end
+
 end

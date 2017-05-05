@@ -11,8 +11,7 @@
 			<div class="form-inline">
 				<%= select_tag(:search_category, options_for_select(['Ristorante','Pub','Dance']), include_blank: 'Inserisci categoria', class: 'form-control') %>
 				&nbsp;&nbsp;
-		    <%= text_field_tag :search_date, params[:search_date], placeholder: "Inserisci data e ora", class: 'datetimepicker12 form-control' %>
-		  
+		    <%= text_field_tag :search_date, params[:search_date], placeholder: "Inserisci data e ora", class: 'datetimepicker12 form-control' %>		  
 		  </div>
 		  
 		  <div class="input-group">
@@ -21,6 +20,12 @@
 		  		<%= submit_tag "Cerca", :name => nil, class: "btn btn-in" %>
 		  	</div>
 			</div>
+			<br>
+			<div class="checkbox" style="margin-left:-20px">
+    		<label>
+   				Visualizza anche i locali in zona senza eventi in programma&nbsp;&nbsp;<%= check_box_tag 'also_empty', 'yes', false %> 
+   			</label>
+   		</div>
 		<% end %>
 		<br><br>
 		<% if @address != nil %>
@@ -62,9 +67,9 @@
     
     
     var marker1=new google.maps.Marker({
-          position:myCenter,
-          animation:google.maps.Animation.BOUNCE,
-        });
+      position:myCenter,
+      animation:google.maps.Animation.BOUNCE,
+    });
     marker1.setMap(map);
     var infowindow = new google.maps.InfoWindow();
     var marker, i;
@@ -72,17 +77,32 @@
     var features = <%= raw @positions %>;
     
     for (i = 0; i < features.length; i++) {  
-          marker = new google.maps.Marker({
-            position: new google.maps.LatLng(features[i][0], features[i][1]),
-            map: map
-          });
-          google.maps.event.addListener(marker, 'click', (function(marker, i) {
-            return function() {
-              infowindow.setContent('<div>Evento: '+features[i][2]+'<br>'+features[i][3]+'</div>');
-              infowindow.open(map, marker);
-            }
-          })(marker, i));
+      marker = new google.maps.Marker({
+      	position: new google.maps.LatLng(features[i][0], features[i][1]),
+      	map: map
+      });
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent('<div>Evento: <a href="/events/'+features[i][4]+'">'+features[i][2]+'</a></div><div>Locale: <a href="/locals/'+features[i][6]+'">'+features[i][5]+'</a></div><div>'+features[i][3]+'</div>');
+          infowindow.open(map, marker);
         }
+      })(marker, i));
+    }
+
+    var empty_features = <%= raw @empty_positions %>;
+    
+    for (i = 0; i < empty_features.length; i++) {  
+      marker = new google.maps.Marker({
+      	position: new google.maps.LatLng(empty_features[i][0], empty_features[i][1]),
+      	map: map
+      });
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent('<div>Locale: <a href="/locals/'+empty_features[i][3]+'">'+empty_features[i][2]+'</a></div><div>'+empty_features[i][4]+'</div><div>Nessun evento in programma</div>');
+          infowindow.open(map, marker);
+        }
+      })(marker, i));
+    }
   }
 </script>
 

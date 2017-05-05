@@ -20,6 +20,9 @@ class PagesController < ApplicationController
   def contact
   end
 
+  def banned
+  end
+
   def search
     require 'date'
     require 'time'
@@ -28,6 +31,7 @@ class PagesController < ApplicationController
     @address = nil
     @category = nil
     @positions = []
+    @empty_positions = []
     @lat = 0
     @lng = 0
     @date = nil
@@ -44,6 +48,19 @@ class PagesController < ApplicationController
       end
     
       if not @locals.blank?
+        @empty_locals_ids = []
+        if params[:also_empty] == 'yes'
+          @locals.each do |l|
+            if l.events.empty?
+              @empty_locals_ids << l.id
+            end
+          end
+          @empty_locals = Local.where(:id => @empty_locals_ids).paginate(page: params[:page], :per_page => 5)
+          @empty_locals.each do |l|
+            (@empty_positions ||= []) << [l.latitude, l.longitude, l.name, l.id, l.address]
+          end
+        end 
+
         @events_ids = []
         if @category != '' 
           @locals.where({category: @category}).each do |l|
@@ -65,7 +82,7 @@ class PagesController < ApplicationController
 
         @events = Event.where(:id => @events_ids).paginate(page: params[:page], :per_page => 5)
         @events.each do |e|
-          (@positions ||= []) << [e.local.latitude, e.local.longitude, e.name, e.description]
+          (@positions ||= []) << [e.local.latitude, e.local.longitude, e.name, e.local.address, e.id, e.local.name, e.local.id]
         end 
       end 
     end

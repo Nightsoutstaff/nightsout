@@ -19,7 +19,15 @@ class Users::SessionsController < Devise::SessionsController
   protected
 
   def after_sign_in_path_for(resource)
-    notifications_path
+    if current_user.role == 'client'
+      all_events_path
+    elsif current_user.role == 'owner'
+      your_events_path
+    elsif current_user.role == 'admin'
+      events_all_path
+    else
+      banned_path
+    end
     #flash[:notice] = "benvenuto"
   end
 
