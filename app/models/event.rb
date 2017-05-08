@@ -24,6 +24,8 @@ class Event < ApplicationRecord
 
   acts_as_commontable
 
+  ratyrate_rateable "stars"
+
   private
 
     # Validates the size of an uploaded picture.

@@ -22,6 +22,8 @@ class User < ApplicationRecord
   acts_as_commontator
   #acts_as_voter
 
+  ratyrate_rater
+
 
   def self.from_omniauth(auth)#, f)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|

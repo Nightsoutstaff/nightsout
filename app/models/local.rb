@@ -34,6 +34,8 @@ class Local < ApplicationRecord
 
   acts_as_commentable
 
+  ratyrate_rateable "stars"
+
   def self.search_local(search)
     Local.near("%#{search}%", 5)
   end

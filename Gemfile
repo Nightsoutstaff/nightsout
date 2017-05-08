@@ -37,6 +37,8 @@ gem 'city-state'
 gem 'whenever', :require => false
 gem 'commontator'
 gem 'acts_as_votable'
+gem 'ratyrate'
+gem 'jquery-turbolinks'
 
 group :development, :test do
   gem 'sqlite3', '1.3.12'
