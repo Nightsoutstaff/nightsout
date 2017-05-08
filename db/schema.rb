@@ -105,14 +105,16 @@ ActiveRecord::Schema.define(version: 20170504101251) do
 
   create_table "notifications", force: :cascade do |t|
     t.string   "text"
-    t.boolean  "read",       default: false
-    t.boolean  "sent",       default: false
-    t.string   "event"
-    t.string   "local"
+    t.string   "mentioned_by"
+    t.boolean  "read",         default: false
     t.datetime "end"
     t.integer  "user_id"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.integer  "event_id"
+    t.integer  "local_id"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.index ["event_id"], name: "index_notifications_on_event_id"
+    t.index ["local_id"], name: "index_notifications_on_local_id"
     t.index ["user_id", "created_at"], name: "index_notifications_on_user_id_and_created_at"
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end

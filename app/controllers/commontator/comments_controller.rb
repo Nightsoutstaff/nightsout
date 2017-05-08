@@ -26,7 +26,7 @@ module Commontator
       @comment.creator = @user
       @comment.body = params[:comment].nil? ? nil : params[:comment][:body]
       security_transgression_unless @comment.can_be_created_by?(@user)
-      subscribe_mentioned if Commontator.mentions_enabled
+      notify_mentioned if Commontator.mentions_enabled #subscribe_mentioned
       
       respond_to do |format|
         if  !params[:cancel].nil?
@@ -63,7 +63,7 @@ module Commontator
       security_transgression_unless @comment.can_be_edited_by?(@user)
       @comment.body = params[:comment].nil? ? nil : params[:comment][:body]
       @comment.editor = @user
-      subscribe_mentioned if Commontator.mentions_enabled
+      notify_mentioned if Commontator.mentions_enabled #subscribe_mentioned
 
       respond_to do |format|
         if !params[:cancel].nil?
@@ -150,9 +150,13 @@ module Commontator
       commontator_set_new_comment(@thread, @user)
     end
 
-    def subscribe_mentioned
+    def notify_mentioned #subscribe_mentioned
       Commontator.commontator_mentions(@user, '').where(id: params[:mentioned_ids]).each do |user|
-        @thread.subscribe(user)
+        if @thread.commontable_type == 'Local'
+          @thread.notify(user, @comment.creator, @thread.commontable_id, "")#subscribe(user)
+        elsif @thread.commontable_type == 'Event'
+          @thread.notify(user, @comment.creator, "", @thread.commontable_id)#subscribe(user)
+        end
       end
     end
   end

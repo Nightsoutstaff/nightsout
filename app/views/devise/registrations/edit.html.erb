@@ -30,11 +30,14 @@
         <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
       <% end %>
 
+      <% if not current_user.provider == "facebook" %>
       <div class="field">
         <%= f.label :password %> <i>&nbsp;(lascia vuoto se non vuoi cambiare)</i><br />
         <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
       </div>
+      <% end %>
 
+      <% if not current_user.provider == "facebook" %>
       <div class="field">
         <%= f.label :password_confirmation %>
         <span>&nbsp;<% if @minimum_password_length %>
@@ -42,6 +45,7 @@
         <% end %></span><br />
         <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %>
       </div>
+      <% end %>
 
       <div class="field">
         <%= f.label :Città %><br />
@@ -59,10 +63,12 @@
         <%= f.collection_select(:role, User::ROLES, :to_s, lambda{|i| i.to_s.humanize}) %>
       </div>
 
+      <% if not current_user.provider == "facebook" %>
       <div class="field">
         <%= f.label :current_password %> <i>&nbsp;(password attuale per salvare i cambiamenti)</i><br />
         <%= f.password_field :current_password, autocomplete: "off", class: 'form-control' %>
       </div>
+      <% end %>
 
       <br>
       <div class="actions">

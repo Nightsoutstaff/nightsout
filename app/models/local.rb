@@ -32,6 +32,8 @@ class Local < ApplicationRecord
   end
   after_validation :reverse_geocode
 
+  acts_as_commentable
+
   def self.search_local(search)
     Local.near("%#{search}%", 5)
   end
@@ -39,13 +41,12 @@ class Local < ApplicationRecord
   def self.deleteEvents
     event = Event.joins(:local).where(['events.end<?', DateTime.now])
     if not event.blank?
-      for i in 0..event.size-1
-        followerEvent = EventRelationship.where(['followed_id=?', event[i].id])
-          for k in 0..followerEvent.size-1
-            Notification.create(text: "Evento seguito scaduto!", sent: true, event: event[i].name, local: event[i].local_id, end: event[i].end, user_id: followerEvent[k].follower_id)
-          end
-          Notification.create(text: "Evento scaduto!", sent: true, event: event[i].name, local: event[i].local_id, end: event[i].end, user_id: event[i].local.user_id)
-          event[i].destroy
+      event.each do |e|
+        EventRelationship.where(['followed_id=?', e.id]).each do |f|
+          Notification.create(text: "Evento seguito scaduto!", mentioned_by: "", event_id: e.id, local_: e.local_id, end: e.end, user_id: f.follower_id)
+        end
+        Notification.create(text: "Evento scaduto!", sent: true, event: e.name, local: e.local_id, end: e.end, user_id: e.local.user_id)
+        e.destroy
       end
     end
   end
@@ -53,22 +54,19 @@ class Local < ApplicationRecord
   #Caso in cui vado ad inserire all'interno del campo end della tabella notifiche, il contenuto del campo start dell'evento,
   #così da visualizzare la data dell'evento in arrivo. Questo metodo è inserito nello schedule.rb e verrà effettuato ogni 24h
   def self.approachingEvent
-    event = Event.joins(:local).where(['events.start>?', DateTime.now+2])
-    if not event.blank?
-      for i in 0..event.size-1
-        followerEvent = EventRelationship.where(['followed_id=?', event[i].id])
-          for k in 0..followerEvent.size-1
-            Notification.create(text: "Evento in avvicinamento!", sent: true, event: event[i].name, local: "", end: event[i].start, user_id: followerEvent[k].follower_id)
-          end
+    if not Event.joins(:local).where(['events.start>?', DateTime.now+2]).blank?
+      Event.joins(:local).where(['events.start>?', DateTime.now+2]).each do |e|
+        EventRelationship.where(['followed_id=?', e.id]).each do |ee|
+          Notification.create(text: "Evento in avvicinamento!", mentioned_by: "", event_id: e.id, local_id: "", end: e.start, user_id: ee.follower_id)
+        end
       end
     end
   end
 
-  def self.addFollowingLocalPublishEventNotification(idLocal, nameLocal)
-    local = LocalRelationship.where(followed_id: idLocal)
-    if not local.blank?
-      for i in 0..local.size-1
-         Notification.create(text: "Nuovo evento!", sent: true, event: "", local: nameLocal, end: "", user_id: local[i].follower_id)
+  def self.addFollowingLocalPublishEventNotification(idLocal, idEvent)
+    if not LocalRelationship.where(followed_id: idLocal).blank?
+      LocalRelationship.where(followed_id: idLocal).each do |l|
+        Notification.create(text: "Nuovo evento!", mentioned_by: "", event_id: idEvent, local_id: idLocal, end: "", user_id: l.follower_id)
       end
     end   
   end

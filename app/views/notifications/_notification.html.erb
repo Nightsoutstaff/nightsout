@@ -1,26 +1,34 @@
 <li id="notification-<%= notification.id %>">
   <div class="row">
     <div class="col-sm-12">
-        <% if (notification.text == "Evento scaduto!") %>
-        	<%= notification.text %>
-        	<p>Il tuo evento "<b><%= notification.event %></b>" è stato eliminato perchè scaduto alle
-        			<b><%=notification.end.strftime("ore %H:%M del %d-%m-%y") %></b></p>
-		<% elsif (notification.text == "Nuovo evento!") %>
-        	<%= notification.text %>
-        		<p>Ciao! Il locale "<b><%= notification.local %></b>" che stai seguendo ha appena pubblicato un nuovo evento!</p>
-        <% elsif (notification.text == "Evento seguito scaduto!") %>
-        	<%= notification.text %>
-        		<p>L'evento "<b><%= notification.event %></b>" seguito in precedenza è scaduto!</p>
-        <% elsif (notification.text == "Evento in avvicinamento!") %>
-        	<%= notification.text %>
-        		<p>L'evento "<b><%= notification.event %></b>" si terrà alle <b><%=notification.end.strftime("ore %H:%M del %d-%m-%y") %></b></p>
-        <% elsif (notification.text == "Evento eliminato da Admin!") %>
-          <%= notification.text %>
-            <p>Il tuo evento "<b><%= notification.event %></b>" è stato eliminato dall'Admin a causa delle segnalazioni ricevute dagli utenti.</p>
-        <% elsif (notification.text == "Locale eliminato da Admin!") %>
-          <%= notification.text %>
-            <p>Il tuo locale "<b><%= notification.local %></b>" è stato eliminato dall'Admin a causa delle segnalazioni ricevute dagli utenti.</p>
-        <% end %>         
+      <% if (notification.text == "Evento scaduto!") %>
+        <%= notification.text %>
+        <p>Il tuo evento "<b><%= notification.event.name %></b>" è stato eliminato perchè scaduto alle
+        <b><%=notification.end.strftime("ore %H:%M del %d-%m-%y") %></b></p>
+		  <% elsif (notification.text == "Nuovo evento!") %>
+        <%= notification.text %>
+        	<p>Ciao! Il locale "<b><%= link_to notification.local.name, notification.local %></b>" che stai seguendo ha appena pubblicato un nuovo evento: <%= link_to notification.event.name, notification.event %></p>
+      <% elsif (notification.text == "Evento seguito scaduto!") %>
+        <%= notification.text %>
+        <p>L'evento "<b><%= notification.event.name %></b>" seguito in precedenza è scaduto!</p>
+      <% elsif (notification.text == "Evento in avvicinamento!") %>
+        <%= notification.text %>
+        <p>L'evento "<b><%= link_to notification.event.name, notification.event %></b>" si terrà alle <b><%=notification.end.strftime("ore %H:%M del %d-%m-%y") %></b></p>
+      <% elsif (notification.text == "Evento eliminato da Admin!") %>
+        <%= notification.text %>
+        <p>Il tuo evento "<b><%= notification.event.name %></b>" è stato eliminato dall'Admin a causa delle segnalazioni ricevute dagli utenti.</p>
+      <% elsif (notification.text == "Locale eliminato da Admin!") %>
+        <%= notification.text %>
+        <p>Il tuo locale "<b><%= notification.local.name %></b>" è stato eliminato dall'Admin a causa delle segnalazioni ricevute dagli utenti.</p>
+      <% elsif (notification.text == "Sei stato menzionato in un commento!") %>
+        <%= notification.text %>
+        <p>Sei stato menzionato dall'utente "<b><%= notification.mentioned_by %></b>" in un commento
+        <% if notification.local.blank? %>
+          all'evento <%= link_to notification.event.name, notification.event %></p>
+        <% else %>
+          al locale <%= link_to notification.local.name, notification.local %></p>
+        <% end 
+      end %>         
     </div>
   </div>
 </li>

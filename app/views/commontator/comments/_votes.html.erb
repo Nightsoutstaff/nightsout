@@ -7,54 +7,63 @@
   <% can_vote = comment.can_be_voted_on_by?(user) %>
   <% vote = comment.get_vote_by(user) %>
   <% comment_voting = comment.thread.config.comment_voting.to_sym %>
-
-  <% if comment_voting == :ld || comment_voting == :l %>
-  <% vtype = (comment_voting == :ld) ? 'upvote' : 'like' %>
-  <span id="comment_<%= comment.id %>_<%= vtype %>_span"
-        class="comment_<%= vtype %>">
-    <% if can_vote && (vote.blank? || !vote.vote_flag) %>
-      <%= form_tag commontator.upvote_comment_path(comment),
-            :method => :put,
-            :remote => true do %>
-        <%= image_submit_tag('/assets/blue-plus.png', class: 'vote-btn')%>
-      <% end %>
-    <% elsif can_vote %>
-      <%= form_tag commontator.unvote_comment_path(comment),
-            :method => :put,
-            :remote => true do %>
-        <%= image_submit_tag('/assets/plus.png', class: 'vote-btn')%>
-      <% end %>
-    <% else %>
-      <%= image_submit_tag('/assets/blue-plus.png', class: 'vote-btn')%>
-        <!--:onmouseover => "this.src='#{image_path("commontator/upvote_hover.png")}'",
-              :onmouseout => "this.src='#{image_path("commontator/upvote.png")}'" %>-->
-    <% end %>
-  </span>
-  <% end %>
-
-  <span id="comment_<%= comment.id %>_vote_count_span" class="comment_vote_count">
-    <% config = comment.thread.config %>
-    <%= config.vote_count_proc.call(comment.thread,
+  
+  <% if comment.creator_id == current_user.id %>
+    <span id="comment_<%= comment.id %>_vote_count_span" class="comment_vote_count">
+      <% config = comment.thread.config %>
+      <%= config.vote_count_proc.call(comment.thread,
           comment.get_upvotes.size, comment.get_downvotes.size) %>
-  </span>
+    </span>
+  <% else %>
 
-  <% if comment_voting == :ld %>
-  <span id="comment_<%= comment.id %>_downvote_span" class="comment_downvote">
-    <% if can_vote && (vote.blank? || vote.vote_flag) %>
-      <%= form_tag commontator.downvote_comment_path(comment),
-            :method => :put,
-            :remote => true do %>
+    <% if comment_voting == :ld || comment_voting == :l %>
+    <% vtype = (comment_voting == :ld) ? 'upvote' : 'like' %>
+    <span id="comment_<%= comment.id %>_<%= vtype %>_span"
+          class="comment_<%= vtype %>">
+      <% if can_vote && (vote.blank? || !vote.vote_flag) %>
+        <%= form_tag commontator.upvote_comment_path(comment),
+              :method => :put,
+              :remote => true do %>
+          <%= image_submit_tag('/assets/blue-plus.png', class: 'vote-btn')%>
+        <% end %>
+      <% elsif can_vote %>
+        <%= form_tag commontator.unvote_comment_path(comment),
+              :method => :put,
+              :remote => true do %>
+          <%= image_submit_tag('/assets/plus.png', class: 'vote-btn')%>
+        <% end %>
+      <% else %>
+        <%= image_submit_tag('/assets/blue-plus.png', class: 'vote-btn')%>
+          <!--:onmouseover => "this.src='#{image_path("commontator/upvote_hover.png")}'",
+                :onmouseout => "this.src='#{image_path("commontator/upvote.png")}'" %>-->
+      <% end %>
+    </span>
+    <% end %>
+
+    <span id="comment_<%= comment.id %>_vote_count_span" class="comment_vote_count">
+      <% config = comment.thread.config %>
+      <%= config.vote_count_proc.call(comment.thread,
+            comment.get_upvotes.size, comment.get_downvotes.size) %>
+    </span>
+
+    <% if comment_voting == :ld %>
+    <span id="comment_<%= comment.id %>_downvote_span" class="comment_downvote">
+      <% if can_vote && (vote.blank? || vote.vote_flag) %>
+        <%= form_tag commontator.downvote_comment_path(comment),
+              :method => :put,
+              :remote => true do %>
+          <%= image_submit_tag('/assets/red-minus.png', class: 'vote-btn')%>
+        <% end %>
+      <% elsif can_vote %>
+        <%= form_tag commontator.unvote_comment_path(comment),
+              :method => :put,
+              :remote => true do %>
+          <%= image_submit_tag('/assets/minus.png', class: 'vote-btn')%>
+        <% end %>
+      <% else %>
         <%= image_submit_tag('/assets/red-minus.png', class: 'vote-btn')%>
       <% end %>
-    <% elsif can_vote %>
-      <%= form_tag commontator.unvote_comment_path(comment),
-            :method => :put,
-            :remote => true do %>
-        <%= image_submit_tag('/assets/minus.png', class: 'vote-btn')%>
-      <% end %>
-    <% else %>
-      <%= image_submit_tag('/assets/red-minus.png', class: 'vote-btn')%>
-    <% end %>
-  </span>
-  <% end %>
-<% end %>
+    </span>
+  <% end 
+  end
+end %>

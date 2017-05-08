@@ -23,7 +23,7 @@ before_action :authenticate_user!, only: [:create, :edit, :update, :destroy]
     
     if @event.save
       flash[:success] = "Evento aggiunto!"
-      Local.addFollowingLocalPublishEventNotification(@local.id, @local.name)
+      Local.addFollowingLocalPublishEventNotification(@local.id, @event.id)
       redirect_to your_events_path
     else
       render 'owner_pages/publish_events'
@@ -35,7 +35,7 @@ before_action :authenticate_user!, only: [:create, :edit, :update, :destroy]
     #Se è l'admin che ha eliminato l'evento
     @event = Event.find(params[:id])
     if(current_user.role == 'admin')
-        Notification.create(text: "Evento eliminato da Admin!", sent: true, event: @event.name, local: @event.local.name, end: @event.start, user_id: @event.local.user.id)
+        Notification.create(text: "Evento eliminato da Admin!", mentioned_by:"", event_id: @event.id, local_id: @event.local.id, end: @event.start, user_id: @event.local.user.id)
     end
     @event.destroy
     flash[:success] = "Evento eliminato!"

@@ -8,20 +8,20 @@
             <li><%= link_to "Home", all_events_path %></li>
             <li><%= link_to "Cerca", search_path %></li>
             <li><%= link_to "Seguiti", following_path %></li>
-            <li><%= link_to "Notifiche", notifications_path %></li>
+            <li><%= link_to "Notifiche (" + Notification.where(['user_id = ? AND read = ?', current_user.id, false]).count.to_s + ")", notifications_path %></li>
             <li><%= link_to "Impostazioni", edit_user_registration_path %></li>
             <li><%= link_to "Esci", destroy_user_session_path, method: :delete %></li>
           <% elsif current_user.role == 'owner' %>
             <li><%= link_to "Tuoi eventi", your_events_path %></li>
             <li><%= link_to "Tuoi locali", your_locals_path %></li>
-            <li><%= link_to "Notifiche", notifications_path %></li>
+            <li><%= link_to "Notifiche (" + Notification.where(['user_id = ? AND read = ?', current_user.id, false]).count.to_s + ")", notifications_path %></li>
             <li><%= link_to "Impostazioni", edit_user_registration_path %></li>
             <li><%= link_to "Esci", destroy_user_session_path, method: :delete %></li>
           <% elsif current_user.role == 'admin' %>
             <li><%= link_to "Tutti gli eventi", events_all_path %></li>
             <li><%= link_to "Tutti i locali", locals_all_path %></li>
             <li><%= link_to "Tutti gli utenti", users_all_path %></li>
-            <li><%= link_to "Notifiche", notifications_path %></li>
+            <li><%= link_to "Notifiche (" + Notification.where(['user_id = ? AND read = ?', current_user.id, false]).count.to_s + ")", notifications_path %></li>
             <li><%= link_to "Esci", destroy_user_session_path, method: :delete %></li>
           <% elsif current_user.role == 'banned' %>
             <li><%= link_to "Esci", destroy_user_session_path, method: :delete %></li>

@@ -58,6 +58,51 @@
         end %>
         <% if current_user.role != 'admin' %>
         <span><img src="/assets/eye-icon.png" width="20px" height="20px">&nbsp;&nbsp;<%= @event.followers.count %></span>
+        <br><br>
+        <div id="fb-root"></div>
+        <script>
+          (function(d, s, id){
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/it_IT/sdk.js#xfbml=1&version=v2.9";
+          fjs.parentNode.insertBefore(js, fjs);
+          }(document, 'script', 'facebook-jssdk'));
+
+          
+
+          //-------------NON CANCELLARE GLI SCRIPT E LA CLASS=FB-SHARE-BUTTON NEI COMMENTI----------------
+          //------>>  ci serviranno dopo che saremo sul web con un nostro dominio per poter condividere gli eventi!!!!----------
+
+
+
+
+          $(document).ready(function(){
+            $(".fb-share-button").attr('data-href','https://www.ilmeteo.it/meteo/'+'Roma');
+          })
+
+          /*$(document).ready(function(){
+            var name=document.title;
+            $(".fb-share-button").attr('data-href','http://localhost:3000/events/'+name);
+          })*/
+
+          (function link(){
+            return "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.ilmeteo.it%2Fmeteo%2FRoma&amp;src=sdkpreparse";
+          })
+
+          /*(function link(){
+            var name=document.title;
+            return "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A3000%2Fevents%2F"+name+"&amp;src=sdkpreparse";
+          })*/
+        </script>
+
+        <!--<div class="fb-share-button" data-href="" data-layout="button" data-size="small" data-mobile-iframe="false"> <a class="fb-xfbml-parse-ignore" target="_blank" href="javascript:link();">Share</a>
+        </div>-->
+
+
+        <div class="fb-share-button" data-href="" data-layout="button" data-size="small" data-mobile-iframe="false"> <a class="fb-xfbml-parse-ignore" target="_blank" href="javascript:link();">Share</a>
+        </div>
+
         <% else %>
           <span>Segnalazioni</span>
         <% end %>
@@ -113,6 +158,50 @@
         end %>
         <% if current_user.role != 'admin' %>
         <span><img src="/assets/eye-icon.png" width="20px" height="20px">&nbsp;&nbsp;<%= @event.followers.count %></span>
+        <br><br>
+        <div id="fb-root"></div>
+        <script>
+          (function(d, s, id){
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/it_IT/sdk.js#xfbml=1&version=v2.9";
+          fjs.parentNode.insertBefore(js, fjs);
+          }(document, 'script', 'facebook-jssdk'));
+
+
+          
+          //-------------NON CANCELLARE GLI SCRIPT E LA CLASS=FB-SHARE-BUTTON NEI COMMENTI----------------
+          //------>>  ci serviranno dopo che saremo sul web con un nostro dominio per poter condividere gli eventi!!!!----------
+
+
+
+          $(document).ready(function(){
+            $(".fb-share-button").attr('data-href','https://www.ilmeteo.it/meteo/'+'Roma');
+          })
+
+          /*$(document).ready(function(){
+            var name=document.title;
+            $(".fb-share-button").attr('data-href','http://localhost:3000/events/'+<%= @event.id %>);
+          })*/
+
+          (function link(){
+            return "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.ilmeteo.it%2Fmeteo%2FRoma&amp;src=sdkpreparse";
+          })
+
+          /*(function link(ID){
+            var name=document.title;
+            return "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A3000%2Fevents%2F"+ID+"&amp;src=sdkpreparse";
+          })*/
+        </script>
+
+        <!--<div class="fb-share-button" data-href="" data-layout="button" data-size="small" data-mobile-iframe="false"> <a class="fb-xfbml-parse-ignore" target="_blank" href="javascript:link(<%= @event.id %>);">Share</a>
+        </div>-->
+
+
+        <div class="fb-share-button" data-href="" data-layout="button" data-size="small" data-mobile-iframe="false"> <a class="fb-xfbml-parse-ignore" target="_blank" href="javascript:link();">Share</a>
+        </div>
+
         <% else %>
           <span>Segnalazioni</span>
         <% end %>

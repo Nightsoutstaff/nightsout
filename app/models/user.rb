@@ -63,11 +63,11 @@ class User < ApplicationRecord
   # Follows a local.
   def follow_local(local)
     following_local << local
-    local.events.each do |e|
-      if following_event?(e)
-      else following_event << e
-      end
-    end
+    #local.events.each do |e|
+      #if following_event?(e)
+      #else following_event << e
+      #end
+    #end
   end
 
   # Unfollows a local.

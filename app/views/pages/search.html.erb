@@ -32,7 +32,7 @@
 			<% if @locals.blank?%>
 				<h4>Non ci sono eventi vicino a: <%= @address %></h4> 
 			<% else 
-					if @events.blank?%>
+					if @events.blank? && @empty_locals.blank?%>
 						<h4>Non ci sono eventi con queste caratteristiche vicino a: <%= @address %></h4>
 					<% else %>
 						<div id="map"></div><br>

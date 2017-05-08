@@ -7,7 +7,7 @@ class ClientPagesController < ApplicationController
     require 'time'
 
     #@city = request.location.city
-    if current_user.city == nil 
+    if current_user.city.blank?||current_user.city == nil
       @erroreCitta = 1
     else
       @city_user = current_user.city.split(',')[0].humanize
@@ -63,8 +63,15 @@ class ClientPagesController < ApplicationController
 
   def following
     @user  ||= current_user
-    @events = @user.following_event.paginate(page: params[:page], :per_page => 5)
     @locals = @user.following_local.paginate(page: params[:page], :per_page => 5)
+    #@locals.each do |l|
+      #l.events.each do |e|
+        #if @user.following_event?(e)
+        #else @user.following_event << e
+        #end
+      #end
+    #end
+    @events = @user.following_event.paginate(page: params[:page], :per_page => 5)
   end
 
 end

@@ -20,7 +20,7 @@ class LocalsController < ApplicationController
   def destroy
     @local = Local.find(params[:id])
     if(current_user.role == 'admin')
-        Notification.create(text: "Locale eliminato da Admin!", sent: true, local: @local.name, user_id: @local.user.id)
+        Notification.create(text: "Locale eliminato da Admin!", mentioned_by:"", local_id: @local.id, user_id: @local.user.id)
     end
     @local.destroy
     flash[:success] = "Locale eliminato!"

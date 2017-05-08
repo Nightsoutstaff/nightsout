@@ -102,6 +102,10 @@ module Commontator
       subscription.save
     end
 
+    def notify(user, creator, idLocal, idEvent)
+      Notification.create(text: "Sei stato menzionato in un commento!", mentioned_by: creator.name, event_id: idEvent, local_id: idLocal, end: "", user_id: user.id)
+    end
+
     def unsubscribe(subscriber)
       subscription = subscription_for(subscriber)
       return false unless subscription

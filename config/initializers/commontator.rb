@@ -181,7 +181,7 @@ Commontator.configure do |config|
   # If :l is selected, the "reply to thread" form will appear before the comments
   # Otherwise, it will appear after the comments
   # Default: :e
-  config.comment_order = :ve
+  config.comment_order = :vl
 
   # new_comment_style
   # Type: Symbol
@@ -192,7 +192,7 @@ Commontator.configure do |config|
   # Not yet implemented:
   #   :n (link to the form; opens in a new window)
   # Default: :l
-  config.new_comment_style = :t
+  config.new_comment_style = :l
 
   # comments_per_page
   # Type: Fixnum or nil
@@ -255,7 +255,7 @@ Commontator.configure do |config|
   #   false (no mentions)
   #   true  (mentions enabled)
   # Default: false
-  config.mentions_enabled = false
+  config.mentions_enabled = true
 
   # user_mentions_proc
   # Type: Proc
@@ -276,5 +276,5 @@ Commontator.configure do |config|
   # Default: lambda { |current_user, query|
   #                   current_user.class.where('username LIKE ?', "#{query}%") }
   config.user_mentions_proc = lambda { |current_user, query|
-    current_user.class.where('username LIKE ?', "#{query}%") }
+    current_user.class.where('name LIKE ?', "#{query}%") }
 end

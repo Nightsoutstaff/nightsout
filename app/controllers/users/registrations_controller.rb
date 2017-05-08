@@ -57,6 +57,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
     edit_user_registration_path
   end
 
+  def update_resource(resource, params)
+    if current_user.provider == "facebook"
+      resource.update_without_password(params)
+    else
+      super(resource,params)
+    end
+  end
+
   # The path used after sign up for inactive accounts.
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
