@@ -59,8 +59,6 @@
         <% if current_user.role != 'admin' %>
         <span><img src="/assets/eye-icon.png" width="20px" height="20px">&nbsp;&nbsp;<%= @event.followers.count %></span>
         <br><br>
-         Average rating <%= rating_for @event, 'stars', star: 5, disable_after_rate: false, half_show: true, enable_half: true, cancel: true, cancel_place: 'right', cancel_hint: 'Cancel this rating!', imbd_avg: true %>
-        <br><br>
         <div id="fb-root"></div>
         <script>
           (function(d, s, id){
@@ -160,8 +158,6 @@
         end %>
         <% if current_user.role != 'admin' %>
         <span><img src="/assets/eye-icon.png" width="20px" height="20px">&nbsp;&nbsp;<%= @event.followers.count %></span>
-        <br><br>
-         Average rating <%= rating_for @event, 'stars', star: 5, disable_after_rate: false, half_show: true, enable_half: true, cancel: true, cancel_place: 'right', cancel_hint: 'Cancel this rating!', imbd_avg: true %>
         <br><br>
         <div id="fb-root"></div>
         <script>

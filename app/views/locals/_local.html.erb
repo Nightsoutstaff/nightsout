@@ -54,8 +54,7 @@
         end %>
 
         <span><img src="/assets/eye-icon.png" width="20px" height="20px">&nbsp;&nbsp;<%= local.followers.count %></span>
-        <br><br>
-         Average rating <%= rating_for @local, 'stars', star: 5, disable_after_rate: false, half_show: true, enable_half: true, cancel: true, cancel_place: 'right', cancel_hint: 'Cancel this rating!', imbd_avg: true %>
+        
       </div>
     <% else %>
 
@@ -105,8 +104,7 @@
           <% end 
         end %>
         <span><img src="/assets/eye-icon.png" width="20px" height="20px">&nbsp;&nbsp;<%= local.followers.count %></span>
-        <br><br>
-         Average rating <%= rating_for @local, 'stars', star: 5, disable_after_rate: false, half_show: true, enable_half: true, cancel: true, cancel_place: 'right', cancel_hint: 'Cancel this rating!', imbd_avg: true %>
+        
       </div>
     <% end %>
 
