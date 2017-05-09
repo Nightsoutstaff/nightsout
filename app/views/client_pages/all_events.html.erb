@@ -14,8 +14,11 @@
 		  		<%= submit_tag "Cerca", :name => nil, class: "btn btn-in" %>
 		  	</div>
 		<% end %>
-
-		<p>Eventi a <%= @city_user %></p>
+		<% if @city_user.blank? %>
+			<p>Eventi a <%= link_to "Inserisci la tua città", edit_user_registration_path %></p>
+		<% else %>
+			<p>Eventi a <%= @city_user %></p>
+		<% end %>
 
 		<% if @erroreCitta == 1 %>
 		     <p>Non ci sono eventi nella tua città!<br><small>Se il problema persiste, controlla la città nelle tue impostazioni!</small></p>

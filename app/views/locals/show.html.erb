@@ -59,8 +59,7 @@
         <% if current_user.role != 'admin' %>
         <span><img src="/assets/eye-icon.png" width="20px" height="20px">&nbsp;&nbsp;<%= @local.followers.count %></span>
         <br><br>
-         Average rating:
-          <%= rating_for @local, 'stars', star: 5, disable_after_rate: false, half_show: true, enable_half: true, cancel: true, cancel_place: 'right', cancel_hint: 'Cancel this rating!', imbd_avg: true %><%= @local.rates("stars").count %>
+         <div style="float:left;"><%= rating_for @local, 'stars', star: 5, disable_after_rate: false, half_show: false, enable_half: false, imbd_avg: true %></div><div style="float:left;">&nbsp;&nbsp;(<%= @local.rates("stars").count %>)</div>
         <% else %>
           <span>#Segnalazioni</span>
         <% end %>
@@ -115,8 +114,8 @@
         <% if current_user.role != 'admin' %>
         <span><img src="/assets/eye-icon.png" width="20px" height="20px">&nbsp;&nbsp;<%= @local.followers.count %></span>
         <br><br>
-         Average rating:
-         <%= rating_for @local, 'stars', star: 5, disable_after_rate: false, half_show: true, enable_half: true, cancel: true, cancel_place: 'right', cancel_hint: 'Cancel this rating!', imbd_avg: true %><%= @local.rates("stars").count %>
+         <div style="float:left;"><%= rating_for @local, 'stars', star: 5, disable_after_rate: false, half_show: false, enable_half: false, imbd_avg: true %></div><div style="float:left;">&nbsp;&nbsp;(<%= @local.rates("stars").count %>)</div>
+         
         <% else %>
           <span>Segnalazioni</span>
         <% end %>
