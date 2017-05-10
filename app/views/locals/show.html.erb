@@ -123,6 +123,20 @@
   </div>
 </div>
 
+<br><br>
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <% if not @events.blank? %>
+      <h5>Eventi del locale:</h5>
+      <ul class="events">
+        <%= render @events %>
+      </ul>
+      <%= will_paginate @events %>
+    <% end %>
+  </div>
+</div>
+
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
     <%= render "comments/widget", commentable: @local %>

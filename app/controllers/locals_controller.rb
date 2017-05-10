@@ -4,6 +4,7 @@ class LocalsController < ApplicationController
 
   def show
     @local = Local.find(params[:id])
+    @events = @local.events.paginate(page: params[:page], :per_page => 5)
     #@commentable = @local
     #@comment = @local.comments.build
     #@reply = @local.comments.build(parent: @comment)
