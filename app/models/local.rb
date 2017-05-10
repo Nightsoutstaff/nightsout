@@ -10,6 +10,8 @@ class Local < ApplicationRecord
                                    dependent:   :destroy
 
   has_many :followers, through: :passive_local_relationships, source: :follower
+  
+  has_many :comments, as: :commentable, dependent: :destroy
 
   validates :user_id, presence: true
   validates :description, presence: true, length: { maximum: 1400 }
@@ -31,8 +33,6 @@ class Local < ApplicationRecord
     end
   end
   after_validation :reverse_geocode
-
-  acts_as_commentable
 
   ratyrate_rateable "stars"
 

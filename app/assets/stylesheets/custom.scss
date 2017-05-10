@@ -532,3 +532,88 @@ span.picture {
 img.raty-cancel {
   display: none;
 }
+
+
+
+
+
+/* tutorial giapponese 
+
+*:last-child {
+  margin-bottom: 0;
+}
+ 
+[class*='outline'] {
+  background-color: white;
+}
+ 
+ 
+.form-actions {
+  border-top: 1px solid #ccc;
+  background-color: #eaeaea;
+  padding: 1em 1em 2em;
+  margin: 1em 0;
+}
+  
+.form-group.has-error {
+  border: 1px solid darkred;
+  padding: 1em;
+  background-color: white;
+  color: darkred;
+  input, textarea, .select {
+    color: darkred;
+    border-color: darkred;
+  }
+}
+ 
+#flash_messages .alert {
+  margin-bottom: 1em;
+}
+
+.comments-widget {
+  background-color: #f2f2f2;
+  margin-bottom: 1em;
+  padding: 1em;
+}
+ 
+h2.comments-header {
+  color: rgb(247, 147, 124) !important;
+  margin-bottom: 0.3em !important;
+}
+ 
+ul.comments-list {
+  padding-left: 1.3em;
+  & > li {}
+  ul { padding-left: 1.3em; }
+}
+ 
+li.comment {
+  margin-bottom: .5em !important;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  .comment-content {
+ 
+  }
+  .comment-info {
+    color: #bbb;
+    margin-bottom: .5em;
+    a {
+      color: #bbb;
+      &:hover {
+        @extend .text-primary;
+      }
+    }
+  }
+  margin-bottom: 1.3em;
+  ul.replies_for_comment {
+    margin-top: 1em;
+  }
+}
+ 
+.comment-form {
+  margin-top: 1em;
+  margin-bottom: .5em;
+}
+
+*/

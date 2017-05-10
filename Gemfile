@@ -35,10 +35,16 @@ gem 'gmaps4rails'
 gem 'country_select'
 gem 'city-state'
 gem 'whenever', :require => false
-gem 'commontator'
-gem 'acts_as_votable'
 gem 'ratyrate'
 gem 'jquery-turbolinks'
+gem 'bootstrap'
+source 'https://rails-assets.org' do
+  gem 'rails-assets-tether', '>= 1.1.0'
+end
+gem 'simple_form'
+gem "bootstrap_flash_messages", "~> 1.0.1"
+gem 'jquery-ui-rails'
+gem 'acts_as_votable', '~> 0.10.0'
 
 group :development, :test do
   gem 'sqlite3', '1.3.12'

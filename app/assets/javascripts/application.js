@@ -18,6 +18,15 @@
 //= require_tree .
 //= require moment
 //= require bootstrap-datetimepicker
-//= require commontator/application
 //= require jquery.raty
 //= require ratyrate
+//= require tether
+//= require bootstrap-sprockets
+//= require jquery-ui
+
+
+
+
+
+
+

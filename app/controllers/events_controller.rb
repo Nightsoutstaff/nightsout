@@ -28,7 +28,7 @@ before_action :authenticate_user!, only: [:create, :edit, :update, :destroy]
     else
       render 'owner_pages/publish_events'
     end
-    #commontator_thread_show(@commontable)
+    
   end
 
   def destroy

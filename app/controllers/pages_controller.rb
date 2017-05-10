@@ -4,8 +4,8 @@ class PagesController < ApplicationController
   def notifications
     @oldNotifications = nil
     @newNotifications = nil
-    @oldNotifications = Notification.where(['user_id = ? AND read = ?', current_user.id, true]).paginate(page: params[:page], :per_page => 5)
-    @newNotifications = Notification.where(['user_id = ? AND read = ?', current_user.id, false]).paginate(page: params[:page], :per_page => 5)
+    @oldNotifications = Notification.where(['user_id = ? AND read = ?', current_user.id, true])
+    @newNotifications = Notification.where(['user_id = ? AND read = ?', current_user.id, false])
   end
 
   def home

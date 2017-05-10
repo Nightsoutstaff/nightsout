@@ -21,18 +21,31 @@ Rails.application.routes.draw do
     member do
       get :followers
     end
+    resources :comments, except: [:index, :new, :show] do
+      member do
+        get :reply
+        put "like", to: "comments#upvote"
+        put "dislike", to: "comments#downvote"
+      end
+    end
   end
 
   resources :locals do
     member do
       get :followers
     end
+    resources :comments, except: [:index, :new, :show] do
+      member do
+        get :reply
+        put "like", to: "comments#upvote"
+        put "dislike", to: "comments#downvote"
+      end
+    end
   end
 
-  resources :event_relationships,       only: [:create, :destroy]
-  resources :local_relationships,       only: [:create, :destroy]
-
-  mount Commontator::Engine => '/commontator'
+  resources :event_relationships, only: [:create, :destroy]
+  resources :local_relationships, only: [:create, :destroy]
+  resources :comments, only: [:index, :create]
 
 
   root 'pages#home'
@@ -54,5 +67,6 @@ Rails.application.routes.draw do
   get '/users_all', to: 'admin_pages#users_all'
   post 'admin_pages/ban' => 'admin_pages#ban', :as => :ban
   post 'admin_pages/unban' => 'admin_pages#unban', :as => :unban
+ # get '/comments/new/(:parent_id)', to: 'comments#new', as: :new_comment
 
 end

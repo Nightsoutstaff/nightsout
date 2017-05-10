@@ -11,6 +11,8 @@ class Event < ApplicationRecord
 
   has_many :followers, through: :passive_event_relationships, source: :follower
 
+  has_many :comments, as: :commentable, dependent: :destroy
+
   validates :local_id, presence: true
   default_scope -> { order(created_at: :desc) }
 
@@ -21,8 +23,6 @@ class Event < ApplicationRecord
    
   mount_uploader :picture, PictureUploader
   validate  :picture_size
-
-  acts_as_commontable
 
   ratyrate_rateable "stars"
 

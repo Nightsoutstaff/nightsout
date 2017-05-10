@@ -14,7 +14,7 @@
         Inizio: <%= event.start.strftime("ore %H:%M del %d-%m-%y") %><br>
         Fine: <%=event.end.strftime("ore %H:%M del %d-%m-%y") %><br>
         Descrizione: <%= event.description %><br>
-        <%= commontator_thread(@event)%>
+      
         
         <% if user_signed_in? %>
           <% if current_user==event.local.user %>

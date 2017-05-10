@@ -15,7 +15,9 @@
  *= require bootstrap-social
  *= require font-awesome
  *= require bootstrap-datetimepicker
- *= require commontator/application
 
  */
 
+$enable-flex: true;
+@import 'bootstrap';
+@import 'jquery-ui';

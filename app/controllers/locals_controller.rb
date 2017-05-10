@@ -4,6 +4,9 @@ class LocalsController < ApplicationController
 
   def show
     @local = Local.find(params[:id])
+    #@commentable = @local
+    #@comment = @local.comments.build
+    #@reply = @local.comments.build(parent: @comment)
     #@microposts = @user.microposts.paginate(page: params[:page], :per_page => 10)
   end
 

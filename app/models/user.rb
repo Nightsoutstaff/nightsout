@@ -1,5 +1,7 @@
 class User < ApplicationRecord
 
+  acts_as_voter
+
   has_many :locals, dependent: :destroy
   #Aggiunta la riga delle notifiche
   has_many :notifications, dependent: :destroy
@@ -19,8 +21,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:facebook]
 
-  acts_as_commontator
-  #acts_as_voter
+  has_many :comments, dependent: :destroy
 
   ratyrate_rater
 

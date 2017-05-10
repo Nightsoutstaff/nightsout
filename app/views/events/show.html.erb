@@ -209,9 +209,9 @@
     <% end %>
   </div>
 </div>
+
 <div class="row">
-  <div class="col-md-6 col-md-offset-4">
-    <%= commontator_thread(@event)%>
-    
+  <div class="col-md-8 col-md-offset-2">
+    <%= render "comments/widget", commentable: @event %>
   </div>
 </div>
