@@ -55,6 +55,12 @@ class LocalsController < ApplicationController
     render 'client_pages/following'
   end
 
+  def report
+    @local = Local.find(params[:id])
+    Notification.create(text: "Segnalazione locale!", written_by: current_user.name, local_id: @local.id, user_id: User.find_by(role: 'admin').id)
+    redirect_to @local
+  end
+
   private
 
     def local_params

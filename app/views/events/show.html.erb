@@ -56,7 +56,7 @@
             </div>
           <% end 
         end %>
-        <% if current_user.role != 'admin' %>
+        
         <span><img src="/assets/eye-icon.png" width="20px" height="20px">&nbsp;&nbsp;<%= @event.followers.count %></span>
         <br><br>
         <div id="fb-root"></div>
@@ -103,10 +103,12 @@
         <div class="fb-share-button" data-href="" data-layout="button" data-size="small" data-mobile-iframe="false"> <a class="fb-xfbml-parse-ignore" target="_blank" href="javascript:link();">Share</a>
         </div>
 
-        <% else %>
-          <span>Segnalazioni</span>
+        <% if current_user.role != 'admin' %>
+          <%= link_to "Segnala", signal_event_path(@event), method: :put, data:{confirm:"Sei sicuro?"} %>
         <% end %>
+
       </div>
+
 
     <% else %>
 
@@ -156,7 +158,7 @@
             </div>
           <% end 
         end %>
-        <% if current_user.role != 'admin' %>
+        
         <span><img src="/assets/eye-icon.png" width="20px" height="20px">&nbsp;&nbsp;<%= @event.followers.count %></span>
         <br><br>
         <div id="fb-root"></div>
@@ -202,9 +204,10 @@
         <div class="fb-share-button" data-href="" data-layout="button" data-size="small" data-mobile-iframe="false"> <a class="fb-xfbml-parse-ignore" target="_blank" href="javascript:link();">Share</a>
         </div>
 
-        <% else %>
-          <span>Segnalazioni</span>
+        <% if current_user.role != 'admin' %>
+          <%= link_to "Segnala", signal_event_path(@event), method: :put, data:{confirm:"Sei sicuro?"} %>
         <% end %>
+        
       </div>
     <% end %>
   </div>

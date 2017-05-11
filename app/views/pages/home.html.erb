@@ -1,7 +1,7 @@
 <% provide(:title, "Home") %>
 
 <img src="assets/banner2.jpg" style="width:100%">
-<div style="position: absolute; top: 0; background-color: transparent; right:20px;">
+<div class="hidden-xs" style="position: absolute; top: 0; background-color: transparent; right:20px;">
   <br>
   <%= link_to "Accedi", new_user_session_path, class: "btn btn-sm btn-default" %>
   &nbsp;<%= link_to "Registrati", new_user_registration_path, class: "btn btn-sm btn-default" %>
@@ -73,10 +73,10 @@
     <br><br><br><br>
   <div class="row">
     <div class="col-md-8 col-md-offset-2"> 
-    <h2 style="font-size:18px;text-align:left;color:white;">
+    <h2 style="font-size:20px;color:white;">
       Dopo esserti registrato e aver effettuato l'accesso puoi cambiare modalità dalle impostazioni<br>
-      In modalità utente puoi cercare tutti gli eventi intorno a te e salvare i tuoi preferiti da seguire! Visita e valuta ogni locale e scrivi la tua opinione!<br>
-      In modalità gestore puoi creare la pagina del tuo locale e pubblicare tutti gli eventi che vuoi! Osserva cosa ne pensano gli altri utenti e continua a pubblicarne di nuovi!<br>
+      In modalità utente puoi cercare tutti gli eventi intorno a te e salvare i tuoi preferiti da seguire!<br>Visita e valuta ogni locale e scrivi la tua opinione!<br>
+      In modalità gestore puoi creare la pagina del tuo locale e pubblicare tutti gli eventi che vuoi!<br>Osserva cosa ne pensano gli altri utenti e continua a pubblicarne di nuovi!<br>
     </h2>
     <center><%= link_to "Accedi", new_user_session_path, class: "btn btn-lg btn-default" %>
     &nbsp;&nbsp;<%= link_to "Registrati", new_user_registration_path, class: "btn btn-lg btn-default" %></center>
@@ -86,13 +86,15 @@
 </div>
 <br><br><br>
 
+<div style="padding-left:50px; padding-right:50px;">
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
-    <h2>
-      Se non vuoi iscriverti non potrai accedere a tutti i servizi offerti da Nightsout, ma potrai comunque cercare velocemente tutti gli eventi intorno a te per organizzare le tue serate, prova!
+    <h2 style="font-size:20px;">
+      Se non vuoi iscriverti non potrai accedere a tutti i servizi offerti da Nightsout, ma potrai comunque cercare velocemente tutti gli eventi intorno a te per organizzare le tue serate, prova subito! Inserisci un indirizzo e scopri tutti gli eventi e locali in zona; puoi inserire anche una categoria e una data per trovare l'evento più adatto a te!
     </h2>
     <center><%= link_to "Cerca", search_path, class: "btn btn-lg btn-primary" %></center>
   </div>
+</div>
 </div>
 <br>
 

@@ -20,12 +20,14 @@ Rails.application.routes.draw do
   resources :events do
     member do
       get :followers
+      put "signal", to: "events#report"
     end
     resources :comments, except: [:index, :new, :show] do
       member do
         get :reply
         put "like", to: "comments#upvote"
         put "dislike", to: "comments#downvote"
+        put "signal", to: "comments#report"
       end
     end
   end
@@ -33,12 +35,14 @@ Rails.application.routes.draw do
   resources :locals do
     member do
       get :followers
+      put "signal", to: "locals#report"
     end
     resources :comments, except: [:index, :new, :show] do
       member do
         get :reply
         put "like", to: "comments#upvote"
         put "dislike", to: "comments#downvote"
+        put "signal", to: "comments#report"
       end
     end
   end

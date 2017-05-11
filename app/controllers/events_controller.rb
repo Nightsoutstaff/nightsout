@@ -66,6 +66,12 @@ before_action :authenticate_user!, only: [:create, :edit, :update, :destroy]
     render 'client_pages/following'
   end
 
+  def report
+    @event = Event.find(params[:id])
+    Notification.create(text: "Segnalazione evento!", written_by: current_user.name, event_id: @event.id, user_id: User.find_by(role: 'admin').id)
+    redirect_to @event
+  end
+
   private
 
     def event_params

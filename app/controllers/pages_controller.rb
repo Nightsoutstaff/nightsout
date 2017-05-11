@@ -6,6 +6,9 @@ class PagesController < ApplicationController
     @newNotifications = nil
     @oldNotifications = Notification.where(['user_id = ? AND read = ?', current_user.id, true])
     @newNotifications = Notification.where(['user_id = ? AND read = ?', current_user.id, false])
+    if(@oldNotifications.count > 10)
+      Notification.delete(['user_id=? AND id=?', current_user.id, @oldNotifications.last.id])
+    end
   end
 
   def home

@@ -9,16 +9,22 @@
       <% if user_signed_in? %>
         <% if current_user == comment.user %>
           <%= link_to "Edit", edit_polymorphic_path([comment.commentable, comment]), class: 'edit-comment-link', remote: true  %> &bull;
-          <%= link_to "Destroy", [comment.commentable, comment], method: :delete, class: 'delete-comment-link', data:{confirm:"Are your sure?"}, remote: true %> &bull;
+          <%= link_to "Destroy", [comment.commentable, comment], method: :delete, class: 'delete-comment-link', data:{confirm:"Sei sicuro?"}, remote: true %> &bull;
         <% end %>
         <%= link_to "Reply", polymorphic_path([:reply, comment.commentable, comment]), class: 'reply-comment-link', remote: true  %>
       
       <% if comment.commentable_type == 'Local' %>
         <%= link_to "Upvote", like_local_comment_path(comment.commentable.id, comment), method: :put %>
         <%= link_to "Downvote", dislike_local_comment_path(comment.commentable.id, comment), method: :put %>
+        <% if current_user.role != 'admin' %>
+          <%= link_to "Segnala", signal_local_comment_path(comment.commentable.id, comment), method: :put, data:{confirm:"Sei sicuro?"} %>
+        <% end %>
       <% elsif comment.commentable_type == 'Event' %>
         <%= link_to "Upvote", like_event_comment_path(comment.commentable.id, comment), method: :put %>
         <%= link_to "Downvote", dislike_event_comment_path(comment.commentable.id, comment), method: :put %>
+        <% if current_user.role != 'admin' %>
+          <%= link_to "Segnala", signal_event_comment_path(comment.commentable.id, comment), method: :put, data:{confirm:"Sei sicuro?"} %>
+        <% end %>
       <% end 
       end %>
     + <%= comment.get_likes.size %>

@@ -35,11 +35,11 @@ class CommentsController < ApplicationController
           end
         end
 
-        format.html { redirect_to @commentable, notice: "Comment was successfully created."}
+        format.html { redirect_to @commentable, notice: "Commento aggiunto."}
         format.json { render json: @comment }
         format.js
       else
-        format.html { render :back, notice: "Comment was not created." }
+        format.html { render :back, notice: "Commento non aggiunto. Riprova." }
         format.json { render json: @comment.errors }
         format.js
       end
@@ -52,11 +52,11 @@ class CommentsController < ApplicationController
   def update
     respond_to do |format|
       if @comment.update(comment_params)
-        format.html { redirect_to @commentable, notice: "Comment was successfully updated."}
+        format.html { redirect_to @commentable, notice: "Commento aggiornato."}
         format.json { render json: @comment }
         format.js
       else
-        format.html { render :back, notice: "Comment was not updated." }
+        format.html { render :back, notice: "Commento non aggiornato. Riprova." }
         format.json { render json: @comment.errors }
         format.js
       end
@@ -66,7 +66,7 @@ class CommentsController < ApplicationController
   def destroy
     @comment.destroy if @comment.errors.empty?
     respond_to do |format|
-      format.html { redirect_to @commentable, notice: "Comments was successfully destroyed."}
+      format.html { redirect_to @commentable, notice: "Commento eliminato."}
       format.json { head :no_content }
       format.js
     end
@@ -77,7 +77,7 @@ class CommentsController < ApplicationController
     @comment = @commentable.comments.find(params[:id])
     @comment.liked_by current_user
     respond_to do |format|
-      format.html { redirect_to @commentable, notice: "Comments was successfully destroyed."}
+      format.html { redirect_to @commentable, notice: "Aggiunto like al commento."}
       format.json { head :no_content }
       format.js
     end
@@ -87,7 +87,21 @@ class CommentsController < ApplicationController
     @comment = @commentable.comments.find(params[:id])
     @comment.downvote_from current_user
     respond_to do |format|
-      format.html { redirect_to @commentable, notice: "Comments was successfully destroyed."}
+      format.html { redirect_to @commentable, notice: "Aggiunto dislike al commento."}
+      format.json { head :no_content }
+      format.js
+    end
+  end
+
+  def report
+    @comment = @commentable.comments.find(params[:id])
+    if @comment.commentable_type == 'Local' 
+      Notification.create(text: "Segnalazione commento!", written_by: current_user.name, comment_id: @comment.id, local_id: @comment.commentable_id, user_id: User.find_by(role: 'admin').id)
+    elsif @comment.commentable_type == 'Event' 
+      Notification.create(text: "Segnalazione commento!", written_by: current_user.name, comment_id: @comment.id, event_id: @comment.commentable_id, user_id: User.find_by(role: 'admin').id)
+    end
+    respond_to do |format|
+      format.html { redirect_to @commentable, notice: "Commento segnalato agli admin."}
       format.json { head :no_content }
       format.js
     end
@@ -106,7 +120,7 @@ class CommentsController < ApplicationController
     rescue => e
       logger.error "#{e.class.name} : #{e.message}"
       @comment = @commentable.comments.build
-      @comment.errors.add(:base, :recordnotfound, message: "That record doesn't exist. Maybe, it is already destroyed.")
+      @comment.errors.add(:base, :recordnotfound, message: "Commento inesistente o già eliminato.")
     end
   end
  
