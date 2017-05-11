@@ -20,7 +20,7 @@
           <% if current_user==event.local.user %>
             Categoria: <%= event.local.category %><br>
             <div class="timestamp">
-              Posted <%= time_ago_in_words(event.created_at) %> ago
+              Postato <%= time_ago_in_words(event.created_at) %> fa
             </div>
         <% end 
         end %>
@@ -72,7 +72,7 @@
           <% if current_user==event.local.user %>
             Categoria: <%= event.local.category %><br>
             <div class="timestamp">
-              Posted <%= time_ago_in_words(event.created_at) %> ago
+              Postato <%= time_ago_in_words(event.created_at) %> fa
             </div>
         <% end 
         end %>
