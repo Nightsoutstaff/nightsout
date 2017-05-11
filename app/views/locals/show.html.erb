@@ -23,7 +23,7 @@
           <% if current_user==@local.user %>
               Partita IVA: <%= @local.iva %><br>
               <div class="timestamp">
-                Posted <%= time_ago_in_words(@local.created_at) %> ago
+                Postato <%= time_ago_in_words(@local.created_at) %> fa
               </div>
           <% end 
           end %>
@@ -80,7 +80,7 @@
           <% if current_user==@local.user %>
               Partita IVA: <%= @local.iva %><br>
               <div class="timestamp">
-                Posted <%= time_ago_in_words(@local.created_at) %> ago
+                Postato <%= time_ago_in_words(@local.created_at) %> fa
               </div>
           <% end 
         end %>
