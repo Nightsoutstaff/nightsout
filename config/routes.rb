@@ -26,7 +26,7 @@ Rails.application.routes.draw do
       member do
         get :reply
         put "like", to: "comments#upvote"
-        put "dislike", to: "comments#downvote"
+        #put "dislike", to: "comments#downvote"
         put "signal", to: "comments#report"
       end
     end
@@ -41,7 +41,7 @@ Rails.application.routes.draw do
       member do
         get :reply
         put "like", to: "comments#upvote"
-        put "dislike", to: "comments#downvote"
+        #put "dislike", to: "comments#downvote"
         put "signal", to: "comments#report"
       end
     end

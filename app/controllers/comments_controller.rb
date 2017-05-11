@@ -83,15 +83,15 @@ class CommentsController < ApplicationController
     end
   end
 
-  def downvote
-    @comment = @commentable.comments.find(params[:id])
-    @comment.downvote_from current_user
-    respond_to do |format|
-      format.html { redirect_to @commentable, notice: "Aggiunto dislike al commento."}
-      format.json { head :no_content }
-      format.js
-    end
-  end
+  #def downvote
+  #  @comment = @commentable.comments.find(params[:id])
+  #  @comment.downvote_from current_user
+  #  respond_to do |format|
+  #    format.html { redirect_to @commentable, notice: "Aggiunto dislike al commento."}
+  #    format.json { head :no_content }
+  #    format.js
+  #  end
+  #end
 
   def report
     @comment = @commentable.comments.find(params[:id])

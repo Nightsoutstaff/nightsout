@@ -15,13 +15,11 @@
       
       <% if comment.commentable_type == 'Local' %>
         <%= link_to "Upvote", like_local_comment_path(comment.commentable.id, comment), method: :put %>
-        <%= link_to "Downvote", dislike_local_comment_path(comment.commentable.id, comment), method: :put %>
         <% if current_user.role != 'admin' %>
           <%= link_to "Segnala", signal_local_comment_path(comment.commentable.id, comment), method: :put, data:{confirm:"Sei sicuro?"} %>
         <% end %>
       <% elsif comment.commentable_type == 'Event' %>
         <%= link_to "Upvote", like_event_comment_path(comment.commentable.id, comment), method: :put %>
-        <%= link_to "Downvote", dislike_event_comment_path(comment.commentable.id, comment), method: :put %>
         <% if current_user.role != 'admin' %>
           <%= link_to "Segnala", signal_event_comment_path(comment.commentable.id, comment), method: :put, data:{confirm:"Sei sicuro?"} %>
         <% end %>

@@ -29,11 +29,36 @@
 		<% end %>
 		<br><br>
 		<% if @address != nil %>
-			<% if @locals.blank?%>
-				<h4>Non ci sono eventi vicino a: <%= @address %></h4> 
+			<% if @locals.blank? && @empty_locals.blank? %>
+				<h4>Non ci sono eventi o locali vicino a:</h4><%= @address %> 
+      <% elsif @locals.blank? && @empty_locals.any? %>
+        <h4>Non ci sono eventi vicino a: <%= @address %><br><br>
+          <% if @empty_locals.size > 1 %>
+            Ci sono <%= @empty_locals.size %> locali in zona:</h4>
+          <% else %>
+            C'è 1 locale in zona:</h4>
+          <% end %>
+          <br>
+          <ul class="locals">
+            <%= render partial: "/locals/local", collection: @empty_locals %>
+          </ul>
+          <%= will_paginate @empty_locals %>
 			<% else 
 					if @events.blank? && @empty_locals.blank?%>
-						<h4>Non ci sono eventi con queste caratteristiche vicino a: <%= @address %></h4>
+						<h4>Non ci sono eventi o locali con queste caratteristiche vicino a:</h4><%= @address %>
+          <% elsif @events.blank? && @empty_locals.any?%>
+            <div id="map"></div><br>
+            <h4>Non ci sono eventi vicino a: <%= @address %><br><br>
+            <% if @empty_locals.size > 1 %>
+              Ci sono <%= @empty_locals.size %> locali in zona:</h4>
+            <% else %>
+              C'è 1 locale in zona:</h4>
+            <% end %>
+            <br>
+            <ul class="locals">
+            <%= render partial: "/locals/local", collection: @empty_locals %>
+          </ul>
+          <%= will_paginate @empty_locals %>
 					<% else %>
 						<div id="map"></div><br>
 						<h4>Eventi trovati:</h4>
