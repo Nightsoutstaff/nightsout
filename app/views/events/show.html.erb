@@ -103,7 +103,7 @@
         <div class="fb-share-button" data-href="" data-layout="button" data-size="small" data-mobile-iframe="false"> <a class="fb-xfbml-parse-ignore" target="_blank" href="javascript:link();">Share</a>
         </div>
 
-        <% if user_signed_in && current_user.role != 'admin' %>
+        <% if user_signed_in? && current_user.role != 'admin' %>
           <%= link_to "Segnala", signal_event_path(@event), method: :put, data:{confirm:"Sei sicuro?"} %>
         <% end %>
 

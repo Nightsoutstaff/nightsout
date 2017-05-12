@@ -10,88 +10,104 @@ class CommentsController < ApplicationController
   def create
     @comment = @commentable.comments.new(comment_params)
     @comment.user = current_user
+    @comment.likes = 0
     
-    respond_to do |format|
+    #respond_to do |format|
       if @comment.save
         if @comment.commentable_type == 'Local' 
           if @comment.parent_id == nil
             if current_user != @commentable.user
               Notification.create(text: "Il tuo locale è stato commentato!", comment_id: @comment.id, written_by: current_user.name, local_id: @comment.commentable_id, user_id: Local.find(@comment.commentable_id).user_id)
             end
+            redirect_to local_path(@commentable, anchor: 'comment_' + @comment.id.to_s)
           else
             if current_user != Comment.find(@comment.parent_id).user
               Notification.create(text: "Qualcuno ha risposto al tuo commento!", comment_id: @comment.id, written_by: current_user.name, local_id: @comment.commentable_id, user_id: Comment.find(@comment.parent_id).user.id)
             end
-          end
+            redirect_to local_path(@commentable, anchor: 'comment_' + @comment.parent_id.to_s)
+          end 
         elsif @comment.commentable_type == 'Event' 
           if @comment.parent_id == nil
             if current_user != @commentable.local.user
               Notification.create(text: "Il tuo evento è stato commentato!", comment_id: @comment.id, written_by: current_user.name, event_id: @comment.commentable_id, user_id: Event.find(@comment.commentable_id).local.user_id)
             end
+            redirect_to event_path(@commentable, anchor: 'comment_' + @comment.id.to_s)
           else
             if current_user != Comment.find(@comment.parent_id).user
               Notification.create(text: "Qualcuno ha risposto al tuo commento!", comment_id: @comment.id, written_by: current_user.name, event_id: @comment.commentable_id, user_id: Comment.find(@comment.parent_id).user.id)
             end
+            redirect_to event_path(@commentable, anchor: 'comment_' + @comment.parent_id.to_s)
           end
         end
 
-        format.html { redirect_to @commentable, notice: "Commento aggiunto."}
-        format.json { render json: @comment }
-        format.js
+
+        #format.html { redirect_to @commentable, notice: "Commento aggiunto."}
+        #format.json { render json: @comment }
+        #format.js
       else
-        format.html { render :back, notice: "Commento non aggiunto. Riprova." }
-        format.json { render json: @comment.errors }
-        format.js
+        redirect_to @commentable, notice: "Commento non aggiunto. Riprova."
+        #format.html { render :back, notice: "Commento non aggiunto. Riprova." }
+        #format.json { render json: @comment.errors }
+        #format.js
       end
-    end
+    #end
   end
  
   def edit
   end
  
   def update
-    respond_to do |format|
-      if @comment.update(comment_params)
-        format.html { redirect_to @commentable, notice: "Commento aggiornato."}
-        format.json { render json: @comment }
-        format.js
-      else
-        format.html { render :back, notice: "Commento non aggiornato. Riprova." }
-        format.json { render json: @comment.errors }
-        format.js
+    if current_user == @comment.user
+      respond_to do |format|
+        if @comment.update(comment_params)
+          format.html { redirect_to @commentable, notice: "Commento aggiornato."}
+          format.json { render json: @comment }
+          format.js
+        else
+          format.html { render :back, notice: "Commento non aggiornato. Riprova." }
+          format.json { render json: @comment.errors }
+          format.js
+        end
       end
+    else
+      redirect_to @commentable
     end
   end
  
   def destroy
-    @comment.destroy if @comment.errors.empty?
-    respond_to do |format|
-      format.html { redirect_to @commentable, notice: "Commento eliminato."}
-      format.json { head :no_content }
-      format.js
+    if current_user == @comment.user
+      @comment.destroy if @comment.errors.empty?
+      respond_to do |format|
+        format.html { redirect_to @commentable, notice: "Commento eliminato."}
+        format.json { head :no_content }
+        format.js
+      end
+    else
+      redirect_to @commentable
     end
   end
 
   def upvote
-    #@post = Post.find(params[:post_id])
     @comment = @commentable.comments.find(params[:id])
     @comment.liked_by current_user
+    @comment.update_attributes(likes: @comment.likes + 1)
     respond_to do |format|
-      format.html { redirect_to @commentable, notice: "Aggiunto like al commento."}
-      format.json { head :no_content }
+      format.html { redirect_to @commentable }
+      format.json { render json: @comment }
       format.js
     end
   end
 
-  #def downvote
-  #  @comment = @commentable.comments.find(params[:id])
-  #  @comment.downvote_from current_user
-  #  respond_to do |format|
-  #    format.html { redirect_to @commentable, notice: "Aggiunto dislike al commento."}
-  #    format.json { head :no_content }
-  #    format.js
-  #  end
-  #end
+  def downvote
+    @comment = @commentable.comments.find(params[:id])
+    @comment.downvote_from current_user
+    @comment.update_attributes(likes: @comment.likes - 1)
+    respond_to do |format|
+      format.html { redirect_to @commentable }
+      format.json { render json: @comment }
+      format.js
+    end
+  end
 
   def report
     @comment = @commentable.comments.find(params[:id])

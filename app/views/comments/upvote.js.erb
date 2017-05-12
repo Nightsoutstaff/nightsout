@@ -1,0 +1,4 @@
+// upvote.js.erb (CommentsController#upvote)
+$(document).ready(function(){
+  $('#comment_<%= @comment.id %>').html("<%=j render @comment %>");
+});

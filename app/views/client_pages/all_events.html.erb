@@ -3,7 +3,12 @@
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
 		<%= form_tag(all_events_path, :method => "get", id: "search-form") do %>
+
+			
+				
 			<div class="form-inline">
+				<%= select_tag(:order_category, options_for_select(['Più recenti','Più popolari']), include_blank: 'Ordina per', class: 'form-control') %>
+			&nbsp;&nbsp;
 				<%= select_tag(:search_category, options_for_select(['Ristorante','Pub','Dance']), include_blank: 'Inserisci categoria', class: 'form-control') %>
 				&nbsp;&nbsp;
 		    <%= text_field_tag :search_date, params[:search_date], placeholder: "Inserisci data e ora", class: 'datetimepicker12 form-control' %>
@@ -11,15 +16,16 @@
 		  </div>
 
 		  <div class="input-group-btn">
-		  		<%= submit_tag "Cerca", :name => nil, class: "btn btn-in" %>
+		  		<%= submit_tag "Filtra", :name => nil, class: "btn btn-in" %>
 		  	</div>
 		<% end %>
+
 		<% if @city_user.blank? %>
 			<p>Eventi a <%= link_to "Inserisci la tua città", edit_user_registration_path %></p>
 		<% else %>
 			<p>Eventi a <%= @city_user %></p>
 		<% end %>
-
+		<%= @evento_maggiore %>
 		<% if @erroreCitta == 1 %>
 		     <p>Non ci sono eventi nella tua città!<br><small>Se il problema persiste, controlla la città nelle tue impostazioni!</small></p>
 		<% elsif @events_ids.empty? %>
@@ -30,7 +36,7 @@
 			</ol>
 			<%= will_paginate @events %>
 		<% end %>
-
+		<%= @ricerca %>
 	</div>
 </div>
 

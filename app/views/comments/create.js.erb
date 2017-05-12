@@ -12,8 +12,8 @@
 <% end %>
 $comments_count = $("#comments-count-of-commentable-<%= @commentable.id %>");
 <% if @comment.errors.empty?  # if no erros on creating a comment... %>
-  $comments_count.html("<%= @commentable.comments.size %>").effect('highlight',{}, 1000);
-  $comment_parent.append("<%=j render @comment %>").find('li').last().effect("highlight", {}, 1000);
+  $comments_count.html("<%= @commentable.comments.size %>");//.effect('highlight',{}, 1000);
+  $comment_parent.append("<%=j render @comment %>");//.find('li').last().effect("highlight", {}, 1000);
   $comment_form[0].reset();
   <% if @comment.parent %>
     $comment_form.remove();

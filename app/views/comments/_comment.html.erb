@@ -1,36 +1,60 @@
 <li id="comment_<%= comment.id %>" class="comment">
-  <%= comment.user.name %>
+  <b><%= comment.user.name %></b>
   <div class="comment-content">
     <%= comment.content %>
   </div>
   <div class="comment-info">
-    <small>-
-      <%= localize(comment.created_at, format: :long) %> &bull;
+    <small>
       <% if user_signed_in? %>
         <% if current_user == comment.user %>
-          <%= link_to "Edit", edit_polymorphic_path([comment.commentable, comment]), class: 'edit-comment-link', remote: true  %> &bull;
-          <%= link_to "Destroy", [comment.commentable, comment], method: :delete, class: 'delete-comment-link', data:{confirm:"Sei sicuro?"}, remote: true %> &bull;
+          <%= link_to "Modifica", edit_polymorphic_path([comment.commentable, comment]), class: 'edit-comment-link', remote: true  %> &bull;
+          <%= link_to "Elimina", [comment.commentable, comment], method: :delete, class: 'delete-comment-link', data:{confirm:"Sei sicuro?"}, remote: true %> &bull;
+        <% else %>
+        <div style="display:none">
+          <%= link_to "", edit_polymorphic_path([comment.commentable, comment]), class: 'edit-comment-link'  %> &bull;
+          <%= link_to "", [comment.commentable, comment], class: 'delete-comment-link' %> &bull;
+        </div>
         <% end %>
-        <%= link_to "Reply", polymorphic_path([:reply, comment.commentable, comment]), class: 'reply-comment-link', remote: true  %>
+        <%= link_to "Rispondi", polymorphic_path([:reply, comment.commentable, comment]), class: 'reply-comment-link', remote: true  %> &bull;
       
       <% if comment.commentable_type == 'Local' %>
-        <%= link_to "Upvote", like_local_comment_path(comment.commentable.id, comment), method: :put %>
-        <% if current_user.role != 'admin' %>
-          <%= link_to "Segnala", signal_local_comment_path(comment.commentable.id, comment), method: :put, data:{confirm:"Sei sicuro?"} %>
+
+        <% if current_user.voted_up_on? comment %>
+          <%= link_to "Non mi piace più", dislike_local_comment_path(comment.commentable.id, comment), method: :put, remote: true %>
+        <% else %>
+          <%= link_to "Mi piace", like_local_comment_path(comment.commentable.id, comment), method: :put, remote: true %>
         <% end %>
+
+        <div style="float:right; color: #bbb;">
+          <% if current_user.role != 'admin' %>
+            <%= link_to "Segnala", signal_local_comment_path(comment.commentable.id, comment), method: :put, data:{confirm:"Sei sicuro?"} %>
+          <% end %>
+          &bull; <%= localize(comment.updated_at, format: :long) %>
+        </div>
       <% elsif comment.commentable_type == 'Event' %>
-        <%= link_to "Upvote", like_event_comment_path(comment.commentable.id, comment), method: :put %>
-        <% if current_user.role != 'admin' %>
-          <%= link_to "Segnala", signal_event_comment_path(comment.commentable.id, comment), method: :put, data:{confirm:"Sei sicuro?"} %>
+
+        <% if current_user.voted_up_on? comment %>
+          <%= link_to "Non mi piace più", dislike_event_comment_path(comment.commentable.id, comment), method: :put, remote: true %>
+        <% else %>
+          <%= link_to "Mi piace", like_event_comment_path(comment.commentable.id, comment), method: :put, remote: true %>
         <% end %>
+
+        <div style="float:right">
+          <% if current_user.role != 'admin' %>
+            <%= link_to "Segnala", signal_event_comment_path(comment.commentable.id, comment), method: :put, data:{confirm:"Sei sicuro?"} %>
+          <% end %>
+          &bull; <%= localize(comment.created_at, format: :long) %>
+        </div>
       <% end 
       end %>
-    + <%= comment.get_likes.size %>
+      <% if comment.likes > 0 %>
+        + <%= comment.likes %>
+      <% end %>
     </small>
   </div>
   <% if comment.replies.any? %>
     <ul>
-      <%= render comment.replies %>
+      <%= render comment.replies.order(:created_at) %>
     </ul>
   <% end %>
 </li>

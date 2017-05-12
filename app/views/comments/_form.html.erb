@@ -1,9 +1,15 @@
 <div class="comment-form">
   <%= form_for [comment.commentable, comment], remote: true do | f | %>
     <%= f.hidden_field :parent_id %>
-    <%= f.text_field :content, label: false, placeholder: (f.object.parent_id.nil? ? 'Share your idea.' : 'Leave your reply.') %>
-    <%= link_to "Cancel", "#", 'data-reply': comment.parent_id.present?, class: 'cancel-comment-link btn btn-primary btn-sm float-xs-right ml-1' if comment.persisted? or comment.parent %>
-    <%= f.submit class: 'btn btn-primary btn-sm float-xs-right' %>
+    &nbsp;<%= link_to "Annulla", "#", 'data-reply': comment.parent_id.present?, class: 'cancel-comment-link' if comment.persisted? or comment.parent %>
+    
+    <div class="input-group">
+		  <%= f.text_field :content, label: false, placeholder: (f.object.parent_id.nil? ? 'Commenta...' : 'Rispondi al commento...'), class: 'form-control' %>
+		  <div class="input-group-btn">
+		  	<%= f.submit "Invia", class: 'btn btn-in' %>
+		  </div>
+		</div>
+    
     <div class="clearfix"></div>
   <% end %>
 </div>

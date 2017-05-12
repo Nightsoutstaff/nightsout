@@ -12,6 +12,9 @@ module Nightsout
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
+    config.time_zone = 'Rome'
+    config.active_record.default_timezone = :local
+
     config.i18n.default_locale = :it
     I18n.locale = :it
   end

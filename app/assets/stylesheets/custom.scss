@@ -537,8 +537,9 @@ img.raty-cancel {
 
 
 
-/* tutorial giapponese 
+/* tutorial giapponese */
 
+/*
 *:last-child {
   margin-bottom: 0;
 }
@@ -546,7 +547,7 @@ img.raty-cancel {
 [class*='outline'] {
   background-color: white;
 }
- 
+*/
  
 .form-actions {
   border-top: 1px solid #ccc;
@@ -571,7 +572,7 @@ img.raty-cancel {
 }
 
 .comments-widget {
-  background-color: #f2f2f2;
+  background-color: #f5f5fa;
   margin-bottom: 1em;
   padding: 1em;
 }
@@ -582,12 +583,21 @@ h2.comments-header {
 }
  
 ul.comments-list {
-  padding-left: 1.3em;
+  list-style-type: none;
+  padding-left: 1.5em;
   & > li {}
-  ul { padding-left: 1.3em; }
+  ul{ 
+    list-style-type: none;
+    padding-left: 2em; 
+    ul{
+      list-style-type: none; 
+      padding-left: 0px; 
+    }
+  }
 }
  
 li.comment {
+  /* background-color: #e6e6e6; */
   margin-bottom: .5em !important;
   &:last-child {
     margin-bottom: 0;
@@ -596,11 +606,12 @@ li.comment {
  
   }
   .comment-info {
-    color: #bbb;
+    color: #004d99;
     margin-bottom: .5em;
     a {
-      color: #bbb;
+      color: #004d99;
       &:hover {
+        color: #004d99;
         @extend .text-primary;
       }
     }
@@ -615,5 +626,3 @@ li.comment {
   margin-top: 1em;
   margin-bottom: .5em;
 }
-
-*/
