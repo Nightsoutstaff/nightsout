@@ -1,42 +1,51 @@
 <%= provide(:title,'Eventi in città') %>
 
 <div class="row">
-  <div class="col-md-8 col-md-offset-2">
-		<%= form_tag(all_events_path, :method => "get", id: "search-form") do %>
+  <div class="col-md-12">
 
-			
-				
-			<div class="form-inline">
-				<%= select_tag(:order_category, options_for_select(['Più recenti','Più popolari']), include_blank: 'Ordina per', class: 'form-control') %>
-			&nbsp;&nbsp;
-				<%= select_tag(:search_category, options_for_select(['Ristorante','Pub','Dance']), include_blank: 'Inserisci categoria', class: 'form-control') %>
-				&nbsp;&nbsp;
-		    <%= text_field_tag :search_date, params[:search_date], placeholder: "Inserisci data e ora", class: 'datetimepicker12 form-control' %>
-		  
-		  </div>
-
-		  <div class="input-group-btn">
-		  		<%= submit_tag "Filtra", :name => nil, class: "btn btn-in" %>
-		  	</div>
+  	<h1>Eventi in città</h1><br>
+  	<%= form_tag(all_events_path, :method => "get", id: "search-form",:class => 'form-inline', :style => 'float:left') do %>
+  		<div class="form-group">
+    		<div class="input-group">
+      		<span class="input-group-btn">
+		  			<%= submit_tag "Applica", :name => nil, class: "btn btn-in" %>
+		  		</span>
+      		<%= text_field_tag :search_date, params[:search_date], placeholder: "Inserisci data e ora", class: 'datetimepicker12 form-control' %>
+      		<span class="input-group-btn">
+      			<%= select_tag(:search_category, options_for_select(['Ristorante','Pub','Dance']), include_blank: 'Inserisci categoria', class: 'form-control') %>
+      		</span>
+      		<span class="imput-group-btn">
+      			<%= select_tag(:order_category, options_for_select(['Più recenti','Più popolari']), include_blank: 'Ordina per', class: 'form-control') %>
+      		</span>
+    		</div>
+  		</div>
 		<% end %>
+	</div>
 
+	<div class="col-md-8 col-md-offset-2"><br><br><br>
 		<% if @city_user.blank? %>
-			<p>Eventi a <%= link_to "Inserisci la tua città", edit_user_registration_path %></p>
+			<p><%= link_to "Inserisci la tua città", edit_user_registration_path %></p>
 		<% else %>
-			<p>Eventi a <%= @city_user %></p>
-		<% end %>
-		<%= @evento_maggiore %>
-		<% if @erroreCitta == 1 %>
-		     <p>Non ci sono eventi nella tua città!<br><small>Se il problema persiste, controlla la città nelle tue impostazioni!</small></p>
-		<% elsif @events_ids.empty? %>
-			<p>Non ci sono eventi nella tua città!</p>
-		<% else %>
-			<ol class="events">
-		   		<%= render @events %>
-			</ol>
-			<%= will_paginate @events %>
-		<% end %>
-		<%= @ricerca %>
+			<% if @locals.empty? %>
+				<p>Non ci sono locali iscritti nella tua città!</p>
+				<small>Controlla di aver selezionato correttamente la tua città dalle <%= link_to "impostazioni", edit_user_registration_path %></small>
+			<% else %>
+				<% if @events.blank? %>
+					<% if @category != nil || @date != nil %>
+					<%= (DateTime.strptime(@date, '%d-%m-%Y %H:%M')) %>
+						<p>Non ci sono eventi con queste caratteristiche nella tua città!</p>
+					<% else %>
+						<p>Non ci sono eventi nella tua città!</p>
+					<% end %>
+				<% else %>
+					<p>Eventi a <%= @city_user %>:</p>
+					<ul class="events">
+		   			<%= render @events %>
+					</ul>
+					<%= will_paginate @events %>
+				<% end 
+			end
+		end %>
 	</div>
 </div>
 

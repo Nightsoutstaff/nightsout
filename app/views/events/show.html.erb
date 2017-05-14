@@ -1,45 +1,26 @@
 <%= provide(:title, @event.name) %>
 
-<div class="row">
-  <div class="col-md-10 col-md-offset-1">
-    <center><h1><%= @event.name %></h1></center>
-    <center><h4><%= @event.local.name %></h4></center><br>
+<center><h1><%= @event.name %></h1></center>
+<center><h4><%= @event.local.name %></h4></center><br>
 
-    <% if @event.picture? %>
-
-      <div class="col-sm-4">
+<% if @event.picture? %>
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-6">
         <%= image_tag @event.picture.url, class: 'thumbnail' %>
       </div>
-    
-      <div class="col-sm-6">
-        <p>Nome evento: <%= link_to @event.name, @event %><br>
-        Nome locale: <%= link_to @event.local.name, @event.local %><br>
-        Indirizzo: <%= @event.local.address %><br>
-        Inizio: <%= @event.start.strftime("ore %H:%M del %d-%m-%y") %><br>
-        Fine: <%= @event.end.strftime("ore %H:%M del %d-%m-%y") %><br>
-        Descrizione: <%= @event.description %><br></p>
 
-        
-        <% if user_signed_in? %>
-          <% if current_user==@event.local.user %>
-            Categoria: <%= @event.local.category %><br>
-            <div class="timestamp">
-              Postato <%= time_ago_in_words(@event.created_at) %> fa
-            </div>
-        <% end 
-        end %>
-      </div>
-
-      <div class="col-sm-2">
+      <div class="col-sm-3">
         <% if user_signed_in? %>
           <% if current_user==@event.local.user && current_user.role=='owner' %>
             <%= link_to 'Modifica', edit_event_path(@event), class: "edit-link" %><br>
             <%= link_to "Elimina", @event, method: :delete,
-                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %>
+                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %><br><br>
           <% elsif current_user==@event.local.user%>
           <% elsif current_user.role == 'admin' %>
           <%= link_to "Elimina", @event, method: :delete,
-                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %>
+                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %><br><br>
           <% else %>
             <div id="follow_form">
               <% if current_user.following_event?(@event) %>
@@ -53,6 +34,7 @@
                   <%= f.submit "Segui", class: "follow-btn" %>
                 <% end %>
               <% end %>
+              <br><br>
             </div>
           <% end 
         end %>
@@ -99,27 +81,47 @@
         <!--<div class="fb-share-button" data-href="" data-layout="button" data-size="small" data-mobile-iframe="false"> <a class="fb-xfbml-parse-ignore" target="_blank" href="javascript:link();">Share</a>
         </div>-->
 
-
         <div class="fb-share-button" data-href="" data-layout="button" data-size="small" data-mobile-iframe="false"> <a class="fb-xfbml-parse-ignore" target="_blank" href="javascript:link();">Share</a>
         </div>
-
+        <br><br>
         <% if user_signed_in? && current_user.role != 'admin' %>
           <%= link_to "Segnala", signal_event_path(@event), method: :put, data:{confirm:"Sei sicuro?"} %>
         <% end %>
-
       </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <br>
+      <!--<p>Nome evento: <%= link_to @event.name, @event %></p>-->
+      <p><b>Locale:</b> <%= link_to @event.local.name, @event.local %></p>
+      <p><b>Indirizzo:</b> <%= @event.local.address %></p>
+      <p><b>Inizio:</b> <%= @event.start.strftime("ore %H:%M del %d-%m-%y") %></p>
+      <p><b>Fine:</b> <%= @event.end_time.strftime("ore %H:%M del %d-%m-%y") %></p>
+      <p><b>Descrizione:</b> <%= @event.description %></p>
 
-
-    <% else %>
-
-      <div class="col-sm-10">
-        Nome evento: <%= link_to @event.name, @event %><br>
-        Nome locale: <%= link_to @event.local.name, @event.local %><br>
-        Indirizzo: <%= @event.local.address %><br>
-        Inizio: <%= @event.start.strftime("ore %H:%M del %d-%m-%y") %><br>
-        Fine: <%= @event.end.strftime("ore %H:%M del %d-%m-%y") %><br>
-        Descrizione: <%= @event.description %><br>
-
+        
+      <% if user_signed_in? %>
+        <% if current_user==@event.local.user %>
+          Categoria: <%= @event.local.category %><br>
+          <div class="timestamp">
+            Postato <%= time_ago_in_words(@event.created_at) %> fa
+          </div>
+        <% end 
+      end %>
+    </div>
+  </div>
+<% else %>
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+      <div class="col-sm-1"></div>
+      <div class="col-sm-7">
+        <!--<p>Nome evento: <%= link_to @event.name, @event %></p>-->
+        <p><b>Locale:</b> <%= link_to @event.local.name, @event.local %></p>
+        <p><b>Indirizzo:</b> <%= @event.local.address %></p>
+        <p><b>Inizio:</b> <%= @event.start.strftime("ore %H:%M del %d-%m-%y") %></p>
+        <p><b>Fine:</b> <%= @event.end_time.strftime("ore %H:%M del %d-%m-%y") %></p>
+        <p><b>Descrizione:</b> <%= @event.description %></p>
 
         <% if user_signed_in? %>
           <% if current_user==@event.local.user %>
@@ -127,23 +129,22 @@
             <div class="timestamp">
               Postato <%= time_ago_in_words(@event.created_at) %> fa
             </div>
-        <% end 
+          <% end 
         end %>
       </div>
-
-      <div class="col-sm-2">
-        
+      <div class="col-sm-1"></div> 
+      <div class="col-sm-3">
         <% if user_signed_in? %>
           <% if current_user==@event.local.user && current_user.role=='owner' %>
             <%= link_to 'Modifica', edit_event_path(@event), class: "edit-link" %><br>
             <%= link_to "Elimina", @event, method: :delete,
-                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %>
+                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %><br><br>
           <% elsif current_user==@event.local.user%>
           <% elsif current_user.role == 'admin' %>
           <%= link_to "Elimina", @event, method: :delete,
-                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %>
+                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %><br><br>
           <% else %>
-            <div id="follow_form">
+            <div id="follow_form"><br>
               <% if current_user.following_event?(@event) %>
                 <%= form_for(current_user.active_event_relationships.find_by(followed_id: @event.id),
                html: { method: :delete }) do |f| %>
@@ -155,6 +156,7 @@
                   <%= f.submit "Segui", class: "follow-btn" %>
                 <% end %>
               <% end %>
+              <br><br>
             </div>
           <% end 
         end %>
@@ -200,18 +202,18 @@
         <!--<div class="fb-share-button" data-href="" data-layout="button" data-size="small" data-mobile-iframe="false"> <a class="fb-xfbml-parse-ignore" target="_blank" href="javascript:link(<%= @event.id %>);">Share</a>
         </div>-->
 
-
         <div class="fb-share-button" data-href="" data-layout="button" data-size="small" data-mobile-iframe="false"> <a class="fb-xfbml-parse-ignore" target="_blank" href="javascript:link();">Share</a>
         </div>
-
+        <br><br>
         <% if user_signed_in? && current_user.role != 'admin' %>
           <%= link_to "Segnala", signal_event_path(@event), method: :put, data:{confirm:"Sei sicuro?"} %>
         <% end %>
-        
       </div>
-    <% end %>
+    </div>
   </div>
-</div>
+<% end %>
+
+<br><br>
 
 <div class="row">
   <div class="col-md-8 col-md-offset-2">

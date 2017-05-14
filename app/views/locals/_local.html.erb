@@ -3,26 +3,28 @@
 
     <% if local.picture? %>
 
+      <div class="col-sm-1"></div>
       <div class="col-sm-3">
         <%= image_tag local.picture.url, class: 'thumbnail' %>
       </div>
 
-      <div class="col-sm-7">
-        Nome locale: <%= link_to local.name, local %><br>
-        Categoria: <%= local.category %><br>
-        Indirizzo: <%= local.address %><br>
-        Telefono: <%= local.telephone %><br>
-        Sito web: <%= local.website %><br>
-        Descrizione: <%= local.description %><br>
+      <div class="col-sm-6">
+        <b>Locale:</b> <%= link_to local.name, local %><br>
+        <b>Categoria:</b> <%= local.category %><br>
+        <b>Indirizzo:</b> <%= local.address %><br>
+        <% if not local.telephone.blank? %><b>Telefono:</b> <%= local.telephone %><br><% end %>
+        <% if not local.website.blank? %><b>Sito web:</b> <%= link_to local.website, "http://#{local.website}" %><br><% end %>
+        <!--Descrizione: <%= local.description %><br>-->
 
-        <% if user_signed_in? %>
+        <br><%= link_to "Maggiori informazioni...", local %>
+        <!--<% if user_signed_in? %>
           <% if current_user==local.user %>
               Partita IVA: <%= local.iva %><br>
               <div class="timestamp">
-                Posted <%= time_ago_in_words(local.created_at) %> ago
+                Postato <%= time_ago_in_words(local.created_at) %> fa
               </div>
           <% end 
-          end %>
+          end %>-->
       </div>
 
       <div class="col-sm-2">
@@ -31,22 +33,22 @@
           <% if current_user==local.user && current_user.role=='owner'%>
             <%= link_to 'Modifica', edit_local_path(local), class: "edit-link" %><br>
             <%= link_to "Elimina", local, method: :delete,
-                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %>
+                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %><br><br>
           <% elsif current_user==local.user%>
           <% elsif current_user.role == 'admin' %>
             <%= link_to "Elimina", local, method: :delete,
-                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %>
+                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %><br><br>
           <% else %>
             <div id="follow_form"><br>
               <% if current_user.following_local?(local) %>
                 <%= form_for(current_user.active_local_relationships.find_by(followed_id: local.id),
                html: { method: :delete }) do |f| %>
-                  <%= f.submit "Segui già", class: "unfollow-btn" %>
+                  <%= f.submit "Segui già", class: "unfollow-btn" %><br><br>
                 <% end %>
               <% else %>
                 <%= form_for(current_user.active_local_relationships.build) do |f| %>
                   <div><%= hidden_field_tag :followed_id, local.id %></div>
-                  <%= f.submit "Segui", class: "follow-btn" %>
+                  <%= f.submit "Segui", class: "follow-btn" %><br><br>
                 <% end %>
               <% end %>
             </div>
@@ -58,22 +60,24 @@
       </div>
     <% else %>
 
-      <div class="col-sm-10">
-        Nome locale: <%= link_to local.name, local %><br>
-        Categoria: <%= local.category %><br>
-        Indirizzo: <%= local.address %><br>
-        Telefono: <%= local.telephone %><br>
-        Sito web: <%= local.website %><br>
-        Descrizione: <%= local.description %><br>
+      <div class="col-sm-1"></div>
+      <div class="col-sm-9">
+        <b>Locale:</b> <%= link_to local.name, local %><br>
+        <b>Categoria:</b> <%= local.category %><br>
+        <b>Indirizzo:</b> <%= local.address %><br>
+        <% if not local.telephone.blank? %><b>Telefono:</b> <%= local.telephone %><br><% end %>
+        <% if not local.website.blank? %><b>Sito web:</b> <%= link_to local.website, "http://#{local.website}" %><br><% end %>
+        <!--Descrizione: <%= local.description %><br>-->
 
-        <% if user_signed_in? %>
+        <br><%= link_to "Maggiori informazioni...", local %>
+        <!--<% if user_signed_in? %>
           <% if current_user==local.user %>
               Partita IVA: <%= local.iva %><br>
               <div class="timestamp">
-                Posted <%= time_ago_in_words(local.created_at) %> ago
+                Postato <%= time_ago_in_words(local.created_at) %> fa
               </div>
           <% end 
-        end %>
+          end %>-->
       </div>
         
       <div class="col-sm-2">
@@ -82,22 +86,22 @@
           <% if current_user==local.user && current_user.role=='owner' %>
             <%= link_to 'Modifica', edit_local_path(local), class: "edit-link" %><br>
             <%= link_to "Elimina", local, method: :delete,
-                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %>
+                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %><br><br>
           <% elsif current_user==local.user%>
           <% elsif current_user.role == 'admin' %>
           <%= link_to "Elimina", local, method: :delete,
-                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %>
+                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %><br><br>
           <% else %>
             <div id="follow_form"><br>
               <% if current_user.following_local?(local) %>
                 <%= form_for(current_user.active_local_relationships.find_by(followed_id: local.id),
                html: { method: :delete }) do |f| %>
-                  <%= f.submit "Segui già", class: "unfollow-btn" %>
+                  <%= f.submit "Segui già", class: "unfollow-btn" %><br><br>
                 <% end %>
               <% else %>
                 <%= form_for(current_user.active_local_relationships.build) do |f| %>
                   <div><%= hidden_field_tag :followed_id, local.id %></div>
-                  <%= f.submit "Segui", class: "follow-btn" %>
+                  <%= f.submit "Segui", class: "follow-btn" %><br><br>
                 <% end %>
               <% end %>
             </div>

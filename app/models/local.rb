@@ -17,8 +17,10 @@ class Local < ApplicationRecord
   validates :description, presence: true, length: { maximum: 1400 }
   validates :name, presence: true
   validates :category, presence: true
-  validates :iva, presence: true
+  validates :iva, presence: true, uniqueness: true
+  validate :check_IVA
   validates :telephone, length: {minimum:8, maximum:11}
+  validates :address, presence: true
    
   mount_uploader :picture, PictureUploader
   validate  :picture_size
@@ -45,9 +47,9 @@ class Local < ApplicationRecord
     if not event.blank?
       event.each do |e|
         EventRelationship.where(['followed_id=?', e.id]).each do |f|
-          Notification.create(text: "Evento seguito scaduto!", mentioned_by: "", event_id: e.id, local_: e.local_id, end: e.end, user_id: f.follower_id)
+          Notification.create(text: "Evento seguito scaduto!", written_by: e.name, event_id: e.id, local_: e.local_id, end: e.end, user_id: f.follower_id)
         end
-        Notification.create(text: "Evento scaduto!", sent: true, event: e.name, local: e.local_id, end: e.end, user_id: e.local.user_id)
+        Notification.create(text: "Evento scaduto!", written_by: e.name, event_id: e.id, local_id: e.local_id, end: e.end, user_id: e.local.user_id)
         e.destroy
       end
     end
@@ -59,7 +61,7 @@ class Local < ApplicationRecord
     if not Event.joins(:local).where(['events.start>?', DateTime.now+2]).blank?
       Event.joins(:local).where(['events.start>?', DateTime.now+2]).each do |e|
         EventRelationship.where(['followed_id=?', e.id]).each do |ee|
-          Notification.create(text: "Evento in avvicinamento!", mentioned_by: "", event_id: e.id, local_id: "", end: e.start, user_id: ee.follower_id)
+          Notification.create(text: "Evento in avvicinamento!", written_by: "", event_id: e.id, local_id: "", end: e.start, user_id: ee.follower_id)
         end
       end
     end
@@ -68,7 +70,7 @@ class Local < ApplicationRecord
   def self.addFollowingLocalPublishEventNotification(idLocal, idEvent)
     if not LocalRelationship.where(followed_id: idLocal).blank?
       LocalRelationship.where(followed_id: idLocal).each do |l|
-        Notification.create(text: "Nuovo evento!", mentioned_by: "", event_id: idEvent, local_id: idLocal, end: "", user_id: l.follower_id)
+        Notification.create(text: "Nuovo evento!", written_by: "", event_id: idEvent, local_id: idLocal, end: "", user_id: l.follower_id)
       end
     end   
   end
@@ -79,6 +81,37 @@ class Local < ApplicationRecord
     def picture_size
       if picture.size > 5.megabytes
         errors.add(:picture, "should be less than 5MB")
+      end
+    end
+
+    def check_IVA
+      temp = iva
+      iva_array = []
+      while temp >0
+        iva_array << temp%10
+        temp /= 10
+      end
+      iva_array.reverse
+      if iva_array.length < 11
+        errors.add(:iva, "Partita IVA troppo corta")
+      elsif iva_array.length > 11
+        errors.add(:iva, "Partita IVA troppo lunga")
+      else
+        x = iva_array[0] + iva_array[2] + iva_array[4] + iva_array[6] + iva_array[8] + iva_array[10]
+        y1 = 2*iva_array[1]
+        y1-=9 if y1>9 
+        y2 = 2*iva_array[3]
+        y2-=9 if y2>9 
+        y3 = 2*iva_array[5]
+        y3-=9 if y3>9 
+        y4 = 2*iva_array[7]
+        y4-=9 if y4>9 
+        y5 = 2*iva_array[9] 
+        y5-=9 if y5>9 
+        y = y1 + y2 + y3 + y4 + y5
+        if (x+y)%10 != 0
+          errors.add(:iva,"Partita IVA non valida")
+        end
       end
     end
 

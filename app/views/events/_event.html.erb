@@ -2,28 +2,30 @@
   <div class="row">
 
     <% if event.picture? %>
+      <div class="col-sm-1"></div>
 
       <div class="col-sm-3">
         <%= image_tag event.picture.url, class: 'thumbnail' %>
       </div>
     
-      <div class="col-sm-7">
-        Nome evento: <%= link_to event.name, event %><br>
-        Nome locale: <%= link_to event.local.name, event.local %><br>
-        Indirizzo: <%= event.local.address %><br>
-        Inizio: <%= event.start.strftime("ore %H:%M del %d-%m-%y") %><br>
-        Fine: <%=event.end.strftime("ore %H:%M del %d-%m-%y") %><br>
-        Descrizione: <%= event.description %><br>
-      
+      <div class="col-sm-6">
+        <b>Evento:</b> <%= link_to event.name, event %><br>
+        <b>Locale:</b> <%= link_to event.local.name, event.local %><br>
+        <b>Indirizzo:</b> <%= event.local.address %><br>
+        <b>Inizio:</b> <%= event.start.strftime("ore %H:%M del %d-%m-%y") %><br>
+        <b>Fine:</b> <%=event.end_time.strftime("ore %H:%M del %d-%m-%y") %><br>
+        <!--Descrizione: <%= event.description %><br>-->
+        <br>
+        <%= link_to "Maggiorni informazioni..", event %><br>
         
-        <% if user_signed_in? %>
+        <!--<% if user_signed_in? %>
           <% if current_user==event.local.user %>
             Categoria: <%= event.local.category %><br>
             <div class="timestamp">
               Postato <%= time_ago_in_words(event.created_at) %> fa
             </div>
         <% end 
-        end %>
+        end %>-->
       </div>
 
       <div class="col-sm-2">
@@ -32,23 +34,23 @@
           <% if current_user==event.local.user && current_user.role=='owner' %>
             <%= link_to 'Modifica', edit_event_path(event), class: "edit-link" %><br>
             <%= link_to "Elimina", event, method: :delete,
-                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %>
+                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %><br><br>
           <% elsif current_user==event.local.user%>
           <% elsif current_user.role == 'admin' %>
           <!-- Numero segnalazioni -->
           <%= link_to "Elimina", event, method: :delete,
-                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %>
+                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %><br><br>
           <% else %>
             <div id="follow_form">
               <% if current_user.following_event?(event) %>
                 <%= form_for(current_user.active_event_relationships.find_by(followed_id: event.id),
                html: { method: :delete }) do |f| %>
-                  <%= f.submit "Segui già", data: { confirm: "Sei sicuro di voler smettere di seguire questo evento?" }, class: "unfollow-btn" %>
+                  <%= f.submit "Segui già", data: { confirm: "Sei sicuro di voler smettere di seguire questo evento?" }, class: "unfollow-btn" %><br><br>
                 <% end %>
               <% else %>
                 <%= form_for(current_user.active_event_relationships.build) do |f| %>
                   <div><%= hidden_field_tag :followed_id, event.id %></div>
-                  <%= f.submit "Segui", class: "follow-btn" %>
+                  <%= f.submit "Segui", class: "follow-btn" %><br><br>
                 <% end %>
               <% end %>
             </div>
@@ -59,23 +61,25 @@
       </div>
 
     <% else %>
-
-      <div class="col-sm-10">
-        Nome evento: <%= link_to event.name, event %><br>
-        Nome locale: <%= link_to event.local.name, event.local %><br>
-        Indirizzo: <%= event.local.address %><br>
-        Inizio: <%= event.start.strftime("ore %H:%M del %d-%m-%y") %><br>
-        Fine: <%=event.end.strftime("ore %H:%M del %d-%m-%y") %><br>
-        Descrizione: <%= event.description %><br>
-
-        <% if user_signed_in? %>
+      <div class="col-sm-1"></div>
+      <div class="col-sm-9">
+        <b>Evento:</b> <%= link_to event.name, event %><br>
+        <b>Locale:</b> <%= link_to event.local.name, event.local %><br>
+        <b>Indirizzo:</b> <%= event.local.address %><br>
+        <b>Inizio:</b> <%= event.start.strftime("ore %H:%M del %d-%m-%y") %><br>
+        <b>Fine:</b> <%=event.end_time.strftime("ore %H:%M del %d-%m-%y") %><br>
+        <!--Descrizione: <%= event.description %><br>-->
+        <br>
+        <%= link_to "Maggiorni informazioni..", event %><br>
+        
+        <!--<% if user_signed_in? %>
           <% if current_user==event.local.user %>
             Categoria: <%= event.local.category %><br>
             <div class="timestamp">
               Postato <%= time_ago_in_words(event.created_at) %> fa
             </div>
         <% end 
-        end %>
+        end %>-->
       </div>
 
       <div class="col-sm-2">
@@ -84,23 +88,23 @@
           <% if current_user==event.local.user && current_user.role=='owner' %>
             <%= link_to 'Modifica', edit_event_path(event), class: "edit-link" %><br>
             <%= link_to "Elimina", event, method: :delete,
-                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %>
+                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %><br><br>
           <% elsif current_user==event.local.user%>
           <% elsif current_user.role == 'admin' %>
           <!-- Numero segnalazioni -->
           <%= link_to "Elimina", event, method: :delete,
-                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %>
+                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %><br><br>
           <% else %>
             <div id="follow_form">
               <% if current_user.following_event?(event) %>
                 <%= form_for(current_user.active_event_relationships.find_by(followed_id: event.id),
                html: { method: :delete }) do |f| %>
-                  <%= f.submit "Segui già", data: { confirm: "Sei sicuro?" }, class: "unfollow-btn" %>
+                  <%= f.submit "Segui già", data: { confirm: "Sei sicuro?" }, class: "unfollow-btn" %><br><br>
                 <% end %>
               <% else %>
                 <%= form_for(current_user.active_event_relationships.build) do |f| %>
                   <div><%= hidden_field_tag :followed_id, event.id %></div>
-                  <%= f.submit "Segui", class: "follow-btn" %>
+                  <%= f.submit "Segui", class: "follow-btn" %><br><br>
                 <% end %>
               <% end %>
             </div>

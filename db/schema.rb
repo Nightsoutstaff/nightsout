@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170511224600) do
+ActiveRecord::Schema.define(version: 20170513174600) do
 
   create_table "average_caches", force: :cascade do |t|
     t.integer  "rater_id"
@@ -26,10 +26,10 @@ ActiveRecord::Schema.define(version: 20170511224600) do
     t.integer  "commentable_id"
     t.integer  "user_id"
     t.text     "content"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.integer  "parent_id"
-    t.integer  "likes"
+    t.integer  "likes",            default: 0
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
     t.index ["parent_id"], name: "index_comments_on_parent_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
@@ -48,12 +48,13 @@ ActiveRecord::Schema.define(version: 20170511224600) do
   create_table "events", force: :cascade do |t|
     t.string   "name"
     t.datetime "start"
-    t.datetime "end"
+    t.datetime "end_time"
     t.text     "description"
     t.integer  "local_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.string   "picture"
+    t.integer  "followed_count", default: 0
     t.index ["local_id", "created_at"], name: "index_events_on_local_id_and_created_at"
     t.index ["local_id"], name: "index_events_on_local_id"
   end
@@ -72,16 +73,16 @@ ActiveRecord::Schema.define(version: 20170511224600) do
     t.string   "name"
     t.string   "category"
     t.text     "description"
-    t.integer  "telephone"
+    t.integer  "telephone",   limit: 8
     t.string   "address"
     t.string   "website"
-    t.integer  "iva"
+    t.integer  "iva",         limit: 8
     t.string   "city"
     t.float    "latitude"
     t.float    "longitude"
     t.integer  "user_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
     t.string   "picture"
     t.index ["user_id", "created_at"], name: "index_locals_on_user_id_and_created_at"
     t.index ["user_id"], name: "index_locals_on_user_id"

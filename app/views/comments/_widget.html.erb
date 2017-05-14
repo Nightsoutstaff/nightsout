@@ -1,18 +1,29 @@
-<div id="comments-widget-of-commentable-<%= commentable.id %>" class="comments-widget">
-  <h2 class="comments-header">
-    Commenti:
-    <small id="comments-count-of-commentable-<%= commentable.id %>">
-      <%= commentable.comments.size %>
-    </small>
-  </h2>
+<h4>Commenti: &nbsp;
+  <small id="comments-count-of-commentable-<%= commentable.id %>">
+    <% if commentable.comments.size > 1 %>
+      (<%= commentable.comments.size %> commenti)
+    <% elsif commentable.comments.size == 1%>
+      (1 commento)
+    <% else %>
+      (nessun commento)
+    <% end %>
+  </small>
+</h4>
 
+<div id="comments-widget-of-commentable-<%= commentable.id %>" class="comments-widget">
   <!-- comment-form -->
   <% if user_signed_in? %>
     <%= render "comments/form", comment: commentable.comments.build %>
+    <% if commentable.comments.size > 1 %><br><% end %>
   <% end %>
 
   <ul class="comments-list">
-    <%= render commentable.comments.where({parent: nil, user_id: current_user.id}).order(created_at: :desc) %>
-    <%= render commentable.comments.where(parent: nil).where.not(user_id: current_user.id).order(likes: :desc, created_at: :desc) %>
+    <% if user_signed_in? %>
+      <%= render commentable.comments.where({parent: nil, user_id: current_user.id}).order(created_at: :desc) %>
+      <%= render commentable.comments.where(parent: nil).where.not(user_id: current_user.id).order(likes: :desc, created_at: :desc) %>
+    <% else %>
+      <br>
+      <%= render commentable.comments.where(parent: nil).order(likes: :desc, created_at: :desc) %>
+    <% end %>
   </ul>
 </div>

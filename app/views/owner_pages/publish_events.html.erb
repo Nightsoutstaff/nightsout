@@ -6,38 +6,40 @@
   <div class="col-md-6 col-md-offset-3">
       
     	<%= form_for @event do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
+        Locale:
     		<%= f.select :local_id, options_for_select(Local.find_by_sql(["SELECT * FROM locals WHERE user_id = ? ", current_user.id]).collect{|p| [ p.name,p.id] }), {:id => "select_local"} %>  <!-- value:id, option:name -->
   			<div class="field">
+          Nome:
     			<%= f.text_field :name, placeholder: "Inserisci nome", class: "form-control" %>
   			</div>
 
         <div class="field">
+          Inizio:
           <%= f.text_field :start, placeholder: "Inserisci data e ora di inizio evento", class: 'datetimepicker12 form-control' %>
         </div>
 
         <div class="field">
-          <%= f.text_field :end, placeholder: "Inserisci data e ora di fine evento", class: 'datetimepicker12 form-control' %>
+          Fine:
+          <%= f.text_field :end_time, placeholder: "Inserisci data e ora di fine evento", class: 'datetimepicker12 form-control' %>
         </div>
   			
   			<div class="field">
+          Descrizione:
     			<%= f.text_area :description, placeholder: "Inserisci descrizione", class: "form-control" %>
   			</div>
   			<span class="picture">
           <p>Inserisci un'immagine per l'evento:</p>
     			<%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
   			</span>
-        </div>
-    </div>
-    <br><div class="row">
-      <div class="col-xs-4 col-xs-offset-4">
-      <div class="actions">
   			<%= f.submit "Pubblica", class: "btn btn-primary" %>
-
-	  </div><br>
+        <% end %>
+        <br><br>
+        <%= link_to 'Annulla', :back %>
+	  
   </div>
 </div>
-<% end %>
-
+      
 <script type="text/javascript">
   $('#local_picture').bind('change', function() {
     var size_in_megabytes = this.files[0].size/1024/1024;

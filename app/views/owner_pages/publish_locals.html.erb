@@ -15,8 +15,7 @@
   }
 </script>
 
-<h1>Pubblica locali</h1>
-<h2>Creazione, modifica e visualizzazione di tutti i tuoi locali</h2>
+<h1>Pubblica locale</h1><br>
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
@@ -24,40 +23,51 @@
     	<%= form_for(@local) do |f| %>
     		<%= render 'shared/error_messages', object: f.object %>
   			<div class="field">
+          Nome:
     			<%= f.text_field :name, placeholder: "Inserisci nome", class: "form-control" %>
   			</div>
         <div class="field">
+          Categoria:
           <%= f.select(:category, ['Pub', 'Ristorante', 'Dance']) %>
         </div>
   			<div class="field" id="address" name="address" tag="address">
+          Indirizzo:
     			<%= f.text_field :address, placeholder: "Inserisci indirizzo", id: "loc-address", class: "form-control" %>
   			</div>
         <div class="field">
+          Telefono:
           <%= f.text_field :telephone, placeholder: "Inserisci telefono", class: "form-control" %>
         </div>
         <div class="field">
+          Sito web: <small>(attenzione al formato: es. 'www.nightsout.it')</small>
           <%= f.text_field :website, placeholder: "Inserisci sito internet", class: "form-control" %>
         </div>
         <div class="field">
+          Partita IVA:
           <%= f.text_field :iva, placeholder: "Inserisci partita iva", class: "form-control" %>
         </div>
   			<div class="field">
+          Descrizione:
     			<%= f.text_area :description, placeholder: "Inserisci descrizione", class: "form-control" %>
   			</div>
         
   			<span class="picture">
+          <p>Inserisci un'immagine per l'evento:</p>
     			<%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
   			</span>
-  			<%= f.submit "Post", class: "btn btn-primary" %>
+  			<%= f.submit "Pubblica", class: "btn btn-primary" %>
 		  <% end %>
-		  <script type="text/javascript">
-  		$('#local_picture').bind('change', function() {
-    		var size_in_megabytes = this.files[0].size/1024/1024;
-    		if (size_in_megabytes > 5) {
-      		alert('Maximum file size is 5MB. Please choose a smaller file.');
-    		}
-  		});
-		  </script>
+      <br><br>
+      <%= link_to 'Annulla', :back %>
 	  </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  $('#local_picture').bind('change', function() {
+    var size_in_megabytes = this.files[0].size/1024/1024;
+    if (size_in_megabytes > 5) {
+      alert('Maximum file size is 5MB. Please choose a smaller file.');
+    }
+  });
+</script>

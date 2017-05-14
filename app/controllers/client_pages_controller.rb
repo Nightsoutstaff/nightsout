@@ -6,10 +6,7 @@ class ClientPagesController < ApplicationController
     require 'date'
     require 'time'
 
-    #@city = request.location.city
-    if current_user.city.blank?||current_user.city == nil
-      @erroreCitta = 1
-    else
+    if not current_user.city.blank?||current_user.city == nil
       @city_user = current_user.city.split(',')[0].humanize
       @date = nil
       @category = nil
@@ -18,77 +15,45 @@ class ClientPagesController < ApplicationController
       #Recupero i locali presenti nella città dell'utente
       @locals = Local.where(city: @city_user)
 
-      if @locals.empty?
-        @erroreCitta = 1
-      end
-
-      if (params[:search_date] == "" || params[:search_date] == nil) && (params[:search_category] == "" || params[:search_category] == nil) && (params[:order_category] == "" || params[:order_category] == nil || params[:order_category] == "Più recenti")
+      if not @locals.empty?
+        if (params[:search_date] == "" || params[:search_date] == nil) && (params[:search_category] == "" || params[:search_category] == nil) && (params[:order_category] == "" || params[:order_category] == nil || params[:order_category] == "Più recenti")
           @locals.each do |l|
             @events_ids += l.events.collect{|e| e.id }
           end
-        @events = Event.where(:id => @events_ids).paginate(page: params[:page], :per_page => 10)
-
-      elsif params[:order_category] == "" || params[:order_category] == "Più recenti"
-
-        if params[:search_date] != nil
-          @date = params[:search_date]
-        end
-
-        if params[:search_category] != nil
-          @category = params[:search_category]
-        end
-
-        if @category != ""
-          @locals.where({category: @category}).each do |l|
-            if @date != ""
-              @events_ids += l.events.where(start: (DateTime.strptime(@date, '%d-%m-%Y %H:%M'))..(DateTime.strptime(@date, '%d-%m-%Y %H:%M')+1.day)).collect{|e| e.id }
-            else
-              @events_ids += l.events.collect{|e| e.id}
-            end
-          end
+          @events = Event.where(:id => @events_ids).paginate(page: params[:page], :per_page => 10)
         else
-          @locals.each do |l|
-            if @date != ""
-              @events_ids += l.events.where(start: (DateTime.strptime(@date, '%d-%m-%Y %H:%M'))..(DateTime.strptime(@date, '%d-%m-%Y %H:%M')+1.day)).collect{|e| e.id }
-            else
-              @events_ids += l.events.collect{|e| e.id }
+          if params[:search_date] != nil
+            @date = params[:search_date]
+          end
+          if params[:search_category] != nil
+            @category = params[:search_category]
+          end
+
+          if @category != ""
+            @locals.where({category: @category}).each do |l|
+              if @date != ""
+                @events_ids += l.events.where(start: (DateTime.strptime(@date, '%d-%m-%Y %H:%M'))-2.hours..(DateTime.strptime(@date, '%d-%m-%Y %H:%M')+1.day)).collect{|e| e.id }
+              else
+                @events_ids += l.events.collect{|e| e.id}
+              end
+            end
+          else
+            @locals.each do |l|
+              if @date != ""
+                @events_ids += l.events.where(start: (DateTime.strptime(@date, '%d-%m-%Y %H:%M'))-2.hours..(DateTime.strptime(@date, '%d-%m-%Y %H:%M')+1.day)).collect{|e| e.id }
+              else
+                @events_ids += l.events.collect{|e| e.id }
+              end
             end
           end
-        end
 
-        @events = Event.where(:id => @events_ids).paginate(page: params[:page], :per_page => 10)
-
-      elsif params[:order_category] == "Più popolari"
-        
-        if params[:search_date] != nil
-          @date = params[:search_date]
-        end
-
-        if params[:search_category] != nil
-          @category = params[:search_category]
-        end
-
-        if @category != ""
-          @locals.where({category: @category}).each do |l|
-            if @date != ""
-              @events_ids += l.events.where(start: (DateTime.strptime(@date, '%d-%m-%Y %H:%M'))..(DateTime.strptime(@date, '%d-%m-%Y %H:%M')+1.day)).collect{|e| e.id }
-            else
-              @events_ids += l.events.collect{|e| e.id}
-            end
+          if params[:order_category] == "" || params[:order_category] == "Più recenti"
+            @events = Event.where(:id => @events_ids).paginate(page: params[:page], :per_page => 10)
+          elsif params[:order_category] == "Più popolari"
+            @events = Event.where(:id => @events_ids).paginate(page: params[:page], :per_page => 10).reorder(followed_count: :desc)
           end
-        else
-          @locals.each do |l|
-            if @date != ""
-              @events_ids += l.events.where(start: (DateTime.strptime(@date, '%d-%m-%Y %H:%M'))..(DateTime.strptime(@date, '%d-%m-%Y %H:%M')+1.day)).collect{|e| e.id }
-            else
-              @events_ids += l.events.collect{|e| e.id }
-            end
-          end
-        end
-
-        @events = Event.where(:id => @events_ids).paginate(page: params[:page], :per_page => 10).reorder(followed_count: :desc)
+        end 
       end
-
     end
   end
 

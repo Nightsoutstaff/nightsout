@@ -3,8 +3,7 @@
     <div class="col-sm-12">
       <% if (notification.text == "Evento scaduto!") %>
         <%= notification.text %>
-        <p>Il tuo evento "<b><%= notification.event.name %></b>" è stato eliminato perchè scaduto alle
-        <b><%=notification.end.strftime("ore %H:%M del %d-%m-%y") %></b></p>
+        <p>Il tuo evento "<b><%= notification.written_by %></b>" è stato eliminato perchè scaduto</p>
 		  
       <% elsif (notification.text == "Nuovo evento!") %>
         <%= notification.text %>
@@ -12,11 +11,11 @@
       
       <% elsif (notification.text == "Evento seguito scaduto!") %>
         <%= notification.text %>
-        <p>L'evento "<b><%= notification.event.name %></b>" seguito in precedenza è scaduto!</p>
+        <p>L'evento "<b><%= notification.written_by %></b>" seguito in precedenza è scaduto!</p>
       
       <% elsif (notification.text == "Evento in avvicinamento!") %>
         <%= notification.text %>
-        <p>L'evento "<b><%= link_to notification.event.name, notification.event %></b>" si terrà alle <b><%=notification.end.strftime("ore %H:%M del %d-%m-%y") %></b></p>
+        <p>L'evento "<b><%= link_to notification.event.name, notification.event %></b>" si terrà alle <b><%=notification.event.start.strftime("ore %H:%M del %d-%m-%y") %></b></p>
       
       <% elsif (notification.text == "Evento eliminato da Admin!") %>
         <%= notification.text %>

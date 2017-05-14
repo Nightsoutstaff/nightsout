@@ -19,7 +19,9 @@ class Event < ApplicationRecord
   validates :description, presence: true, length: { maximum: 1400 }
   validates :name, presence: true
   validates :start, presence: true
-  validates :end, presence: true
+  validates :end_time, presence: true
+
+  validate :start_before_end
    
   mount_uploader :picture, PictureUploader
   validate  :picture_size
@@ -32,6 +34,12 @@ class Event < ApplicationRecord
     def picture_size
       if picture.size > 5.megabytes
         errors.add(:picture, "should be less than 5MB")
+      end
+    end
+
+    def start_before_end
+      if start != nil && end_time != nil && end_time < start
+        errors.add(:start, ": fine evento prima del suo inizio")
       end
     end
 

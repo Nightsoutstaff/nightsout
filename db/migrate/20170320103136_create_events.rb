@@ -3,7 +3,7 @@ class CreateEvents < ActiveRecord::Migration[5.0]
     create_table :events do |t|
       t.string :name
       t.datetime :start
-      t.datetime :end
+      t.datetime :end_time
       t.text :description
       t.references :local, foreign_key: true
 

@@ -6,17 +6,43 @@
     <%= form_for(@event) do |f| %>
         <%= render 'shared/error_messages', object: f.object %>
         <div class="field">
-          <%= f.text_field :name, placeholder: @event.name %>
+          Nome: <%= f.text_field :name, placeholder: @event.name, class: 'form-control' %>
+        </div>
+
+        <div class="field">
+          Inizio: <%= f.text_field :start, placeholder: "Reinserisci data e ora di inizio evento", class: 'datetimepicker12 form-control' %>
+        </div>
+
+        <div class="field">
+          Fine: <%= f.text_field :end_time, placeholder: "Reinserisci data e ora di fine evento", class: 'datetimepicker12 form-control' %>
         </div>
         
         <div class="field">
-          <%= f.text_area :description, placeholder: @event.local.description %>
+          Descrizione: <%= f.text_area :description, placeholder: @event.local.description, class: 'form-control' %>
         </div>
         <span class="picture">
-          <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
+          Foto: <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
         </span>
-      <%= f.submit "Save changes", class: "btn btn-primary" %>
+      <%= f.submit "Salva modifiche", class: "btn btn-primary" %>
     <% end %>
-
+    <br><br>
+    <%= link_to 'Annulla', :back %>
   </div>
 </div>
+
+<script type="text/javascript">
+  $('#local_picture').bind('change', function() {
+    var size_in_megabytes = this.files[0].size/1024/1024;
+    if (size_in_megabytes > 5) {
+      alert('Maximum file size is 5MB. Please choose a smaller file.');
+    }
+  });
+
+  $(function () {
+    $('.datetimepicker12').datetimepicker({
+      sideBySide: true,
+      format: 'D-M-YYYY HH:mm',
+      minDate: moment()
+    });
+  });
+</script>

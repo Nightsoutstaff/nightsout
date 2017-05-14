@@ -3,9 +3,7 @@
 
 <div class="row">
   <div class="col-md-10 col-md-offset-1">
-
-    Aggiungi un nuovo locale: 
-    <%= link_to "Aggiungi locale", publish_locals_path, class: "btn btn-primary" %>
+    <p>Aggiungi un nuovo locale:&nbsp;&nbsp;&nbsp;<%= link_to "Aggiungi locale", publish_locals_path, class: "btn btn-primary" %></p>
   <br>
     <% if current_user.locals.any? %>
       <% @locals = current_user.locals.paginate(page: params[:page], :per_page => 5) %>

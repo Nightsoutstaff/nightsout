@@ -68,7 +68,7 @@ class PagesController < ApplicationController
         if @category != '' 
           @locals.where({category: @category}).each do |l|
             if @date != ''
-              @events_ids += l.events.where(start: (DateTime.strptime(@date, '%d-%m-%Y %H:%M'))..(DateTime.strptime(@date, '%d-%m-%Y %H:%M')+1.day)).collect{|e| e.id }
+              @events_ids += l.events.where(start: (DateTime.strptime(@date, '%d-%m-%Y %H:%M'))-2.hours..(DateTime.strptime(@date, '%d-%m-%Y %H:%M')+1.day)).collect{|e| e.id }
             else
               @events_ids += l.events.collect{|e| e.id}
             end
@@ -76,7 +76,7 @@ class PagesController < ApplicationController
         else
           @locals.each do |l|
             if @date != ''
-              @events_ids += l.events.where(start: (DateTime.strptime(@date, '%d-%m-%Y %H:%M'))..(DateTime.strptime(@date, '%d-%m-%Y %H:%M')+1.day)).collect{|e| e.id }
+              @events_ids += l.events.where(start: (DateTime.strptime(@date, '%d-%m-%Y %H:%M'))-2.hours..(DateTime.strptime(@date, '%d-%m-%Y %H:%M')+1.day)).collect{|e| e.id }
             else
               @events_ids += l.events.collect{|e| e.id }
             end

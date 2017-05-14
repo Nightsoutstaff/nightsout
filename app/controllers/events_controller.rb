@@ -75,7 +75,7 @@ before_action :authenticate_user!, only: [:create, :edit, :update, :destroy]
   private
 
     def event_params
-      params.require(:event).permit(:name, :description, :local_id, :start, :end, :picture)
+      params.require(:event).permit(:name, :description, :local_id, :start, :end_time, :picture)
     end
 
     #def correct_local

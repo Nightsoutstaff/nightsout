@@ -1,45 +1,26 @@
 <%= provide(:title, @local.name) %>
 
-<div class="row">
-  <div class="col-md-10 col-md-offset-1">
-    
-    <center><h1><%= @local.name %></h1></center>
+<center><h1><%= @local.name %></h1></center><br>
 
-    <% if @local.picture? %>
-
+<% if @local.picture? %>
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
       <div class="col-sm-3">
+      </div>
+      <div class="col-sm-6">
         <%= image_tag @local.picture.url, class: 'thumbnail' %>
       </div>
-
-      <div class="col-sm-7">
-        Nome locale: <%= link_to @local.name, @local %><br>
-        Categoria: <%= @local.category %><br>
-        Indirizzo: <%= @local.address %><br>
-        Telefono: <%= @local.telephone %><br>
-        Sito web: <%= @local.website %><br>
-        Descrizione: <%= @local.description %><br>
-
-        <% if user_signed_in? %>
-          <% if current_user==@local.user %>
-              Partita IVA: <%= @local.iva %><br>
-              <div class="timestamp">
-                Postato <%= time_ago_in_words(@local.created_at) %> fa
-              </div>
-          <% end 
-          end %>
-      </div>
-
-      <div class="col-sm-2">
+      <div class="col-sm-3">
         
         <% if user_signed_in? %>
           <% if current_user==@local.user && current_user.role=='owner'%>
             <%= link_to 'Modifica', edit_local_path(@local), class: "edit-link" %><br>
             <%= link_to "Elimina", @local, method: :delete,
-                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %>
+                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %><br><br>
           <% elsif current_user==@local.user%>
           <% elsif current_user.role == 'admin' %>
           <%= link_to "Elimina", @local, method: :delete,
-                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %>
+                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %><br><br>
           <% else %>
             <div id="follow_form"><br>
               <% if current_user.following_local?(@local) %>
@@ -53,50 +34,78 @@
                   <%= f.submit "Segui", class: "follow-btn" %>
                 <% end %>
               <% end %>
+              <br><br>
             </div>
           <% end 
         end %>
-        
         <span><img src="/assets/eye-icon.png" width="20px" height="20px">&nbsp;&nbsp;<%= @local.followers.count %></span>
         <br><br>
-         <%= rating_for @local, 'stars', star: 5, disable_after_rate: false, half_show: false, enable_half: false, imbd_avg: true %>&nbsp;&nbsp;(<%= @local.rates("stars").count %>)
-
+        <%= rating_for @local, 'stars', star: 5, disable_after_rate: false, half_show: false, enable_half: false, imbd_avg: true, cancel: false, cancel_place: 'right' %>
+        <% if @local.rates("stars").count > 1 %>
+          <small>(<%= @local.rates("stars").count %> voti)</small>
+        <% else %>
+          <small>(1 voto)</small>
+        <% end %>
+        <br><br>
         <% if user_signed_in? && current_user.role != 'admin' %>
           <%= link_to "Segnala", signal_local_path(@local), method: :put, data:{confirm:"Sei sicuro?"} %>
-        <% end %>
-        
+        <% end %>       
       </div>
-    <% else %>
+    </div>
+  </div>
 
-      <div class="col-sm-10">
-        Nome locale: <%= link_to @local.name, @local %><br>
-        Categoria: <%= @local.category %><br>
-        Indirizzo: <%= @local.address %><br>
-        Telefono: <%= @local.telephone %><br>
-        Sito web: <%= @local.website %><br>
-        Descrizione: <%= @local.description %><br>
+  <div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+      <!--Nome locale: <%= link_to @local.name, @local %><br>-->
+      <br>
+      <p><b>Categoria:</b> <%= @local.category %></p>
+      <p><b>Indirizzo:</b> <%= @local.address %></p>
+      <p><% if not @local.telephone.blank? %><b>Telefono:</b> <%= @local.telephone %></p><% end %>
+      <% if not @local.website.blank?%><p><b>Sito web:</b> <%= link_to @local.website, "http://#{@local.website}" %></p><% end %>
+      <p><b>Descrizione:</b> <%= @local.description %></p>
+
+      <% if user_signed_in? %>
+        <% if current_user==@local.user %>
+            <p><b>Partita IVA:</b> <%= @local.iva %></p>
+            <small>
+              Postato <%= time_ago_in_words(@local.created_at) %> fa
+            </small>
+        <% end 
+      end %>  
+    </div>
+  </div>
+<% else %>
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+      <div class="col-sm-1"></div>
+      <div class="col-sm-7">
+        <!--Nome locale: <%= link_to @local.name, @local %><br>-->
+        <p><b>Categoria:</b> <%= @local.category %></p>
+        <p><b>Indirizzo:</b> <%= @local.address %></p>
+        <p><% if not @local.telephone.blank? %><b>Telefono:</b> <%= @local.telephone %></p><% end %>
+        <% if not @local.website.blank?%><p><b>Sito web:</b> <%= link_to @local.website, "http://#{@local.website}" %></p><% end %>
+        <p><b>Descrizione:</b> <%= @local.description %></p>
 
         <% if user_signed_in? %>
           <% if current_user==@local.user %>
-              Partita IVA: <%= @local.iva %><br>
-              <div class="timestamp">
-                Postato <%= time_ago_in_words(@local.created_at) %> fa
-              </div>
+            <p><b>Partita IVA:</b> <%= @local.iva %></p>
+            <small>
+              Postato <%= time_ago_in_words(@local.created_at) %> fa
+            </small>
           <% end 
-        end %>
+        end %>  
       </div>
-        
-      <div class="col-sm-2">
-        
+      <div class="col-sm-1"></div> 
+      <div class="col-sm-3">
         <% if user_signed_in? %>
-          <% if current_user==@local.user && current_user.role=='owner' %>
+          <% if current_user==@local.user && current_user.role=='owner'%>
             <%= link_to 'Modifica', edit_local_path(@local), class: "edit-link" %><br>
             <%= link_to "Elimina", @local, method: :delete,
-                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %>
+                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %><br><br>
           <% elsif current_user==@local.user%>
           <% elsif current_user.role == 'admin' %>
           <%= link_to "Elimina", @local, method: :delete,
-                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %>
+                                           data: { confirm: "Sei sicuro?" }, class: "delete-link" %><br><br>
           <% else %>
             <div id="follow_form"><br>
               <% if current_user.following_local?(@local) %>
@@ -110,24 +119,27 @@
                   <%= f.submit "Segui", class: "follow-btn" %>
                 <% end %>
               <% end %>
+              <br><br>
             </div>
           <% end 
         end %>
         
         <span><img src="/assets/eye-icon.png" width="20px" height="20px">&nbsp;&nbsp;<%= @local.followers.count %></span>
         <br><br>
-         <%= rating_for @local, 'stars', star: 5, disable_after_rate: false, half_show: false, enable_half: false, imbd_avg: true %>&nbsp;&nbsp;(<%= @local.rates("stars").count %>)
-
-         <% if user_signed_in? && current_user.role != 'admin' %>
-          <%= link_to "Segnala", signal_local_path(@local), method: :put, data:{confirm:"Sei sicuro?"} %>
+        <%= rating_for @local, 'stars', star: 5, disable_after_rate: false, half_show: false, enable_half: false, imbd_avg: true, cancel: false, cancel_place: 'right' %>
+        <% if @local.rates("stars").count > 1 %>
+          <small>(<%= @local.rates("stars").count %> voti)</small>
+        <% else %>
+          <small>(1 voto)</small>
         <% end %>
-         
-        
+        <br><br>
+        <% if user_signed_in? && current_user.role != 'admin' %>
+          <%= link_to "Segnala", signal_local_path(@local), method: :put, data:{confirm:"Sei sicuro?"} %>
+        <% end %>       
       </div>
-    <% end %>
-
+    </div>
   </div>
-</div>
+<% end %>
 
 <br><br>
 
