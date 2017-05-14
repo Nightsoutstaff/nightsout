@@ -53,6 +53,10 @@ before_action :authenticate_user!, only: [:create, :edit, :update, :destroy]
   def update
     @event = Event.find(params[:id])
     if @event.update_attributes(event_params)
+      if params[:remove_photo] == 'yes'
+        @event.remove_picture!
+        @event.save
+      end
       flash[:success] = "Evento modificato"
       redirect_to @event
     else

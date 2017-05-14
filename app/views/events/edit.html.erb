@@ -23,6 +23,11 @@
         <span class="picture">
           Foto: <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
         </span>
+        <div class="checkbox" style="margin-left:-20px">
+          <label> 
+            Elimina foto&nbsp;&nbsp;<%= check_box_tag 'remove_photo', 'yes', false %> 
+          </label>
+        </div>
       <%= f.submit "Salva modifiche", class: "btn btn-primary" %>
     <% end %>
     <br><br>

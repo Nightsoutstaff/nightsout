@@ -42,6 +42,10 @@ class LocalsController < ApplicationController
   def update
     @local = Local.find(params[:id])
     if @local.update_attributes(local_params)
+      if params[:remove_photo] == 'yes'
+        @local.remove_picture!
+        @local.save
+      end
       flash[:success] = "Locale modificato"
       redirect_to @local
     else
