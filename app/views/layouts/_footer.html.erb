@@ -1,12 +1,66 @@
-<footer class="footer">
+<br><br><br><br><br>
+<!--<footer class="footer">
+  <div class="row">
+    <div class="col-xs-1"></div>
+    <div class="col-xs-6">
+  <br>
   <small>
     Footer del sito, cose varie contatti vari copyright non lo so solite cose da footer
   </small>
+</div>
+<div class="col-xs-4">
+  <br>
   <nav>
     <ul>
       <li><%= link_to "FAQ", help_path %></li>
       <li><%= link_to "About", about_path %></li>
-      <li><%= link_to "Contact", contact_path %></li>
+      <li><%= link_to "Contacts", contacts_path %></li>
     </ul>
   </nav>
+</div>
+<div class="col-xs-1"></div>
+</footer>-->
+
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-2 col-xs-12">
+        <br>
+        <center><img src="/assets/icon.png" style="width:80%;max-width:150px;"></center><br>
+      </div>
+      <div class="col-sm-2 col-xs-3 footer-col">
+        <br>
+        <nav>
+          <ul>
+            <li style="color: #b4cbe4"><b>&bull;&nbsp;AIUTO</b></li><br>
+            <li><%= link_to "FAQ", help_path %></li> 
+          </ul>
+        </nav>
+      </div>
+      <div class="col-sm-2 col-xs-3 footer-col">
+        <br>
+        <nav>
+          <ul>
+            <li style="color: #b4cbe4"><b>&bull;&nbsp;INFO</b></li><br>
+            <li><%= link_to "About", about_path %></li> 
+          </ul>
+        </nav>
+      </div>
+      <div class="col-sm-3 col-xs-6 footer-col">
+        <br>
+        <nav>
+          <ul>
+            <li style="color: #b4cbe4"><b>&bull;&nbsp;CONTATTI</b></li><br>
+            <li>nightsoutstaff@gmail.com</li>
+            <li>pagina facebook</li>
+            <li><%= link_to "Contacts", contacts_path %></li>  
+          </ul>
+        </nav>
+      </div>
+      
+      <div class="col-sm-3 col-xs-12 footer-col">
+        <br><br><br><center>Nightsout copiright trademark ecc</center><br>
+      </div>
+    </div>
+  </div>
 </footer>

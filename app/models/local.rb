@@ -67,10 +67,21 @@ class Local < ApplicationRecord
     end
   end
 
-  def self.addFollowingLocalPublishEventNotification(idLocal, idEvent)
+  def self.addFollowingLocalPublishEventNotification(idLocal, idEvent, nameEvent)
     if not LocalRelationship.where(followed_id: idLocal).blank?
       LocalRelationship.where(followed_id: idLocal).each do |l|
-        Notification.create(text: "Nuovo evento!", written_by: "", event_id: idEvent, local_id: idLocal, end: "", user_id: l.follower_id)
+        Notification.create(text: "Nuovo evento!", written_by: nameEvent, event_id: idEvent, local_id: idLocal, end: "", user_id: l.follower_id)
+      end
+    end   
+  end
+
+  def self.deleteFollowingLocal(idLocal, nameLocal)
+    if not LocalRelationship.where(followed_id: idLocal).blank?
+      Notification.where(local_id: idLocal).each do |n|
+        n.update(text: "Evento locale seguito eliminato!", read: false)
+      end
+      LocalRelationship.where(followed_id: idLocal).each do |l|
+        Notification.create(text: "Locale seguito eliminato!", written_by: nameLocal, local_id: idLocal, end: "", user_id: l.follower_id)
       end
     end   
   end

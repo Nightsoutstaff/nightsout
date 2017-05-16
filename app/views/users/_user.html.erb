@@ -2,11 +2,11 @@
   <div class="row">
     
       <div class="col-sm-10">
-        Nome: <%= user.name %><br>
-        Email: <%= user.email %><br>
-        Città: <%= user.city %><br>
-        Registrato alle <%= user.created_at.strftime("ore %H:%M del %d-%m-%y") %><br>
-        Ruolo: <%= user.role %><br>
+        <b>Username:</b> <%= user.name %><br>
+        <b>Email:</b> <%= user.email %><br>
+        <b>Città:</b> <%= user.city %><br>
+        <b>Ruolo:</b> <%= user.role %><br>
+        <small>Registrato alle <%= user.created_at.strftime("ore %H:%M del %d-%m-%y") %></small><br>
       </div>
 
       <div class="col-sm-2">

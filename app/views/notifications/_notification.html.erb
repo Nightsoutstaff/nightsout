@@ -57,6 +57,14 @@
           <p><b><%= notification.written_by %></b> ha segnalato un <%= link_to "commento", local_path(notification.local, anchor: "comment_" + notification.comment_id.to_s)%> sull'evento <b><%= link_to notification.local.name, notification.local %></b>": <%= truncate(notification.comment.content, :length => 20) %> ...</p>
         <% end %>
 
+      <% elsif (notification.text == "Evento locale seguito eliminato!") %>
+        <%= notification.text %>
+        <p>Ciao! L'evento "<b><%= notification.written_by %></b>" è stato eliminato in seguito all'eliminazione del locale!</p>
+
+      <% elsif (notification.text == "Locale seguito eliminato!") %>
+        <%= notification.text %>
+        <p>Il locale "<b><%= notification.written_by %></b>" seguito in precedenza è stato eliminato!</p>
+
       <% end %> 
     </div>
   </div>

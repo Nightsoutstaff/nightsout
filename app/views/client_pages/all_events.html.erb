@@ -4,22 +4,24 @@
   <div class="col-md-12">
 
   	<h1>Eventi in città</h1><br>
-  	<%= form_tag(all_events_path, :method => "get", id: "search-form",:class => 'form-inline', :style => 'float:left') do %>
+  	<div class="form-inline" style="float:right">
+  		<%= form_tag(all_events_path, :method => "get", id: "search-form",:class => 'form-inline', :style => 'float:left') do %>
   		<div class="form-group">
     		<div class="input-group">
       		<span class="input-group-btn">
-		  			<%= submit_tag "Applica", :name => nil, class: "btn btn-in" %>
+		  			<%= submit_tag "Applica", :name => nil, class: "btn btn-xs btn-in" %>
 		  		</span>
-      		<%= text_field_tag :search_date, params[:search_date], placeholder: "Inserisci data e ora", class: 'datetimepicker12 form-control' %>
-      		<span class="input-group-btn">
-      			<%= select_tag(:search_category, options_for_select(['Ristorante','Pub','Dance']), include_blank: 'Inserisci categoria', class: 'form-control') %>
-      		</span>
-      		<span class="imput-group-btn">
-      			<%= select_tag(:order_category, options_for_select(['Più recenti','Più popolari']), include_blank: 'Ordina per', class: 'form-control') %>
-      		</span>
-    		</div>
-  		</div>
-		<% end %>
+      		<%= text_field_tag :search_date, params[:search_date], placeholder: " Inserisci data e ora", class: 'datetimepicker12 form-control-sm' %>
+      	</div>
+      </div>
+      <div class="form-group">
+      	<%= select_tag(:search_category, options_for_select(['Ristorante','Pub','Dance']), include_blank: 'Categoria', class: 'form-control-sm') %>
+      </div>
+      <div class="form-group">
+      	<%= select_tag(:order_category, options_for_select(['Più recenti','Più popolari']), include_blank: 'Ordina per', class: 'form-control-sm') %>	
+    	</div>
+    	<% end %>
+  	</div>
 	</div>
 
 	<div class="col-md-8 col-md-offset-2"><br><br><br>
@@ -32,13 +34,12 @@
 			<% else %>
 				<% if @events.blank? %>
 					<% if @category != nil || @date != nil %>
-					<%= (DateTime.strptime(@date, '%d-%m-%Y %H:%M')) %>
 						<p>Non ci sono eventi con queste caratteristiche nella tua città!</p>
 					<% else %>
 						<p>Non ci sono eventi nella tua città!</p>
 					<% end %>
 				<% else %>
-					<p>Eventi a <%= @city_user %>:</p>
+					<h4>Eventi a <%= @city_user %>:</h4>
 					<ul class="events">
 		   			<%= render @events %>
 					</ul>

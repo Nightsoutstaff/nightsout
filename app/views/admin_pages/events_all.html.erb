@@ -3,8 +3,7 @@
 
 <div class="row">
   <div class="col-md-10 col-md-offset-1">
-  	<% @events = @event.paginate(page: params[:page], :per_page => 5) %>
-    <h3>Eventi totali (<%= @event.count %>)</h3><br>
+    <h3>Eventi totali (<%= @events.count %>)</h3><br>
     <ol class="events">
     	<%= render @events %>
     </ol>

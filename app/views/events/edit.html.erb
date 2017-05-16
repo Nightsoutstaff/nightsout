@@ -6,28 +6,33 @@
     <%= form_for(@event) do |f| %>
         <%= render 'shared/error_messages', object: f.object %>
         <div class="field">
-          Nome: <%= f.text_field :name, placeholder: @event.name, class: 'form-control' %>
+          <%= f.label :Nome %><br />
+          <%= f.text_field :name, placeholder: @event.name, class: 'form-control' %>
         </div>
 
         <div class="field">
-          Inizio: <%= f.text_field :start, placeholder: "Reinserisci data e ora di inizio evento", class: 'datetimepicker12 form-control' %>
+          <%= f.label :Inizio %><br />
+          <%= f.text_field :start, placeholder: @event.start.strftime("YYYY-MM-D HH:mm"), class: 'datetimepicker12 form-control' %>
         </div>
 
         <div class="field">
-          Fine: <%= f.text_field :end_time, placeholder: "Reinserisci data e ora di fine evento", class: 'datetimepicker12 form-control' %>
+          <%= f.label :Fine %><br />
+          <%= f.text_field :end_time, placeholder: @event.end_time.strftime("YYYY-MM-D HH:mm"), class: 'datetimepicker12 form-control' %>
         </div>
         
         <div class="field">
-          Descrizione: <%= f.text_area :description, placeholder: @event.local.description, class: 'form-control' %>
+          <%= f.label :Descrizione %><br />
+          <%= f.text_area :description, placeholder: @event.local.description, class: 'form-control' %>
         </div>
         <span class="picture">
-          Foto: <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
+          <p>Modifica l'immagine dell'evento:</p>
+          <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
         </span>
         <div class="checkbox" style="margin-left:-20px">
           <label> 
             Elimina foto&nbsp;&nbsp;<%= check_box_tag 'remove_photo', 'yes', false %> 
           </label>
-        </div>
+        </div><br>
       <%= f.submit "Salva modifiche", class: "btn btn-primary" %>
     <% end %>
     <br><br>
@@ -46,8 +51,10 @@
   $(function () {
     $('.datetimepicker12').datetimepicker({
       sideBySide: true,
-      format: 'D-M-YYYY HH:mm',
-      minDate: moment()
+      format: 'YYYY-MM-D HH:mm',
+      minDate: moment(),
+      locale: moment.locale('it'),
+      useCurrent:false
     });
   });
 </script>

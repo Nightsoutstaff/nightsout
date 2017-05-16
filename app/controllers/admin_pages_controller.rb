@@ -1,14 +1,14 @@
 class AdminPagesController < ApplicationController
   def events_all
-  	@event = Event.all
+  	@events = Event.all.paginate(page: params[:page], :per_page => 10)
   end
 
   def locals_all
-  	@local = Local.all
+  	@locals = Local.all.paginate(page: params[:page], :per_page => 10)
   end
 
   def users_all
-  	@user = User.all.paginate(page: params[:page], :per_page => 5)
+  	@users = User.where.not(role:'admin').paginate(page: params[:page], :per_page => 10)
   end
 
   def ban

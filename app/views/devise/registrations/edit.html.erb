@@ -53,11 +53,6 @@
       </div>
 
       <div class="field">
-        <%= f.label :Lingua %><br />
-        <%= f.text_field :language, class: 'form-control' %>
-      </div>
-
-      <div class="field">
         <%= f.label :Modalità %>
         <p> Come cliente puoi cercare e visualizzare ogni evento, mentre come gestore puoi pubblicare eventi e locali a tuo nome:<p>
         <%= f.collection_select(:role, User::ROLES, :to_s, lambda{|i| i.to_s.humanize}) %>

@@ -4,31 +4,18 @@ before_action :authenticate_user!, only: [:create, :edit, :update, :destroy]
 
   def show
     @event = Event.find(params[:id])
-    #@microposts = @user.microposts.paginate(page: params[:page], :per_page => 10)
   end
 
-  #def search
-  #  @events = Event.all
-  #  if params[:search]
-  #    @events = Event.search(params[:search]).order("created_at DESC")
-  #  else
-  #    @events = Event.all.order("created_at DESC")
-  #  end
-  #end
-
   def create
-  	@local = Local.find_by(id: params[:event][:local_id]) #prendi id locale dal select nel form
-    @event = @local.events.build(event_params)
-    #@event = Event.new(event_params)
-    
+    @local = Local.find_by(id: params[:event][:local_id]) #prendi id locale dal select nel form
+    @event = @local.events.build(event_params)   
     if @event.save
       flash[:success] = "Evento aggiunto!"
-      Local.addFollowingLocalPublishEventNotification(@local.id, @event.id)
+      Local.addFollowingLocalPublishEventNotification(@local.id, @event.id, @event.name)
       redirect_to your_events_path
     else
       render 'owner_pages/publish_events'
-    end
-    
+    end  
   end
 
   def destroy

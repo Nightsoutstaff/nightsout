@@ -3,8 +3,7 @@
 
 <div class="row">
   <div class="col-md-10 col-md-offset-1">
-  	<% @locals = @local.paginate(page: params[:page], :per_page => 5) %>
-    <h3>Locali totali (<%= @local.count %>)</h3><br>
+    <h3>Locali totali (<%= @locals.count %>)</h3><br>
     <ol class="events">
     	<%= render @locals %>
     </ol>

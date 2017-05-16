@@ -26,8 +26,7 @@ gem 'font-awesome-rails'
 #gem 'bootstrap-datepicker-rails'
 gem 'momentjs-rails'
 gem 'bootstrap3-datetimepicker-rails'
-gem 'devise'                
-gem 'cancancan'        
+gem 'devise'                      
 gem 'omniauth'
 gem 'omniauth-facebook'  
 gem 'geocoder'   
@@ -42,6 +41,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.1.0'
 end
 gem 'simple_form'
+gem 'mail_form'
 gem "bootstrap_flash_messages", "~> 1.0.1"
 gem 'jquery-ui-rails'
 gem 'acts_as_votable', '~> 0.10.0'

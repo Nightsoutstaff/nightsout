@@ -3,9 +3,9 @@
 
 <div class="row">
   <div class="col-md-10 col-md-offset-1">
-    <h3>Utenti totali (<%= @user.count %>)</h3><br>
+    <h3>Utenti totali (<%= @users.count %>)</h3><br>
     <ol class="users">
-    	<%= render partial: "users/user", collection: @user %>
+    	<%= render partial: "users/user", collection: @users %>
     </ol>
   </div>
 </div>

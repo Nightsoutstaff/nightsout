@@ -50,6 +50,7 @@ Rails.application.routes.draw do
   resources :event_relationships, only: [:create, :destroy]
   resources :local_relationships, only: [:create, :destroy]
   #resources :comments, only: [:index, :create]
+  resources :contacts, only: [:new, :create]
 
 
   root 'pages#home'
@@ -63,7 +64,10 @@ Rails.application.routes.draw do
   get '/help',    to: 'pages#help'
   get '/notifications',    to: 'pages#notifications'
   get '/about',   to: 'pages#about'
-  get '/contact', to: 'pages#contact'
+  #get '/contact', to: 'pages#contact'
+
+
+  get '/contacts', to: 'contacts#new'
   get '/search',    to: 'pages#search'
   get '/banned', to: 'pages#banned'
   get '/events_all', to: 'admin_pages#events_all'
@@ -71,6 +75,5 @@ Rails.application.routes.draw do
   get '/users_all', to: 'admin_pages#users_all'
   post 'admin_pages/ban' => 'admin_pages#ban', :as => :ban
   post 'admin_pages/unban' => 'admin_pages#unban', :as => :unban
- # get '/comments/new/(:parent_id)', to: 'comments#new', as: :new_comment
 
 end

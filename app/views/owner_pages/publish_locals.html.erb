@@ -23,31 +23,31 @@
     	<%= form_for(@local) do |f| %>
     		<%= render 'shared/error_messages', object: f.object %>
   			<div class="field">
-          Nome:
+          <%= f.label :Nome %><br />
     			<%= f.text_field :name, placeholder: "Inserisci nome", class: "form-control" %>
   			</div>
         <div class="field">
-          Categoria:
+          <%= f.label :Categoria %><br />
           <%= f.select(:category, ['Pub', 'Ristorante', 'Dance']) %>
         </div>
   			<div class="field" id="address" name="address" tag="address">
-          Indirizzo:
+          <%= f.label :Indirizzo %><br />
     			<%= f.text_field :address, placeholder: "Inserisci indirizzo", id: "loc-address", class: "form-control" %>
   			</div>
         <div class="field">
-          Telefono:
+          <%= f.label :Telefono %><br />
           <%= f.text_field :telephone, placeholder: "Inserisci telefono", class: "form-control" %>
         </div>
         <div class="field">
-          Sito web: <small>(attenzione al formato: es. 'www.nightsout.it')</small>
+          <%= f.label :Sito_web %>&nbsp;&nbsp;<small>(attenzione al formato: es. 'www.nightsout.it')</small><br>
           <%= f.text_field :website, placeholder: "Inserisci sito internet", class: "form-control" %>
         </div>
         <div class="field">
-          Partita IVA:
+          <%= f.label :Partita_IVA %><br />
           <%= f.text_field :iva, placeholder: "Inserisci partita iva", class: "form-control" %>
         </div>
   			<div class="field">
-          Descrizione:
+          <%= f.label :Descrizione %><br />
     			<%= f.text_area :description, placeholder: "Inserisci descrizione", class: "form-control" %>
   			</div>
         

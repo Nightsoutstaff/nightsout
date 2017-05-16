@@ -20,42 +20,50 @@
     <%= form_for(@local) do |f| %>
         <%= render 'shared/error_messages', object: f.object %>
         <div class="field">
-          Nome: <%= f.text_field :name, placeholder: @local.name, class: 'form-control' %>
+          <%= f.label :Nome%><br />
+          <%= f.text_field :name, placeholder: @local.name, class: 'form-control' %>
         </div>
 
         <div class="field">
-          Categoria: <%= f.select(:category, ['Pub', 'Ristorante', 'Dance']) %>
+          <%= f.label :Categoria %><br />
+          <%= f.select(:category, ['Pub', 'Ristorante', 'Dance']) %>
         </div>
 
         <div class="field">
-          Indirizzo: <%= f.text_field :address, id: "loc-address-modify", placeholder: @local.address, class: 'form-control' %>
+          <%= f.label :Indirizzo %><br />
+          <%= f.text_field :address, id: "loc-address-modify", placeholder: @local.address, class: 'form-control' %>
         </div>
 
         <div class="field">
-          Telefono: <%= f.text_field :telephone, placeholder: "Inserisci telefono", class: "form-control" %>
+          <%= f.label :Telefono %><br />
+          <%= f.text_field :telephone, placeholder: "Inserisci telefono", class: "form-control" %>
         </div>
 
         <div class="field">
-          Sito web: <%= f.text_field :website, placeholder: "Inserisci sito internet", class: "form-control" %>
+          <%= f.label :Sito_web %><br />
+          <%= f.text_field :website, placeholder: "Inserisci sito internet", class: "form-control" %>
         </div>
 
         <div class="field">
-          Descrizione: <%= f.text_area :description, placeholder: @local.description, class: 'form-control' %>
+          <%= f.label :Descrizione %><br />
+          <%= f.text_area :description, placeholder: @local.description, class: 'form-control' %>
         </div>
 
         <div class="field">
-          Partita IVA: <%= f.text_field :iva, placeholder: "Inserisci partita iva", class: "form-control" %>
+          <%= f.label :Partita_IVA %><br />
+          <%= f.text_field :iva, placeholder: "Inserisci partita iva", class: "form-control" %>
         </div>
 
         <span class="picture">
-          Inserisci foto: <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
+          <p>Modifica l'immagine del locale:</p>
+          <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
         </span>
 
         <div class="checkbox" style="margin-left:-20px">
-        <label> 
-          Elimina foto&nbsp;&nbsp;<%= check_box_tag 'remove_photo', 'yes', false %> 
-        </label>
-      </div>
+          <label> 
+            Elimina foto&nbsp;&nbsp;<%= check_box_tag 'remove_photo', 'yes', false %> 
+          </label>
+        </div><br>
       <%= f.submit "Salva modifiche", class: "btn btn-primary" %>
     <% end %>
     <br><br>
