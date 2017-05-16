@@ -19,7 +19,7 @@ class Event < ApplicationRecord
   validates :description, presence: true, length: { maximum: 1400 }
   validates :name, presence: true
   validates :start, presence: true
-  validates :end_time, presence: true
+  validates :end, presence: true
 
   validate :start_before_end
    
@@ -38,7 +38,7 @@ class Event < ApplicationRecord
     end
 
     def start_before_end
-      if start != nil && end_time != nil && end_time < start
+      if start != nil && self.end != nil && self.end < start
         errors.add(:start, ": fine evento prima del suo inizio")
       end
     end

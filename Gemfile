@@ -49,6 +49,7 @@ gem 'acts_as_votable', '~> 0.10.0'
 group :development, :test do
   gem 'sqlite3', '1.3.12'
   gem 'byebug',  '9.0.0', platform: :mri
+  gem 'rspec-rails'
 end
 
 group :development do
@@ -64,7 +65,6 @@ group :test do
   gem 'minitest-reporters',       '1.1.9'
   gem 'guard',                    '2.13.0'
   gem 'guard-minitest',           '2.4.4'
-  gem 'rspec'
 end
 
 #group :production do

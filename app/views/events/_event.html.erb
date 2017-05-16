@@ -13,7 +13,7 @@
         <b>Locale:</b> <%= link_to event.local.name, event.local %><br>
         <b>Indirizzo:</b> <%= event.local.address %><br>
         <b>Inizio:</b> <%= event.start.strftime("ore %H:%M del %d-%m-%y") %><br>
-        <b>Fine:</b> <%=event.end_time.strftime("ore %H:%M del %d-%m-%y") %><br>
+        <b>Fine:</b> <%=event.end.strftime("ore %H:%M del %d-%m-%y") %><br>
         <!--Descrizione: <%= event.description %><br>-->
         <br>
         <%= link_to "Maggiorni informazioni..", event %><br>
@@ -67,7 +67,7 @@
         <b>Locale:</b> <%= link_to event.local.name, event.local %><br>
         <b>Indirizzo:</b> <%= event.local.address %><br>
         <b>Inizio:</b> <%= event.start.strftime("ore %H:%M del %d-%m-%y") %><br>
-        <b>Fine:</b> <%=event.end_time.strftime("ore %H:%M del %d-%m-%y") %><br>
+        <b>Fine:</b> <%=event.end.strftime("ore %H:%M del %d-%m-%y") %><br>
         <!--Descrizione: <%= event.description %><br>-->
         <br>
         <%= link_to "Maggiorni informazioni..", event %><br>

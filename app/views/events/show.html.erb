@@ -97,7 +97,7 @@
       <p><b>Locale:</b> <%= link_to @event.local.name, @event.local %></p>
       <p><b>Indirizzo:</b> <%= @event.local.address %></p>
       <p><b>Inizio:</b> <%= @event.start.strftime("ore %H:%M del %d-%m-%y") %></p>
-      <p><b>Fine:</b> <%= @event.end_time.strftime("ore %H:%M del %d-%m-%y") %></p>
+      <p><b>Fine:</b> <%= @event.end.strftime("ore %H:%M del %d-%m-%y") %></p>
       <p><b>Descrizione:</b> <%= @event.description %></p>
 
         
@@ -120,7 +120,7 @@
         <p><b>Locale:</b> <%= link_to @event.local.name, @event.local %></p>
         <p><b>Indirizzo:</b> <%= @event.local.address %></p>
         <p><b>Inizio:</b> <%= @event.start.strftime("ore %H:%M del %d-%m-%y") %></p>
-        <p><b>Fine:</b> <%= @event.end_time.strftime("ore %H:%M del %d-%m-%y") %></p>
+        <p><b>Fine:</b> <%= @event.end.strftime("ore %H:%M del %d-%m-%y") %></p>
         <p><b>Descrizione:</b> <%= @event.description %></p>
 
         <% if user_signed_in? %>
