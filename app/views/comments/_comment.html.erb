@@ -1,5 +1,11 @@
 <li id="comment_<%= comment.id %>" class="comment">
-  <b><%= comment.user.name %></b>
+  <% if user_signed_in? && comment.commentable_type=='Local' && comment.user == Local.find(comment.commentable_id).user %>
+    <b><%= Local.find(comment.commentable_id).name %></b>
+  <% elsif user_signed_in? && comment.commentable_type=='Event' && comment.user == Event.find(comment.commentable_id).local.user %>
+    <b><%= Event.find(comment.commentable_id).local.name %></b>
+  <% else %>
+    <b><%= comment.user.name %></b>
+  <% end %>
   <div class="comment-content">
     <%= comment.content %>
   </div>
@@ -8,6 +14,8 @@
       <% if user_signed_in? %>
         <% if current_user == comment.user %>
           <%= link_to "Modifica", edit_polymorphic_path([comment.commentable, comment]), class: 'edit-comment-link', remote: true  %> &bull;
+          <%= link_to "Elimina", [comment.commentable, comment], method: :delete, class: 'delete-comment-link', data:{confirm:"Sei sicuro?"}, remote: true %> &bull;
+        <% elsif current_user.role == 'admin' %>
           <%= link_to "Elimina", [comment.commentable, comment], method: :delete, class: 'delete-comment-link', data:{confirm:"Sei sicuro?"}, remote: true %> &bull;
         <% else %>
         <div style="display:none">
@@ -26,10 +34,10 @@
           <% end %>
 
           <div style="float:right; color: #bbb;">
-            <% if current_user.role != 'admin' %>
-              <%= link_to "Segnala", signal_local_comment_path(comment.commentable.id, comment), method: :put, data:{confirm:"Sei sicuro?"} %>
+            <% if current_user.role != 'admin' && comment.user.role != 'admin' && current_user != comment.user%>
+              <%= link_to "Segnala", signal_local_comment_path(comment.commentable.id, comment), method: :put, data:{confirm:"Sei sicuro?"} %>&bull; 
             <% end %>
-           &bull; <%= localize(comment.updated_at, format: :long) %>
+            <%= localize(comment.updated_at, format: :long) %>
           </div>
         <% elsif comment.commentable_type == 'Event' %>
 
@@ -40,10 +48,10 @@
           <% end %>
 
           <div style="float:right; color: #bbb;">
-            <% if current_user.role != 'admin' %>
-              <%= link_to "Segnala", signal_event_comment_path(comment.commentable.id, comment), method: :put, data:{confirm:"Sei sicuro?"} %>
+            <% if current_user.role != 'admin' && comment.user.role != 'admin' && current_user != comment.user%>
+              <%= link_to "Segnala", signal_event_comment_path(comment.commentable.id, comment), method: :put, data:{confirm:"Sei sicuro?"} %>&bull; 
             <% end %>
-            &bull; <%= localize(comment.created_at, format: :long) %>
+            <%= localize(comment.created_at, format: :long) %>
           </div>
       <% end 
       end %>

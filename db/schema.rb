@@ -73,16 +73,16 @@ ActiveRecord::Schema.define(version: 20170513174600) do
     t.string   "name"
     t.string   "category"
     t.text     "description"
-    t.integer  "telephone"
+    t.integer  "telephone",   limit: 8
     t.string   "address"
     t.string   "website"
-    t.integer  "iva"
+    t.integer  "iva",         limit: 8
     t.string   "city"
     t.float    "latitude"
     t.float    "longitude"
     t.integer  "user_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
     t.string   "picture"
     t.index ["user_id", "created_at"], name: "index_locals_on_user_id_and_created_at"
     t.index ["user_id"], name: "index_locals_on_user_id"
@@ -90,15 +90,15 @@ ActiveRecord::Schema.define(version: 20170513174600) do
 
   create_table "notifications", force: :cascade do |t|
     t.string   "text"
-    t.string   "written_by"
-    t.boolean  "read",       default: false
+    t.string   "additional_info"
+    t.boolean  "read",            default: false
     t.datetime "end"
     t.integer  "user_id"
     t.integer  "event_id"
     t.integer  "local_id"
     t.integer  "comment_id"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.index ["comment_id"], name: "index_notifications_on_comment_id"
     t.index ["event_id"], name: "index_notifications_on_event_id"
     t.index ["local_id"], name: "index_notifications_on_local_id"
@@ -140,7 +140,6 @@ ActiveRecord::Schema.define(version: 20170513174600) do
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "city"
-    t.string   "language"
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
     t.string   "email",                  default: "",       null: false

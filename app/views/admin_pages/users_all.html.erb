@@ -2,6 +2,23 @@
 <br><h1>Tutti gli utenti</h1><br>
 
 <div class="row">
+  <div class="col-md-12">
+		<div class="form-inline" style="float:right">
+  		<%= form_tag(users_all_path, :method => "get", id: "search-form") do %>
+  		<div class="form-group">
+    		<div class="input-group">
+      		<%= text_field_tag :search_user, params[:search_user], placeholder: " Cerca utente...", class: 'form-control-sm' %>
+      		<span class="input-group-btn">
+		  			<%= submit_tag "Cerca", :name => nil, class: "btn btn-xs btn-in" %>
+		  		</span>
+      	</div>
+      </div>
+    	<% end %>
+  	</div>
+	</div>
+</div>
+
+<div class="row">
   <div class="col-md-10 col-md-offset-1">
     <h3>Utenti totali (<%= @users.count %>)</h3><br>
     <ol class="users">

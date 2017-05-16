@@ -22,8 +22,9 @@ before_action :authenticate_user!, only: [:create, :edit, :update, :destroy]
     #Se è l'admin che ha eliminato l'evento
     @event = Event.find(params[:id])
     if(current_user.role == 'admin')
-        Notification.create(text: "Evento eliminato da Admin!", mentioned_by:"", event_id: @event.id, local_id: @event.local.id, end: @event.start, user_id: @event.local.user.id)
+      Notification.create(text: "Evento eliminato da Admin!", additional_info: @event.name, event_id: @event.id, local_id: @event.local.id, end: @event.start, user_id: @event.local.user.id)
     end
+    Event.deleteFollowedEvents(@event.id, @event.name)
     @event.destroy
     flash[:success] = "Evento eliminato!"
     if(current_user.role == 'admin')
@@ -59,7 +60,7 @@ before_action :authenticate_user!, only: [:create, :edit, :update, :destroy]
 
   def report
     @event = Event.find(params[:id])
-    Notification.create(text: "Segnalazione evento!", written_by: current_user.name, event_id: @event.id, user_id: User.find_by(role: 'admin').id)
+    Notification.create(text: "Segnalazione evento!", additional_info: current_user.name, event_id: @event.id, user_id: User.find_by(role: 'admin').id)
     redirect_to @event
   end
 

@@ -2,7 +2,7 @@ class CreateNotifications < ActiveRecord::Migration[5.0]
   def change
     create_table :notifications do |t|
     	t.string :text
-      t.string :written_by
+      t.string :additional_info
     	t.boolean :read, default: false
     	t.datetime :end
 

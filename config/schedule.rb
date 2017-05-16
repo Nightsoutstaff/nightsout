@@ -23,7 +23,7 @@ set :output, "#{path}/log/cron_log.log"
 set :environment, 'development'
 
 every 12.hours do
-	runner "Local.deleteEvents"
+	runner "Event.deleteEvents"
 end
 
 every :day do

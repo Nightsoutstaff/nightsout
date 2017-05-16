@@ -1,31 +1,31 @@
 <li id="user-<%= user.id %>">
   <div class="row">
-    
-      <div class="col-sm-10">
-        <b>Username:</b> <%= user.name %><br>
-        <b>Email:</b> <%= user.email %><br>
-        <b>Città:</b> <%= user.city %><br>
-        <b>Ruolo:</b> <%= user.role %><br>
-        <small>Registrato alle <%= user.created_at.strftime("ore %H:%M del %d-%m-%y") %></small><br>
-      </div>
+    <div class="col-sm-1"></div>
 
-      <div class="col-sm-2">
-        
-        <% if user_signed_in? %>
-          <% if current_user.role=='admin' %>
-            <% if user.role == 'client' || user.role=='owner'%>
-              <%= form_tag ban_path, method: :post do %>
-                <%= hidden_field_tag :id, user.id %>
-                <%= submit_tag 'ban user' %>
-              <% end %>
-            <% elsif user.role == 'banned' %>
-              <%= form_tag unban_path, method: :post do %>
-                <%= hidden_field_tag :id, user.id %>
-                <%= submit_tag 'unban user' %>
-              <% end %>
+    <div class="col-sm-9">
+      <b>Username:</b> <%= user.name %><br>
+      <b>Email:</b> <%= user.email %><br>
+      <b>Città:</b> <%= user.city %><br>
+      <b>Ruolo:</b> <%= user.role %><br>
+      <small>Registrato alle <%= user.created_at.strftime("ore %H:%M del %d-%m-%y") %></small><br>
+    </div>
+
+    <div class="col-sm-2">   
+      <% if user_signed_in? %>
+        <% if current_user.role=='admin' %>
+          <% if user.role == 'client' || user.role=='owner'%>
+            <%= form_tag ban_path, method: :post do %>
+              <%= hidden_field_tag :id, user.id %>
+              <%= submit_tag 'ban user' %>
             <% end %>
-          <% end 
-        end %>
-      </div>
+          <% elsif user.role == 'banned' %>
+            <%= form_tag unban_path, method: :post do %>
+              <%= hidden_field_tag :id, user.id %>
+              <%= submit_tag 'unban user' %>
+            <% end %>
+          <% end %>
+        <% end 
+      end %>
+    </div>
   </div>
 </li>

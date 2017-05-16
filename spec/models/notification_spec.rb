@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Notification, type: :model do 
 
 	before(:each) do
-		@notifica=Notification.new(text:"nuova notifica", written_by:"frank", event_id:1, local_id:1, end:"", user_id:1)
+		@notifica=Notification.new(text:"nuova notifica", additional_info:"frank", event_id:1, local_id:1, end:"", user_id:1)
 		expect(@notifica).to_not eq(nil)
 	end
 
