@@ -34,7 +34,6 @@
                   <%= f.submit "Segui", class: "follow-btn" %>
                 <% end %>
               <% end %>
-              <br><br>
             </div>
           <% end 
         end %>
@@ -144,7 +143,7 @@
           <%= link_to "Elimina", @event, method: :delete,
                                            data: { confirm: "Sei sicuro?" }, class: "delete-link" %><br><br>
           <% else %>
-            <div id="follow_form"><br>
+            <div id="follow_form">
               <% if current_user.following_event?(@event) %>
                 <%= form_for(current_user.active_event_relationships.find_by(followed_id: @event.id),
                html: { method: :delete }) do |f| %>
@@ -156,7 +155,6 @@
                   <%= f.submit "Segui", class: "follow-btn" %>
                 <% end %>
               <% end %>
-              <br><br>
             </div>
           <% end 
         end %>

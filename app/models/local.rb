@@ -42,19 +42,6 @@ class Local < ApplicationRecord
     Local.near("%#{search}%", 5)
   end
 
-  def self.deleteEvents
-    event = Event.joins(:local).where(['events.end<?', DateTime.now])
-    if not event.blank?
-      event.each do |e|
-        EventRelationship.where(['followed_id=?', e.id]).each do |f|
-          Notification.create(text: "Evento seguito scaduto!", additional_info: e.name, event_id: e.id, local_: e.local_id, end: e.end, user_id: f.follower_id)
-        end
-        Notification.create(text: "Evento scaduto!", additional_info: e.name, event_id: e.id, local_id: e.local_id, end: e.end, user_id: e.local.user_id)
-        e.destroy
-      end
-    end
-  end
-
   #Caso in cui vado ad inserire all'interno del campo end della tabella notifiche, il contenuto del campo start dell'evento,
   #così da visualizzare la data dell'evento in arrivo. Questo metodo è inserito nello schedule.rb e verrà effettuato ogni 24h
 

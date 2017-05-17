@@ -53,7 +53,7 @@ class Event < ApplicationRecord
 
   def self.deleteFollowedEvents(idEvent, nameEvent)
     if not EventRelationship.where(followed_id: idEvent).blank?
-      Notification.where(event_id: idEvent).each do |n|
+      Notification.where(event_id: idEvent, text: "Evento in avvicinamento!").each do |n|
         n.update(text: "Evento in avvicinamento eliminato!", read: false)
       end
       EventRelationship.where(followed_id: idEvent).each do |f|

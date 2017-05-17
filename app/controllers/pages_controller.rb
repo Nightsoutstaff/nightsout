@@ -80,7 +80,7 @@ class PagesController < ApplicationController
           end
         end
 
-        @events = Event.where(:id => @events_ids).paginate(page: params[:page], :per_page => 5)
+        @events = Event.where(:id => @events_ids).paginate(page: params[:page], :per_page => 5).reorder(followed_count: :desc, created_at: :desc)
         @events.each do |e|
           (@positions ||= []) << [e.local.latitude, e.local.longitude, e.name, e.local.address, e.id, e.local.name, e.local.id]
         end 

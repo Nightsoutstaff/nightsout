@@ -31,18 +31,26 @@
       
       <% elsif (notification.text == "Il tuo locale è stato commentato!") %> 
         <%= notification.text %>
+        <% if notification.local != nil %>
         <p><b><%= notification.additional_info %></b> ha aggiunto un <%= link_to "commento", local_path(notification.local, anchor: "comment_" + notification.comment_id.to_s)%> al tuo locale "<b><%= link_to notification.local.name, notification.local %></b>": <%= truncate(notification.comment.content, :length => 20) %> ...</p>
+        <% else %>
+          <p><b><%= notification.additional_info %></b> ha aggiunto un commento al tuo locale.</p>
+        <% end %>
       
       <% elsif (notification.text == "Il tuo evento è stato commentato!") %> 
         <%= notification.text %>
+        <% if notification.event != nil %>
         <p><b><%= notification.additional_info %></b> ha aggiunto un <%= link_to "commento", event_path(notification.event, anchor: "comment_" + notification.comment_id.to_s)%> al tuo evento "<b><%= link_to notification.event.name, notification.event %></b>": <%= truncate(notification.comment.content, :length => 20) %> ...</p>
+        <% else %>
+          <p><b><%= notification.additional_info %></b> ha aggiunto un commento al tuo evento.</p>
+        <% end %>
 
       <% elsif (notification.text == "Qualcuno ha risposto al tuo commento!") %>
         <%= notification.text %>
         <% if notification.event != nil && notification.local == nil %>
           <p><b><%= notification.additional_info %></b> ha risposto al tuo <%= link_to "commento", event_path(notification.event, anchor: "comment_" + notification.comment_id.to_s)%> sull'evento <b><%= link_to notification.event.name, notification.event %></b>": <%= truncate(notification.comment.content, :length => 20) %>...</p>
         <% elsif notification.local != nil && notification.event == nil %>
-          <p><b><%= notification.additional_info %></b> ha risposto al tuo <%= link_to "commento", local_path(notification.local, anchor: "comment_" + notification.comment_id.to_s)%> sull'evento <b><%= link_to notification.local.name, notification.local %></b>": <%= truncate(notification.comment.content, :length => 20) %> ...</p>
+          <p><b><%= notification.additional_info %></b> ha risposto al tuo <%= link_to "commento", local_path(notification.local, anchor: "comment_" + notification.comment_id.to_s)%> sul locale <b><%= link_to notification.local.name, notification.local %></b>": <%= truncate(notification.comment.content, :length => 20) %> ...</p>
         <% end %>
 
       <% elsif (notification.text == "Segnalazione locale!") %> 
@@ -58,7 +66,7 @@
         <% if notification.event != nil && notification.local == nil %>
           <p><b><%= notification.additional_info %></b> ha segnalato un <%= link_to "commento", event_path(notification.event, anchor: "comment_" + notification.comment_id.to_s)%> sull'evento <b><%= link_to notification.event.name, notification.event %></b>": <%= truncate(notification.comment.content, :length => 20) %>...</p>
         <% elsif notification.local != nil && notification.event == nil %>
-          <p><b><%= notification.additional_info %></b> ha segnalato un <%= link_to "commento", local_path(notification.local, anchor: "comment_" + notification.comment_id.to_s)%> sull'evento <b><%= link_to notification.local.name, notification.local %></b>": <%= truncate(notification.comment.content, :length => 20) %> ...</p>
+          <p><b><%= notification.additional_info %></b> ha segnalato un <%= link_to "commento", local_path(notification.local, anchor: "comment_" + notification.comment_id.to_s)%> sul locale <b><%= link_to notification.local.name, notification.local %></b>": <%= truncate(notification.comment.content, :length => 20) %> ...</p>
         <% end %>
 
       <% elsif (notification.text == "Evento locale seguito eliminato!") %>

@@ -24,7 +24,7 @@ class LocalsController < ApplicationController
   def destroy
     @local = Local.find(params[:id])
     if(current_user.role == 'admin')
-        Notification.create(text: "Locale eliminato da Admin!", mentioned_by:"", local_id: @local.id, user_id: @local.user.id)
+        Notification.create(text: "Locale eliminato da Admin!", additional_info: @local.name, local_id: @local.id, user_id: @local.user.id)
     end
     Local.deleteFollowingLocal(@local.id, @local.name)
     @local.destroy
@@ -62,7 +62,7 @@ class LocalsController < ApplicationController
 
   def report
     @local = Local.find(params[:id])
-    Notification.create(text: "Segnalazione locale!", written_by: current_user.name, local_id: @local.id, user_id: User.find_by(role: 'admin').id)
+    Notification.create(text: "Segnalazione locale!", additional_info: current_user.name, local_id: @local.id, user_id: User.find_by(role: 'admin').id)
     redirect_to @local
   end
 

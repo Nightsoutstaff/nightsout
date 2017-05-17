@@ -129,29 +129,17 @@ RSpec.describe Local, type: :model do
 			expect(@notif).to_not eq(nil)
 		end
 
-		describe "self.deleteEvents" do
-
-			it "delete non valido" do
-				@ev=Event.new(name: "evento",description: "cose varie",local_id:1, start:"2017-05-14 17:04:00", end:"2017-05-16 13:05:00", picture: nil)
-				expect(@ev).to be_valid
-				expect(@ev.end).to be <Time.now
-				@ev=nil
-				expect(@ev).to eq(nil)
-			end
-		end
-
-		describe "self.approachingEvent" do
-
-			it "approaching non valido" do
-				@ev=Event.new(name: "evento",description: "cose varie",local_id:1, start:"2050-05-14 17:04:00", end:"2050-05-16 13:05:00", picture: nil)
-				expect(@ev).to be_valid
-				expect(@ev.start).to be >Time.now
-			end
-		end
-
 		describe "self.addFollowing..." do
 
 			it "addFollowing.. non valido" do
+				@relationL=LocalRelationship.new(follower_id:1, followed_id:1)
+				expect(@relationL).to be_valid
+			end
+		end
+
+		describe "self.deleteFollowingLocal" do
+
+			it "deleteFollowingLocal non valido" do
 				@relationL=LocalRelationship.new(follower_id:1, followed_id:1)
 				expect(@relationL).to be_valid
 			end

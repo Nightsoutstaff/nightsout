@@ -21,8 +21,10 @@ class CommentsController < ApplicationController
             end
             redirect_to local_path(@commentable, anchor: 'comment_' + @comment.id.to_s)
           else
-            if current_user != Comment.find(@comment.parent_id).user
+            if (current_user != Comment.find(@comment.parent_id).user) && (current_user != Local.find(@comment.commentable_id).user)
               Notification.create(text: "Qualcuno ha risposto al tuo commento!", comment_id: @comment.id, additional_info: current_user.name, local_id: @comment.commentable_id, user_id: Comment.find(@comment.parent_id).user.id)
+            elsif current_user == Local.find(@comment.commentable_id).user
+              Notification.create(text: "Qualcuno ha risposto al tuo commento!", comment_id: @comment.id, additional_info: Local.find(@comment.commentable_id).name, local_id: @comment.commentable_id, user_id: Comment.find(@comment.parent_id).user.id)
             end
             redirect_to local_path(@commentable, anchor: 'comment_' + @comment.parent_id.to_s)
           end 
@@ -33,8 +35,10 @@ class CommentsController < ApplicationController
             end
             redirect_to event_path(@commentable, anchor: 'comment_' + @comment.id.to_s)
           else
-            if current_user != Comment.find(@comment.parent_id).user
+            if (current_user != Comment.find(@comment.parent_id).user) && (current_user != Event.find(@comment.commentable_id).local.user)
               Notification.create(text: "Qualcuno ha risposto al tuo commento!", comment_id: @comment.id, additional_info: current_user.name, event_id: @comment.commentable_id, user_id: Comment.find(@comment.parent_id).user.id)
+             elsif current_user == Event.find(@comment.commentable_id).local.user
+              Notification.create(text: "Qualcuno ha risposto al tuo commento!", comment_id: @comment.id, additional_info: Event.find(@comment.commentable_id).local.name, event_id: @comment.commentable_id, user_id: Comment.find(@comment.parent_id).user.id)
             end
             redirect_to event_path(@commentable, anchor: 'comment_' + @comment.parent_id.to_s)
           end

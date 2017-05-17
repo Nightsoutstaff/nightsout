@@ -22,7 +22,7 @@
           <%= link_to "Elimina", @local, method: :delete,
                                            data: { confirm: "Sei sicuro?" }, class: "delete-link" %><br><br>
           <% else %>
-            <div id="follow_form"><br>
+            <div id="follow_form">
               <% if current_user.following_local?(@local) %>
                 <%= form_for(current_user.active_local_relationships.find_by(followed_id: @local.id),
                html: { method: :delete }) do |f| %>
@@ -34,7 +34,6 @@
                   <%= f.submit "Segui", class: "follow-btn" %>
                 <% end %>
               <% end %>
-              <br><br>
             </div>
           <% end 
         end %>
@@ -107,7 +106,7 @@
           <%= link_to "Elimina", @local, method: :delete,
                                            data: { confirm: "Sei sicuro?" }, class: "delete-link" %><br><br>
           <% else %>
-            <div id="follow_form"><br>
+            <div id="follow_form">
               <% if current_user.following_local?(@local) %>
                 <%= form_for(current_user.active_local_relationships.find_by(followed_id: @local.id),
                html: { method: :delete }) do |f| %>
@@ -119,7 +118,6 @@
                   <%= f.submit "Segui", class: "follow-btn" %>
                 <% end %>
               <% end %>
-              <br><br>
             </div>
           <% end 
         end %>
