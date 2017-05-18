@@ -42,8 +42,10 @@
         <%= rating_for @local, 'stars', star: 5, disable_after_rate: false, half_show: false, enable_half: false, imbd_avg: true, cancel: false, cancel_place: 'right' %>
         <% if @local.rates("stars").count > 1 %>
           <small>(<%= @local.rates("stars").count %> voti)</small>
-        <% else %>
+        <% elsif @local.rates("stars").count == 1 %>
           <small>(1 voto)</small>
+        <% else %>
+          <small>(0 voti)</small>
         <% end %>
         <br><br>
         <% if user_signed_in? && current_user.role != 'admin' %>
@@ -127,8 +129,10 @@
         <%= rating_for @local, 'stars', star: 5, disable_after_rate: false, half_show: false, enable_half: false, imbd_avg: true, cancel: false, cancel_place: 'right' %>
         <% if @local.rates("stars").count > 1 %>
           <small>(<%= @local.rates("stars").count %> voti)</small>
-        <% else %>
+        <% elsif @local.rates("stars").count == 1 %>
           <small>(1 voto)</small>
+        <% else %>
+          <small>(0 voti)</small>
         <% end %>
         <br><br>
         <% if user_signed_in? && current_user.role != 'admin' %>
