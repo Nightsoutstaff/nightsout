@@ -101,7 +101,7 @@ RSpec.describe Event, type: :model do
 	describe "test method notification" do
 
 		after(:each) do
-			@notif=Notification.new(text:"nuova notifica", written_by:"frank", event_id:1, local_id:1, end:"", user_id:1)
+			@notif=Notification.new(text:"nuova notifica", additional_info:"frank", event_id:1, local_id:1, end:"", user_id:1)
 			expect(@notif).to_not eq(nil)
 		end
 

@@ -17,8 +17,8 @@ class Local < ApplicationRecord
   validates :description, presence: true, length: { maximum: 1400 }
   validates :name, presence: true
   validates :category, presence: true
-  #validates :iva, presence: true, uniqueness: true
-  #validate :check_IVA
+  validates :iva, presence: true, uniqueness: true
+  validate :check_IVA
   validates :telephone, length: {minimum:8, maximum:11}
   validates :address, presence: true
    
