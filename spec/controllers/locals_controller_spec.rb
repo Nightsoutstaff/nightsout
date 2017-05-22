@@ -126,7 +126,7 @@ RSpec.describe LocalsController, type: :controller do
 		let(:new_attributes) {{ name: "new_name", description: "new_desc" }}
 
 		it "modifica locale" do
-      @local = Local.create(id:2, user_id:2, name:"locale2",address:"via Tuscolana,RM", description: "boh", picture: nil, website: "www.ciao.it", telephone: "1234567890", iva: "11005760159", category:"Pub")
+      @local = Local.create(id:2, user_id:1, name:"locale2",address:"via Tuscolana,RM", description: "boh", picture: nil, website: "www.ciao.it", telephone: "1234567890", iva: "11005760159", category:"Pub")
       put :update, params: {:id => @local, :local => new_attributes}
       @local.reload
 			expect(@local.name).to eq('new_name')
@@ -139,7 +139,7 @@ RSpec.describe LocalsController, type: :controller do
 		it "segnala locale" do
 			@request.env["devise.mapping"] = Devise.mappings[:admin]
     	@admin = User.create(id: 2, :email => 'test2@example.com', :password => 'password', :password_confirmation => 'password',:name => 'fede', :city => 'Roma, RM, Italia', :role => 'admin')
-			@local = Local.create(id:2, user_id:2, name:"locale2",address:"via Tuscolana,RM", description: "boh", picture: nil, website: "www.ciao.it", telephone: "1234567890", iva: "11005760159", category:"Pub")
+			@local = Local.create(id:2, user_id:1, name:"locale2",address:"via Tuscolana,RM", description: "boh", picture: nil, website: "www.ciao.it", telephone: "1234567890", iva: "11005760159", category:"Pub")
       expect{
       	post :report, params: {id: @local}
       }.to change(Notification, :count).by(1)

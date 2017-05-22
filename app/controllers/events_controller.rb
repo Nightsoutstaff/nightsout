@@ -1,6 +1,7 @@
 class EventsController < ApplicationController
-before_action :authenticate_user!, only: [:create, :edit, :update, :destroy]
-  #before_action :correct_user,   only: [:edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:create, :edit, :update, :destroy]
+  before_action :correct_user,   only: [:edit, :update, :destroy]
+
 
   def show
     @event = Event.find(params[:id])
@@ -75,8 +76,8 @@ before_action :authenticate_user!, only: [:create, :edit, :update, :destroy]
       #redirect_to publish_locals_path if @local.nil?
     #end
 
-    #def correct_user
+    def correct_user
       #@user = User.find(params[:id])
-      #redirect_to(edit_user_registration_path) unless @user == current_user
-    #end
+      redirect_to(root_path) unless current_user == Event.find(params[:id]).local.user || current_user.role == 'admin'
+    end
 end
