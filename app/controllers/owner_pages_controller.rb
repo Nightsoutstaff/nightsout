@@ -2,8 +2,7 @@ class OwnerPagesController < ApplicationController
 	before_action :authenticate_user!
 
   def publish_events
-  	#@local= Local.find_by(params[:local_id])
-    @event = Event.new #@local.events.build
+  	@event = Event.new
   end
 
   def publish_locals

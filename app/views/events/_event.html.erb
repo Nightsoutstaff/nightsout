@@ -31,7 +31,7 @@
       <div class="col-sm-2">
         
         <% if user_signed_in? %>
-          <% if current_user==event.local.user && current_user.role=='owner' %>
+          <% if current_user==event.local.user && current_user.role=='Gestore' %>
             <%= link_to 'Modifica', edit_event_path(event), class: "edit-link" %><br>
             <%= link_to "Elimina", event, method: :delete,
                                            data: { confirm: "Sei sicuro?" }, class: "delete-link" %><br><br>
@@ -85,7 +85,7 @@
       <div class="col-sm-2">
         
         <% if user_signed_in? %>
-          <% if current_user==event.local.user && current_user.role=='owner' %>
+          <% if current_user==event.local.user && current_user.role=='Gestore' %>
             <%= link_to 'Modifica', edit_event_path(event), class: "edit-link" %><br>
             <%= link_to "Elimina", event, method: :delete,
                                            data: { confirm: "Sei sicuro?" }, class: "delete-link" %><br><br>

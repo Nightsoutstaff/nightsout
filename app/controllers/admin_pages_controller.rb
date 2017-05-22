@@ -31,7 +31,7 @@ class AdminPagesController < ApplicationController
 
   def unban
   	@user = User.find(params[:id])
-  	@user.update_attributes(:role => 'client')
+  	@user.update_attributes(:role => 'Cliente')
   	redirect_to users_all_path
   end
 

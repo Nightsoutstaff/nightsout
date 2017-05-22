@@ -17,7 +17,7 @@ class Event < ApplicationRecord
   default_scope -> { order(created_at: :desc) }
 
   validates :description, presence: true, length: { maximum: 1400 }
-  validates :name, presence: true
+  validates :name, presence: true, :uniqueness => {:scope => [:local_id]}
   validates :start, presence: true
   validates :end, presence: true
 

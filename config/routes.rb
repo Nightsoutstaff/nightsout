@@ -9,8 +9,6 @@ Rails.application.routes.draw do
   #	 delete 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_user_session
   # end
 
- 
-
   resources :users do
     member do
       get :following_event, :following_local, :destroy
@@ -52,7 +50,6 @@ Rails.application.routes.draw do
   #resources :comments, only: [:index, :create]
   resources :contacts, only: [:new, :create]
 
-
   root 'pages#home'
   
   get '/publish_events', to: 'owner_pages#publish_events'
@@ -64,9 +61,6 @@ Rails.application.routes.draw do
   get '/help',    to: 'pages#help'
   get '/notifications',    to: 'pages#notifications'
   get '/about',   to: 'pages#about'
-  #get '/contact', to: 'pages#contact'
-
-
   get '/contacts', to: 'contacts#new'
   get '/search',    to: 'pages#search'
   get '/banned', to: 'pages#banned'

@@ -9,9 +9,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user = User.from_omniauth(request.env["omniauth.auth"])#, flash)
     if @user.persisted?
       sign_in @user #, :event => :authentication #this will throw if @user is not activated
-      if current_user.role == 'client'
+      if current_user.role == 'Cliente'
         redirect_to all_events_path
-      elsif current_user.role == 'owner'
+      elsif current_user.role == 'Gestore'
         redirect_to your_events_path
       elsif current_user.role == 'admin'
         redirect_to events_all_path

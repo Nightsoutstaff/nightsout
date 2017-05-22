@@ -12,6 +12,17 @@ class PagesController < ApplicationController
   end
 
   def home
+    if user_signed_in?
+      if current_user.role == 'Cliente'
+        redirect_to all_events_path
+      elsif current_user.role == 'Gestore'
+        redirect_to your_events_path
+      elsif current_user.role == 'admin'
+        redirect_to events_all_path
+      else
+        redirect_to banned_path
+      end
+    end
   end
 
   def help

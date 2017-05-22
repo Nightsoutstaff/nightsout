@@ -39,7 +39,7 @@
 
       <% if not current_user.provider == "facebook" %>
       <div class="field">
-        <%= f.label :password_confirmation %>
+        <%= f.label :conferma_password %>
         <span>&nbsp;<% if @minimum_password_length %>
           <em><%= @minimum_password_length %> caratteri minimo</em>
         <% end %></span><br />
@@ -60,7 +60,7 @@
 
       <% if not current_user.provider == "facebook" %>
       <div class="field">
-        <%= f.label :current_password %> <i>&nbsp;(password attuale per salvare i cambiamenti)</i><br />
+        <%= f.label :password_attuale %> <i>&nbsp;(password attuale per salvare i cambiamenti)</i><br />
         <%= f.password_field :current_password, autocomplete: "off", class: 'form-control' %>
       </div>
       <% end %>

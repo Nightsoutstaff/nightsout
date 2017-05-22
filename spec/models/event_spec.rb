@@ -40,6 +40,13 @@ RSpec.describe Event, type: :model do
 			expect(@evento).to_not be_valid
 		end
 
+		it "unicità nome" do
+			@evento.save
+			@evento2=Event.new(name: "evento",description: "altre cose varie",local_id:1, start:"2017-03-14 17:04:00", end:"2017-03-16 19:05:00", picture: nil)
+			@evento2.name=@evento.name
+			expect(@evento2.valid?).to eq false
+		end
+
 		it "start nullo" do
 			@evento.start=nil
 			expect(@evento).to_not be_valid

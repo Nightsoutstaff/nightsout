@@ -3,7 +3,8 @@
 <div class="row">
   <div class="col-md-12">
 
-  	<h1>Eventi in città</h1><br>
+  	<h1>Eventi in città</h1><br><br>
+  	<% if not @events.blank?%>
   	<div class="form-inline" style="float:right">
   		<%= form_tag(all_events_path, :method => "get", id: "search-form",:class => 'form-inline', :style => 'float:left') do %>
   		<div class="form-group">
@@ -22,23 +23,24 @@
     	</div>
     	<% end %>
   	</div>
+  	<% end %>
 	</div>
 </div>
 
 <div class="row">
-	<div class="col-md-8 col-md-offset-2"><br><br><br>
+	<div class="col-md-8 col-md-offset-2">
 		<% if @city_user.blank? %>
 			<p><%= link_to "Inserisci la tua città", edit_user_registration_path %></p>
 		<% else %>
 			<% if @locals.empty? %>
-				<p>Non ci sono locali iscritti nella tua città!</p>
-				<small>Controlla di aver selezionato correttamente la tua città dalle <%= link_to "impostazioni", edit_user_registration_path %></small>
+				<center><h4>Non ci sono locali iscritti nella tua città!</h4>
+				<p>Controlla di aver selezionato correttamente la tua città dalle <%= link_to "impostazioni", edit_user_registration_path %></p></center>
 			<% else %>
 				<% if @events.blank? %>
 					<% if @category != nil || @date != nil %>
-						<p>Non ci sono eventi con queste caratteristiche nella tua città!</p>
+						<center><p>Non ci sono eventi con queste caratteristiche nella tua città!</p></center>
 					<% else %>
-						<p>Non ci sono eventi nella tua città!</p>
+						<center><p>Non ci sono eventi nella tua città!</p></center>
 					<% end %>
 				<% else %>
 					<h4>Eventi a <%= @city_user %>:</h4>

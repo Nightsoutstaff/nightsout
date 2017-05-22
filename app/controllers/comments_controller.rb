@@ -8,7 +8,7 @@ class CommentsController < ApplicationController
   end
  
   def create
-    @comment = @commentable.comments.new(comment_params)
+    @comment = @commentable.comments.build(comment_params)
     @comment.user = current_user
     #@comment.likes = 0
     
@@ -23,7 +23,7 @@ class CommentsController < ApplicationController
           else
             if (current_user != Comment.find(@comment.parent_id).user) && (current_user != Local.find(@comment.commentable_id).user)
               Notification.create(text: "Qualcuno ha risposto al tuo commento!", comment_id: @comment.id, additional_info: current_user.name, local_id: @comment.commentable_id, user_id: Comment.find(@comment.parent_id).user.id)
-            elsif current_user == Local.find(@comment.commentable_id).user
+            elsif (current_user != Comment.find(@comment.parent_id).user) && (current_user == Local.find(@comment.commentable_id).user)
               Notification.create(text: "Qualcuno ha risposto al tuo commento!", comment_id: @comment.id, additional_info: Local.find(@comment.commentable_id).name, local_id: @comment.commentable_id, user_id: Comment.find(@comment.parent_id).user.id)
             end
             redirect_to local_path(@commentable, anchor: 'comment_' + @comment.parent_id.to_s)
@@ -37,7 +37,7 @@ class CommentsController < ApplicationController
           else
             if (current_user != Comment.find(@comment.parent_id).user) && (current_user != Event.find(@comment.commentable_id).local.user)
               Notification.create(text: "Qualcuno ha risposto al tuo commento!", comment_id: @comment.id, additional_info: current_user.name, event_id: @comment.commentable_id, user_id: Comment.find(@comment.parent_id).user.id)
-             elsif current_user == Event.find(@comment.commentable_id).local.user
+            elsif (current_user != Comment.find(@comment.parent_id).user) && (current_user == Event.find(@comment.commentable_id).local.user)
               Notification.create(text: "Qualcuno ha risposto al tuo commento!", comment_id: @comment.id, additional_info: Event.find(@comment.commentable_id).local.name, event_id: @comment.commentable_id, user_id: Comment.find(@comment.parent_id).user.id)
             end
             redirect_to event_path(@commentable, anchor: 'comment_' + @comment.parent_id.to_s)
@@ -92,8 +92,17 @@ class CommentsController < ApplicationController
       if @comment.errors.empty?
         @text = @comment.content
         @receiver_id = @comment.user.id
+        if @comment.commentable_type == 'Local' 
+          @local_id = @comment.commentable_id
+          Notification.where(text: "Il tuo locale è stato commentato!", local_id: @local_id, comment_id: @comment.id).destroy_all
+        else
+          @event_id = @comment.commentable_id
+            Notification.where(text: "Il tuo evento è stato commentato!", event_id: @event_id, comment_id: @comment.id).destroy_all
+        end
         @comment.destroy 
+
         Notification.create(text: "Commento eliminato da Admin!", additional_info: @text, user_id: @receiver_id)
+         
         respond_to do |format|
           format.html { redirect_to @commentable, notice: "Commento eliminato."}
           format.json { head :no_content }

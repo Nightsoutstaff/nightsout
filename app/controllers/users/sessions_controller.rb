@@ -19,9 +19,9 @@ class Users::SessionsController < Devise::SessionsController
   protected
 
   def after_sign_in_path_for(resource)
-    if current_user.role == 'client'
+    if current_user.role == 'Cliente'
       all_events_path
-    elsif current_user.role == 'owner'
+    elsif current_user.role == 'Gestore'
       your_events_path
     elsif current_user.role == 'admin'
       events_all_path

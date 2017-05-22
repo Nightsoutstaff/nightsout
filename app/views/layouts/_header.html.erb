@@ -4,14 +4,14 @@
       <!--<img src="assets/nightsout_scritta.png" style="width:90px; padding:5px; left:0px">-->
       <ul class="nav navbar-nav navbar-right">
         <% if user_signed_in? %>
-          <% if current_user.role == 'client' %>
+          <% if current_user.role == 'Cliente' %>
             <li><%= link_to "Home", all_events_path %></li>
             <li><%= link_to "Cerca", search_path %></li>
             <li><%= link_to "Seguiti", following_path %></li>
             <li><%= link_to "Notifiche (" + Notification.where(['user_id = ? AND read = ?', current_user.id, false]).count.to_s + ")", notifications_path %></li>
             <li><%= link_to "Impostazioni", edit_user_registration_path %></li>
             <li><%= link_to "Esci", destroy_user_session_path, method: :delete %></li>
-          <% elsif current_user.role == 'owner' %>
+          <% elsif current_user.role == 'Gestore' %>
             <li><%= link_to "Tuoi eventi", your_events_path %></li>
             <li><%= link_to "Tuoi locali", your_locals_path %></li>
             <li><%= link_to "Notifiche (" + Notification.where(['user_id = ? AND read = ?', current_user.id, false]).count.to_s + ")", notifications_path %></li>

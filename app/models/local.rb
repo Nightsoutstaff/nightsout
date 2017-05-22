@@ -55,7 +55,7 @@ class Local < ApplicationRecord
 
   def self.deleteFollowingLocal(idLocal, nameLocal)
     if not LocalRelationship.where(followed_id: idLocal).blank?
-      Notification.where(local_id: idLocal).each do |n|
+      Notification.where(text: "Nuovo evento!", local_id: idLocal).each do |n|
         n.update(text: "Evento locale seguito eliminato!", read: false)
       end
       LocalRelationship.where(followed_id: idLocal).each do |l|

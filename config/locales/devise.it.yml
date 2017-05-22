@@ -41,7 +41,7 @@ it:
       updated: "La tua password è stata cambiata correttamente. Ora sei collegato."
       updated_not_active: "La tua password è stata cambiata correttamente."
     registrations:
-      destroyed: "Arrivederci! Il tuo account è stato cancellato. Speriamo di rivederti presto."
+      destroyed: ""
       signed_up: "Benvenuto! Ti sei registrato correttamente."
       signed_up_but_inactive: "Ti sei registrato correttamente. Tuttavia non puoi effettuare l'accesso perché il tuo account non è stato ancora attivato."
       signed_up_but_locked: "Ti sei registrato correttamente. Tuttavia non puoi effettuare l'accesso perché il tuo account è bloccato."

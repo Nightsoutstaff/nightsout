@@ -69,16 +69,7 @@ class LocalsController < ApplicationController
   private
 
     def local_params
-      params.require(:local).permit(:name, :address, :description, :picture, :website, :telephone, :iva, :category)
+      params.require(:local).permit(:user_id, :name, :address, :description, :picture, :website, :telephone, :iva, :category)
     end
 
-    #def correct_local
-     # @local = current_user.locals.find_by(id: params[:id])
-      #redirect_to publish_locals_path if @local.nil?
-    #end
-
-    #def correct_user
-      #@user = User.find(params[:id])
-      #redirect_to(edit_user_registration_path) unless @user == current_user
-    #end
 end

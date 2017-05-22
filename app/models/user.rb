@@ -46,7 +46,7 @@ class User < ApplicationRecord
 		end 
 	end
 
-  ROLES = %i[client owner]  # + admin e banned non a scelta dell'utente
+  ROLES = %i[Cliente Gestore]  # + admin e banned non a scelta dell'utente
 
   # Follows an event.
   def follow_event(event)

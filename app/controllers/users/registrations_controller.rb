@@ -50,7 +50,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # The path used after sign up.
   def after_sign_up_path_for(resource)
-    edit_user_registration_path
+    if current_user.role == 'Cliente'
+      all_events_path
+    elsif current_user.role == 'Gestore'
+      your_events_path
+    elsif current_user.role == 'admin'
+      events_all_path
+    else
+      banned_path
+    end
   end
 
   def after_update_path_for(resource)
