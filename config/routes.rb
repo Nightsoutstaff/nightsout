@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
 
-
-
-  post '/rate' => 'rater#create', :as => 'rate'
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks", :registrations => "users/registrations", :sessions => "users/sessions"}
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   # devise_scope :user do
@@ -69,5 +66,6 @@ Rails.application.routes.draw do
   get '/users_all', to: 'admin_pages#users_all'
   post 'admin_pages/ban' => 'admin_pages#ban', :as => :ban
   post 'admin_pages/unban' => 'admin_pages#unban', :as => :unban
+  post '/rate' => 'rater#create', :as => 'rate'
 
 end

@@ -1,6 +1,7 @@
 class LocalsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :edit, :update, :destroy]
-  before_action :correct_user,   only: [:edit, :update, :destroy]
+  before_action :correct_user,   only: [:edit, :update]
+  before_action :correct_user_or_admin,   only: [:destroy]
 
   def show
     @local = Local.find(params[:id])
@@ -73,7 +74,10 @@ class LocalsController < ApplicationController
     end
 
     def correct_user
-      #@user = User.find(params[:id])
+      redirect_to(root_path) unless current_user == Local.find(params[:id]).user
+    end
+
+    def correct_user_or_admin
       redirect_to(root_path) unless current_user == Local.find(params[:id]).user || current_user.role == 'admin'
     end
 

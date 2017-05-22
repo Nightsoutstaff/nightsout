@@ -2,7 +2,8 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_commentable
   before_action :set_comment, only: [ :reply, :edit, :update, :destroy ]
-  before_action :correct_user, only: [ :reply, :edit, :update, :destroy ]
+  before_action :correct_user, only: [:edit, :update ]
+  before_action :correct_user_or_admin, only: [:destroy ]
  
   def reply
     @reply = @commentable.comments.build(parent: @comment)
@@ -173,7 +174,10 @@ class CommentsController < ApplicationController
   end
 
   def correct_user
-      #@user = User.find(params[:id])
-      redirect_to(root_path) unless current_user == Comment.find(params[:id]).user || current_user.role == 'admin'
-    end
+    redirect_to(root_path) unless current_user == Comment.find(params[:id]).user 
+  end
+
+  def correct_user_or_admin
+    redirect_to(root_path) unless current_user == Comment.find(params[:id]).user || current_user.role == 'admin'
+  end
 end
