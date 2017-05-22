@@ -6,7 +6,7 @@ RSpec.describe EventsController, type: :controller do
     @request.env["devise.mapping"] = Devise.mappings[:user]
     @user = User.create(id: 1, :email => 'test1@example.com', :password => 'password', :password_confirmation => 'password',:name => 'fede', :city => 'Roma, RM, Italia', :role => 'Gestore')
    	sign_in @user
-   	@local = Local.create(id:1, user_id:1, name:"locale1",address:"via Tuscolana,RM", description: "boh", picture: nil, website: "www.ciao.it", telephone: 1234567890, iva: 13904601005, category:"Pub")  
+   	@local = Local.create(id:1, user_id:1, name:"locale1",address:"via Tuscolana,RM", description: "boh", picture: nil, website: "www.ciao.it", telephone: "1234567890", iva: "13904601005", category:"Pub")  
   end
 
   describe "GET #show" do

@@ -75,28 +75,29 @@ class Local < ApplicationRecord
     end
 
     def check_IVA
-      temp = iva
-      iva_array = []
-      while temp >0
-        iva_array << temp%10
-        temp /= 10
-      end
-      iva_array.reverse
-      if iva_array.length < 11
+      #temp = iva
+      #iva_array = []
+      #while temp >0
+      #  iva_array << temp%10
+      #  temp /= 10
+      #end
+      #iva_array.reverse
+
+      if iva.length < 11
         errors.add(:iva, "Partita IVA troppo corta")
-      elsif iva_array.length > 11
+      elsif iva.length > 11
         errors.add(:iva, "Partita IVA troppo lunga")
       else
-        x = iva_array[0] + iva_array[2] + iva_array[4] + iva_array[6] + iva_array[8] + iva_array[10]
-        y1 = 2*iva_array[1]
+        x = iva[0].to_i + iva[2].to_i + iva[4].to_i + iva[6].to_i + iva[8].to_i + iva[10].to_i
+        y1 = 2*iva[1].to_i
         y1-=9 if y1>9 
-        y2 = 2*iva_array[3]
+        y2 = 2*iva[3].to_i
         y2-=9 if y2>9 
-        y3 = 2*iva_array[5]
+        y3 = 2*iva[5].to_i
         y3-=9 if y3>9 
-        y4 = 2*iva_array[7]
+        y4 = 2*iva[7].to_i
         y4-=9 if y4>9 
-        y5 = 2*iva_array[9] 
+        y5 = 2*iva[9].to_i 
         y5-=9 if y5>9 
         y = y1 + y2 + y3 + y4 + y5
         if (x+y)%10 != 0

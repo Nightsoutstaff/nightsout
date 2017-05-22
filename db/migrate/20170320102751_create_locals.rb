@@ -4,10 +4,10 @@ class CreateLocals < ActiveRecord::Migration[5.0]
       t.string :name
       t.string :category
       t.text :description
-      t.integer :telephone, :limit => 8
+      t.string :telephone
       t.string :address
       t.string :website
-      t.integer :iva, :limit => 8
+      t.string :iva
       t.string :city
       t.float :latitude
       t.float :longitude

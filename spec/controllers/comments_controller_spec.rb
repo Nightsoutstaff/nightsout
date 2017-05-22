@@ -6,7 +6,7 @@ RSpec.describe CommentsController, type: :controller do
     @request.env["devise.mapping"] = Devise.mappings[:user]
     @user = User.create(id: 1, :email => 'test1@example.com', :password => 'password', :password_confirmation => 'password',:name => 'fede', :city => 'Roma, RM, Italia', :role => 'Gestore')
    	sign_in @user
-   	@local = Local.create(id:1, user_id:@user.id, name:"locale1",address:"via Tuscolana,RM", description: "boh", picture: nil, website: "www.ciao.it", telephone: 1234567890, iva: 13904601005, category:"Pub")  
+   	@local = Local.create(id:1, user_id:@user.id, name:"locale1",address:"via Tuscolana,RM", description: "boh", picture: nil, website: "www.ciao.it", telephone: "1234567890", iva: "13904601005", category:"Pub")  
    	@event = Event.create(id:1, name: "evento",description: "cose varie",local_id:@local.id, start:"2017-05-14 17:04:00", end: "2017-05-16 19:05:00", picture: nil)
 	end
 

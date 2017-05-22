@@ -73,16 +73,16 @@ ActiveRecord::Schema.define(version: 20170513174600) do
     t.string   "name"
     t.string   "category"
     t.text     "description"
-    t.integer  "telephone",   limit: 8
+    t.string   "telephone"
     t.string   "address"
     t.string   "website"
-    t.integer  "iva",         limit: 8
+    t.string   "iva"
     t.string   "city"
     t.float    "latitude"
     t.float    "longitude"
     t.integer  "user_id"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.string   "picture"
     t.index ["user_id", "created_at"], name: "index_locals_on_user_id_and_created_at"
     t.index ["user_id"], name: "index_locals_on_user_id"
