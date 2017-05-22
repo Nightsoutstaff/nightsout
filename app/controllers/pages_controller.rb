@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   before_action :authenticate_user!, only: [:notifications]
+  before_action :check_role, only: [:search]
 
   def notifications
     @oldNotifications = nil
@@ -96,6 +97,22 @@ class PagesController < ApplicationController
           (@positions ||= []) << [e.local.latitude, e.local.longitude, e.name, e.local.address, e.id, e.local.name, e.local.id]
         end 
       end 
+    end
+  end
+
+  private
+
+  def check_role
+    if user_signed_in?
+      if not current_user.role == 'Cliente'
+        if current_user.role == 'admin'
+          redirect_to events_all_path
+        elsif current_user.role == 'Gestore'
+          redirect_to your_events_path
+        elsif current_user.role == 'banned'
+          redirect_to banned_path
+        end
+      end
     end
   end
 

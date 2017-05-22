@@ -1,5 +1,6 @@
 class ClientPagesController < ApplicationController
   before_action :authenticate_user!
+  before_action :check_role
   
   def all_events
 
@@ -68,6 +69,22 @@ class ClientPagesController < ApplicationController
       #end
     #end
     @events = @user.following_event.paginate(page: params[:page], :per_page => 5)
+  end
+
+  private
+
+  def check_role
+    if not current_user.role == 'Cliente'
+      if current_user.role == 'admin'
+        redirect_to events_all_path
+      elsif current_user.role == 'Gestore'
+        redirect_to your_events_path
+      elsif current_user.role == 'banned'
+        redirect_to banned_path
+      else
+        redirect_to root_path
+      end
+    end
   end
 
 end

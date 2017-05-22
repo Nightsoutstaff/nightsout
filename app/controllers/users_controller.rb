@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-
+    before_action :authenticate_user!
 	#metodi da aggiungere a quelli del controller creato da Devise
 
 	def following_event
