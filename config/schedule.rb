@@ -27,5 +27,5 @@ every 12.hours do
 end
 
 every :day do
-	runner "Local.approachingEvent"
+	runner "Event.approachingEvent"
 end

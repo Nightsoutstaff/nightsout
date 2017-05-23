@@ -31,10 +31,12 @@ class Event < ApplicationRecord
   def self.deleteEvents
     event = Event.joins(:local).where(['events.end<?', DateTime.now])
     if not event.blank?
-      event.each do |e|
-        EventRelationship.where(['followed_id=?', e.id]).each do |f|
-          Notification.create(text: "Evento seguito scaduto!", additional_info: e.name, event_id: e.id, local_: e.local_id, end: e.end, user_id: f.follower_id)
+        event.each do |e|
+          EventRelationship.where(['followed_id=?', e.id]).each do |f|
+            Notification.create(text: "Evento seguito scaduto!", additional_info: e.name, event_id: e.id, local_id: e.local_id, end: e.end, user_id: f.follower_id)
+            Notification.where(text: "Evento in avvicinamento!", event_id: e.id).destroy_all
         end
+        Notification.where(text: "Nuovo evento!", event_id: e.id).destroy_all
         Notification.create(text: "Evento scaduto!", additional_info: e.name, event_id: e.id, local_id: e.local_id, end: e.end, user_id: e.local.user_id)
         e.destroy
       end
@@ -42,19 +44,26 @@ class Event < ApplicationRecord
   end
 
   def self.approachingEvent
-    if not Event.joins(:local).where(['events.start>?', DateTime.now+2]).blank?
-      Event.joins(:local).where(['events.start>?', DateTime.now+2]).each do |e|
-        EventRelationship.where(['followed_id=?', e.id]).each do |ee|
-          Notification.create(text: "Evento in avvicinamento!", additional_info: "", event_id: e.id, local_id: "", end: e.start, user_id: ee.follower_id)
+      near_events = Event.where(['start<?', DateTime.now+1.day])
+      if not near_events.blank?
+      near_events.each do |e|
+        follower = e.followers
+        if not follower.blank?
+          follower.each do |n|
+              if Notification.find_by(text: "Evento in avvicinamento!", event_id: e.id, user_id: n.id).blank?
+                Notification.create(text: "Evento in avvicinamento!", event_id: e.id, end: e.start, user_id: n.id)
+            end
+          end
         end
       end
     end
   end
 
+
   def self.deleteFollowedEvents(idEvent, nameEvent)
     if not EventRelationship.where(followed_id: idEvent).blank?
       Notification.where(event_id: idEvent, text: "Evento in avvicinamento!").each do |n|
-        n.update(text: "Evento in avvicinamento eliminato!", read: false)
+        n.update(text: "Evento in avvicinamento eliminato!", additional_info: nameEvent, read: false)
       end
       EventRelationship.where(followed_id: idEvent).each do |f|
         Notification.create(text: "Evento seguito eliminato!", additional_info: nameEvent, user_id: f.follower_id)

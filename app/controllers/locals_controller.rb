@@ -27,6 +27,8 @@ class LocalsController < ApplicationController
     if(current_user.role == 'admin')
         Notification.create(text: "Locale eliminato da Admin!", additional_info: @local.name, local_id: @local.id, user_id: @local.user.id)
     end
+    Notification.where(text: "Segnalazione locale!", local_id: @local.id).destroy_all
+    Notification.where(text: "Segnalazione commento!", local_id: @local.id).destroy_all
     Local.deleteFollowingLocal(@local.id, @local.name)
     @local.destroy
     flash[:success] = "Locale eliminato!"

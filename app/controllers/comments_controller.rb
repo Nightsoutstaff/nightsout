@@ -97,9 +97,11 @@ class CommentsController < ApplicationController
         if @comment.commentable_type == 'Local' 
           @local_id = @comment.commentable_id
           Notification.where(text: "Il tuo locale è stato commentato!", local_id: @local_id, comment_id: @comment.id).destroy_all
+          Notification.where(text: "Segnalazione locale!", event_id: @local_id).destroy_all
         else
           @event_id = @comment.commentable_id
             Notification.where(text: "Il tuo evento è stato commentato!", event_id: @event_id, comment_id: @comment.id).destroy_all
+            Notification.where(text: "Segnalazione evento!", event_id: @event_id).destroy_all
         end
         @comment.destroy 
 

@@ -26,6 +26,8 @@ class EventsController < ApplicationController
     if(current_user.role == 'admin')
       Notification.create(text: "Evento eliminato da Admin!", additional_info: @event.name, event_id: @event.id, local_id: @event.local.id, end: @event.start, user_id: @event.local.user.id)
     end
+    Notification.where(text: "Segnalazione evento!", event_id: @event.id).destroy_all
+    Notification.where(text: "Segnalazione commento!", local_id: @event.id).destroy_all
     Event.deleteFollowedEvents(@event.id, @event.name)
     @event.destroy
     flash[:success] = "Evento eliminato!"
