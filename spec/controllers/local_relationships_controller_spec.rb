@@ -10,23 +10,42 @@ RSpec.describe LocalRelationshipsController, type: :controller do
   end
 
   describe "POST #create" do	
-	  it "segui locale" do
-		  expect{
+	  it "segui locale (redirect a pagina seguiti)" do
+	  	expect{
 	     	post :create, params: {id:1, follower_id: 1, followed_id: 2}
 		 	}.to change(LocalRelationship, :count).by(1)
 
 		 	expect(response).to redirect_to(following_path)
 	  end
+
+	  it "segui locale (redirect back su pagina locale" do
+	  	@request.env['HTTP_REFERER'] = 'http://test.host/locals/2'
+		  expect{
+	     	post :create, params: {id:1, follower_id: 1, followed_id: 2}
+		 	}.to change(LocalRelationship, :count).by(1)
+
+		 	expect(response).to redirect_to(@local)
+	  end
   end
 
   describe "POST #destroy" do
-		it "smetti di seguire locale" do
+		it "smetti di seguire locale (redirect a pagina seguiti" do
 			@relationship = LocalRelationship.create(id:1, follower_id: 1, followed_id: 2)
 			expect{ 
 	      delete :destroy, params: {:id => @relationship}
 	    }.to change(LocalRelationship, :count).by(-1)
 	  	
 	  	expect(response).to redirect_to(following_path)
+  	end
+
+  	it "smetti di seguire locale (redirect back su pagina locale)" do
+			@request.env['HTTP_REFERER'] = 'http://test.host/locals/2'
+			@relationship = LocalRelationship.create(id:1, follower_id: 1, followed_id: 2)
+			expect{ 
+	      delete :destroy, params: {:id => @relationship}
+	    }.to change(LocalRelationship, :count).by(-1)
+	  	
+	  	expect(response).to redirect_to(@local)
   	end
   end
 
