@@ -28,7 +28,9 @@ gem 'bootstrap3-datetimepicker-rails'
 gem 'devise'                      
 gem 'omniauth'
 gem 'omniauth-facebook'  
-gem 'geocoder'   
+gem 'geocoder'  
+gem 'gmaps4rails'
+gem 'rails-i18n', '~> 5.0.0' 
 gem 'whenever', :require => false
 gem 'ratyrate'
 gem 'jquery-turbolinks'
@@ -36,7 +38,6 @@ gem 'bootstrap'
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.1.0'
 end
-gem 'simple_form'
 gem 'mail_form'
 gem "bootstrap_flash_messages", "~> 1.0.1"
 gem 'jquery-ui-rails'
