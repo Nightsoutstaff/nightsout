@@ -2,9 +2,10 @@
 
 <h1>Pagina contatti</h1>
 <h2>Form per la mail e altri modi per contattarci (Telefono, Facebook o altri social)</h2><br>
-<div class="row">
-  <div class="col-sm-6 col-sm-offset-3">
-    <%= form_for (@contact) do |f| %>
+
+<%= form_for (@contact) do |f| %>
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
       <%= f.label :Nome %><br />
       <%= f.text_field :name, :required => true, class: "form-control" %>
       <%= f.label :Email %><br />
@@ -12,11 +13,11 @@
       <%= f.label :Messaggio %><br />
       <%= f.text_field :message, :as => :text, :required => true, class: "form-control" %>
       </br>
+    </div>
   </div>
-</div>
-<div class="row">
-  <div class="col-sm-2 col-sm-offset-5">
+  <div class="row">
+    <div class="col-sm-2 col-sm-offset-5">
       <%= f.submit 'Invia', :class=> "btn btn-primary" %>
-    <% end %>
+    </div>
   </div>
-</div>
+<% end %>  

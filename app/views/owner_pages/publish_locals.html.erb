@@ -1,20 +1,5 @@
 <%= provide(:title,'Pubblica Locale') %>
 
-<script src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAXXF9Al_dOIDzdjzBcd5vgF8RtcWNE8_Y&libraries=places&sensor=false&callback=initializeAddr" async defer></script>
-
-    
-<script>
-  var options = {
-    types: ['address'],
-    componentRestrictions: {country: "it"}
-  };
-
-  function initializeAddr() {
-    var input = document.getElementById("loc-address");
-    new google.maps.places.Autocomplete(input, options);
-  }
-</script>
-
 <h1>Pubblica locale</h1><br>
 
 <div class="row">
@@ -62,6 +47,21 @@
 	  </div>
   </div>
 </div>
+
+<script src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAXXF9Al_dOIDzdjzBcd5vgF8RtcWNE8_Y&libraries=places&callback=initializeAddr" async defer>
+</script>
+    
+<script>
+  var options = {
+    types: ['address'],
+    componentRestrictions: {country: "it"}
+  };
+
+  function initializeAddr() {
+    var input = document.getElementById("loc-address");
+    new google.maps.places.Autocomplete(input, options);
+  }
+</script>
 
 <script type="text/javascript">
   $('#local_picture').bind('change', function() {
