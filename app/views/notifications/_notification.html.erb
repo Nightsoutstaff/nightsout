@@ -15,7 +15,9 @@
       
       <% elsif (notification.text == "Evento in avvicinamento!") %>
         <%= notification.text %>
+        <% if !notification.event.blank? %>
         <p>L'evento "<b><%= link_to notification.event.name, notification.event %></b>" si terrà alle <b><%=notification.event.start.strftime("ore %H:%M del %d-%m-%y") %></b></p>
+        <% end %>
       
       <% elsif (notification.text == "Evento eliminato da Admin!") %>
         <%= notification.text %>
