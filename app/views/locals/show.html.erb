@@ -48,7 +48,7 @@
           <small>(0 voti)</small>
         <% end %>
         <br><br>
-        <% if user_signed_in? && current_user.role != 'admin' %>
+        <% if user_signed_in? && current_user.role == 'Cliente' %>
           <%= link_to "Segnala", signal_local_path(@local), method: :put, data:{confirm:"Sei sicuro?"} %>
         <% end %>       
       </div>
@@ -135,7 +135,7 @@
           <small>(0 voti)</small>
         <% end %>
         <br><br>
-        <% if user_signed_in? && current_user.role != 'admin' %>
+        <% if user_signed_in? && current_user.role == 'Cliente' %>
           <%= link_to "Segnala", signal_local_path(@local), method: :put, data:{confirm:"Sei sicuro?"} %>
         <% end %>       
       </div>
