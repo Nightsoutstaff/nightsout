@@ -34,7 +34,7 @@
           <% end %>
 
           <div style="float:right; color: #bbb;">
-            <% if current_user.role != 'admin' && comment.user.role != 'admin' && current_user != comment.user%>
+            <% if current_user.role == 'Cliente' && comment.user.role != 'admin' && current_user != comment.user%>
               <%= link_to "Segnala", signal_local_comment_path(comment.commentable.id, comment), method: :put, data:{confirm:"Sei sicuro?"} %>&bull; 
             <% end %>
             <%= localize(comment.updated_at, format: :long) %>
@@ -48,7 +48,7 @@
           <% end %>
 
           <div style="float:right; color: #bbb;">
-            <% if current_user.role != 'admin' && comment.user.role != 'admin' && current_user != comment.user%>
+            <% if current_user.role == 'Cliente' && comment.user.role != 'admin' && current_user != comment.user%>
               <%= link_to "Segnala", signal_event_comment_path(comment.commentable.id, comment), method: :put, data:{confirm:"Sei sicuro?"} %>&bull; 
             <% end %>
             <%= localize(comment.created_at, format: :long) %>
