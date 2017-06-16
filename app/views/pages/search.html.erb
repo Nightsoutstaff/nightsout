@@ -21,8 +21,9 @@
 			</div>
 			<br>
 			<div class="checkbox" style="margin-left:-20px">
-    		<label>
-   				Visualizza anche i locali in zona senza eventi in programma&nbsp;&nbsp;<%= check_box_tag 'also_empty', 'yes', false %> 
+    		<label class="checkbox">
+   				<%= check_box_tag 'also_empty', 'yes', false %>
+          <span>&nbsp;Visualizza locali senza eventi in programma</span>
    			</label>
    		</div>
     </div>
